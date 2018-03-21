@@ -6,17 +6,17 @@
  * used to display single posts and the comment system.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 global $canuck_include_breadcrumbs,$canuck_exclude_page_title,$canuck_layout_option;
-$canuck_layout_option = esc_html( get_theme_mod( 'canuck_single_post_layout', 'right_sidebar' ) );
+$canuck_layout_option       = esc_html( get_theme_mod( 'canuck_single_post_layout', 'right_sidebar' ) );
 $canuck_include_breadcrumbs = get_theme_mod( 'canuck_breadcrumbs' ) ? true : false;
-$canuck_exclude_page_title = get_theme_mod( 'canuck_single_title' ) ? true : false;
-$sidebar_a = esc_html( get_theme_mod( 'canuck_single_sidebar_a', 'blog-a' ) );
-$sidebar_b = esc_html( get_theme_mod( 'canuck_single_sidebar_b', 'blog-b' ) );
+$canuck_exclude_page_title  = get_theme_mod( 'canuck_single_title' ) ? true : false;
+$sidebar_a                  = esc_html( get_theme_mod( 'canuck_single_sidebar_a', 'blog-a' ) );
+$sidebar_b                  = esc_html( get_theme_mod( 'canuck_single_sidebar_b', 'blog-b' ) );
 
 get_header( 'no-feature' );
 

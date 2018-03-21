@@ -5,23 +5,21 @@
  * This file is used for all blog pages.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 global $canuck_include_breadcrumbs, $canuck_exclude_page_title, $canuck_feature_category;
-$layout_option = esc_html( get_theme_mod( 'canuck_blog_layout', 'right_sidebar' ) );
+$layout_option              = esc_html( get_theme_mod( 'canuck_blog_layout', 'right_sidebar' ) );
 $canuck_include_breadcrumbs = get_theme_mod( 'canuck_breadcrumbs' ) ? true : false;
-$canuck_exclude_page_title = get_theme_mod( 'canuck_blog_title_option' ) ? true : false;
-$sidebar_a = esc_html( get_theme_mod( 'canuck_blog_sidebar_a', 'blog_a' ) );
-$sidebar_b = esc_html( get_theme_mod( 'canuck_blog_sidebar_b', 'blog_b' ) );
-$post_style = esc_html( get_theme_mod( 'canuck_blog_style', 'top_feature' ) );
-$blog_feature = get_theme_mod( 'canuck_blog_feature', 'background_image' );
-$canuck_feature_category = get_theme_mod( 'canuck_blog_feature_category', '' );
-
+$canuck_exclude_page_title  = get_theme_mod( 'canuck_blog_title_option' ) ? true : false;
+$sidebar_a                  = esc_html( get_theme_mod( 'canuck_blog_sidebar_a', 'blog_a' ) );
+$sidebar_b                  = esc_html( get_theme_mod( 'canuck_blog_sidebar_b', 'blog_b' ) );
+$post_style                 = esc_html( get_theme_mod( 'canuck_blog_style', 'top_feature' ) );
+$blog_feature               = get_theme_mod( 'canuck_blog_feature', 'background_image' );
+$canuck_feature_category    = get_theme_mod( 'canuck_blog_feature_category', '' );
 get_header( 'blog' );
-
 if ( 'button_nav' === $blog_feature ) {
 	?>
 	<div id="feature-slider-wide">
@@ -29,10 +27,26 @@ if ( 'button_nav' === $blog_feature ) {
 			<?php
 			if ( '' === $canuck_feature_category ) {
 				?>
-				<span class="error"><?php esc_html_e( 'Go to Canuck Options=>Blog and enter the Feature Category you used for your posts.' , 'canuck' ); ?></span>
+				<span class="error"><?php esc_html_e( 'Go to Canuck Options=>Blog and enter the Feature Category you used for your posts.', 'canuck' ); ?></span>
 				<?php
 			} else {
 				get_template_part( '/template-parts/feature-slider-parts/slider', 'button-nav-3to1' );
+			}
+			?>
+		</div>
+	</div>
+	<?php
+} elseif ( 'fullsize' === $blog_feature ) {
+	?>
+	<div id="feature-slider-wide">
+		<div id="feature-slider-wrap">
+			<?php
+			if ( '' === $canuck_feature_category ) {
+				?>
+				<span class="error"><?php esc_html_e( 'Go to Canuck Options=>Blog and enter the Feature Category you used for your posts.', 'canuck' ); ?></span>
+				<?php
+			} else {
+				get_template_part( '/template-parts/feature-slider-parts/slider', 'button-nav-fullsize' );
 			}
 			?>
 		</div>

@@ -5,7 +5,7 @@
  * This template part is called by template-portfolio-side.php or template-portfolio.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */

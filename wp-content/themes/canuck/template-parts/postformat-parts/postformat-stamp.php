@@ -3,11 +3,12 @@
  * Canuck Post Format Standard
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
+$use_lazyload = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
 ?>
 <div class="post-wrap-stamp">
 	<div class="stamp-feature">
@@ -27,8 +28,19 @@
 				get_template_part( '/template-parts/postformat-parts/postformat', 'standard-feature' );
 			}
 		} else {
-			$background_image_url = get_template_directory_uri() . '/images/password800.jpg';
-			echo '<img src="' . esc_url( $background_image_url ) . '" alt="' . esc_attr__( 'password reqired', 'canuck' ) . '">';
+			$background_image_url = get_template_directory_uri() . '/images/password800.jpg';// WPCS: XSS ok.
+			if ( true === $use_lazyload ) {
+				?>
+				<img class="lazyload"
+					src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+					data-src="<?php echo esc_url( $background_image_url ); ?>"
+					alt="<?php esc_attr_e( 'password required', 'canuck' ); ?>">
+				<?php
+			} else {
+				?>
+				<img src="<?php echo esc_url( $background_image_url ); ?>" alt="<?php esc_attr_e( 'password required', 'canuck' ); ?>">
+				<?php
+			}
 		}
 		?>
 	</div>

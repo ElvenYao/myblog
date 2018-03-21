@@ -3,7 +3,7 @@
  * Plugin Name: Canuck Slider Widget
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  *
@@ -38,7 +38,7 @@ class Canuck_Slider_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname' => 'canuck_slider_widget_class',
+			'classname'   => 'canuck_slider_widget_class',
 			'description' => esc_html__( 'Display slider of featured images', 'canuck' ),
 		);
 		parent::__construct( 'canuck_slider_widget', esc_html__( 'Canuck Slider Widget', 'canuck' ), $widget_ops );
@@ -50,24 +50,24 @@ class Canuck_Slider_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$canuck_slider_defaults = array(
-			'canuck_slider_title' => __( 'Canuck Flex Slider', 'canuck' ),
-			'canuck_slider_type' => 'button nav',
-			'canuck_slider_category' => __( 'feature 1', 'canuck' ),
-			'canuck_slider_animation' => 'fade',
-			'canuck_slider_pause' => '6000',
-			'canuck_slider_transition' => '500',
-			'canuck_slider_auto' => true,
+			'canuck_slider_title'        => __( 'Canuck Flex Slider', 'canuck' ),
+			'canuck_slider_type'         => 'button nav',
+			'canuck_slider_category'     => __( 'feature 1', 'canuck' ),
+			'canuck_slider_animation'    => 'fade',
+			'canuck_slider_pause'        => '6000',
+			'canuck_slider_transition'   => '500',
+			'canuck_slider_auto'         => true,
 			'canuck_include_post_titles' => false,
 		);
-		$instance = wp_parse_args( (array) $instance, $canuck_slider_defaults );
-		$title = $instance['canuck_slider_title'];
-		$slider_type = $instance['canuck_slider_type'];
-		$slider_category = $instance['canuck_slider_category'];
-		$slider_animation = $instance['canuck_slider_animation'];
-		$slider_pause = $instance['canuck_slider_pause'];
-		$slider_transition = $instance['canuck_slider_transition'];
-		$slider_auto = $instance['canuck_slider_auto'] ? true : false;
-		$include_post_titles = $instance['canuck_include_post_titles'] ? true : false;
+		$instance               = wp_parse_args( (array) $instance, $canuck_slider_defaults );
+		$title                  = $instance['canuck_slider_title'];
+		$slider_type            = $instance['canuck_slider_type'];
+		$slider_category        = $instance['canuck_slider_category'];
+		$slider_animation       = $instance['canuck_slider_animation'];
+		$slider_pause           = $instance['canuck_slider_pause'];
+		$slider_transition      = $instance['canuck_slider_transition'];
+		$slider_auto            = $instance['canuck_slider_auto'] ? true : false;
+		$include_post_titles    = $instance['canuck_include_post_titles'] ? true : false;
 		?>
 		<p>
 			<?php
@@ -83,11 +83,11 @@ class Canuck_Slider_Widget extends WP_Widget {
 			esc_html_e( 'Type : ', 'canuck' );
 			?>
 			<select name="<?php echo esc_attr( $this->get_field_name( 'canuck_slider_type' ) ); ?>">
-				<option value="no_nav" <?php selected( $slider_type, 'no_nav' ); ?>><?php esc_html_e( 'no nav' , 'canuck' ); ?></option>
-				<option value="button_nav" <?php selected( $slider_type, 'button_nav' ); ?>><?php esc_html_e( 'button nav' , 'canuck' ); ?></option>
-				<option value="carousel_top" <?php selected( $slider_type, 'carousel_top' ); ?>><?php esc_html_e( 'carousel nav top' , 'canuck' ); ?></option>
-				<option value="carousel_bot" <?php selected( $slider_type, 'carousel_bot' ); ?>><?php esc_html_e( 'carousel nav bottom' , 'canuck' ); ?></option>
-				<option value="carousel" <?php selected( $slider_type, 'carousel' ); ?>><?php esc_html_e( 'carousel slider' , 'canuck' ); ?></option>
+				<option value="no_nav" <?php selected( $slider_type, 'no_nav' ); ?>><?php esc_html_e( 'no nav', 'canuck' ); ?></option>
+				<option value="button_nav" <?php selected( $slider_type, 'button_nav' ); ?>><?php esc_html_e( 'button nav', 'canuck' ); ?></option>
+				<option value="carousel_top" <?php selected( $slider_type, 'carousel_top' ); ?>><?php esc_html_e( 'carousel nav top', 'canuck' ); ?></option>
+				<option value="carousel_bot" <?php selected( $slider_type, 'carousel_bot' ); ?>><?php esc_html_e( 'carousel nav bottom', 'canuck' ); ?></option>
+				<option value="carousel" <?php selected( $slider_type, 'carousel' ); ?>><?php esc_html_e( 'carousel slider', 'canuck' ); ?></option>
 			</select> 
 		</p>
 		<p>
@@ -108,8 +108,8 @@ class Canuck_Slider_Widget extends WP_Widget {
 			esc_html_e( 'Animation : ', 'canuck' );
 			?>
 			<select name="<?php echo esc_attr( $this->get_field_name( 'canuck_slider_animation' ) ); ?>">
-				<option value="fade" <?php selected( $slider_animation, 'fade' ); ?>><?php esc_html_e( 'fade' , 'canuck' ); ?></option>
-				<option value="slide" <?php selected( $slider_animation, 'slide' ); ?>><?php esc_html_e( 'slide' , 'canuck' ); ?></option>
+				<option value="fade" <?php selected( $slider_animation, 'fade' ); ?>><?php esc_html_e( 'fade', 'canuck' ); ?></option>
+				<option value="slide" <?php selected( $slider_animation, 'slide' ); ?>><?php esc_html_e( 'slide', 'canuck' ); ?></option>
 			</select> 
 		</p>
 		<p>
@@ -163,15 +163,15 @@ class Canuck_Slider_Widget extends WP_Widget {
 	 * @param array $old_instance The previous options.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-		$instance['canuck_slider_title'] = sanitize_text_field( $new_instance['canuck_slider_title'] );
-		$instance['canuck_slider_type'] = sanitize_text_field( $new_instance['canuck_slider_type'] );
-		$instance['canuck_slider_category'] = sanitize_text_field( $new_instance['canuck_slider_category'] );
-		$instance['canuck_slider_animation'] = sanitize_text_field( $new_instance['canuck_slider_animation'] );
-		$instance['canuck_slider_pause'] = sanitize_text_field( $new_instance['canuck_slider_pause'] );
-		$instance['canuck_slider_transition'] = sanitize_text_field( $new_instance['canuck_slider_transition'] );
+		$instance                               = $old_instance;
+		$instance['canuck_slider_title']        = sanitize_text_field( $new_instance['canuck_slider_title'] );
+		$instance['canuck_slider_type']         = sanitize_text_field( $new_instance['canuck_slider_type'] );
+		$instance['canuck_slider_category']     = sanitize_text_field( $new_instance['canuck_slider_category'] );
+		$instance['canuck_slider_animation']    = sanitize_text_field( $new_instance['canuck_slider_animation'] );
+		$instance['canuck_slider_pause']        = sanitize_text_field( $new_instance['canuck_slider_pause'] );
+		$instance['canuck_slider_transition']   = sanitize_text_field( $new_instance['canuck_slider_transition'] );
 		$instance['canuck_include_post_titles'] = isset( $new_instance['canuck_include_post_titles'] ) ? true : false;
-		$instance['canuck_slider_auto'] = isset( $new_instance['canuck_slider_auto'] ) ? true : false;
+		$instance['canuck_slider_auto']         = isset( $new_instance['canuck_slider_auto'] ) ? true : false;
 		return $instance;
 	}
 	/**
@@ -188,22 +188,22 @@ class Canuck_Slider_Widget extends WP_Widget {
 		isset( $instance['canuck_slider_pause'] ) ? $slider_pause = $instance['canuck_slider_pause'] : $slider_pause = '6000';
 		isset( $instance['canuck_slider_transition'] ) ? $slider_transition = $instance['canuck_slider_transition'] : $slider_transition = '500';
 		$include_post_titles = isset( $instance['canuck_include_post_titles'] ) ? true : false;
-		$slider_auto = isset( $instance['canuck_slider_auto'] ) ? $instance['canuck_slider_auto'] : true;
+		$slider_auto         = isset( $instance['canuck_slider_auto'] ) ? $instance['canuck_slider_auto'] : true;
 		echo wp_kses_post( $args['before_widget'] );
 		if ( ! empty( $title ) ) {
 			echo wp_kses_post( $args['before_title'] ) . wp_kses_post( $title ) . wp_kses_post( $args['after_title'] );
 		}
 		if ( 'button_nav' === $slider_type ) {
-			canuck_widget_slider_button_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition , $include_post_titles, $slider_auto );
+			canuck_widget_slider_button_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto );
 		} elseif ( 'carousel_top' === $slider_type ) {
-			canuck_widget_slider_carousel_top_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition , $include_post_titles, $slider_auto );
+			canuck_widget_slider_carousel_top_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto );
 		} elseif ( 'carousel_bot' === $slider_type ) {
-			canuck_widget_slider_carousel_bot_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition , $include_post_titles, $slider_auto );
+			canuck_widget_slider_carousel_bot_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto );
 		} elseif ( 'carousel' === $slider_type ) {
-			canuck_widget_slider_carousel( $slider_category, $slider_animation, $slider_pause, $slider_transition , $include_post_titles, $slider_auto );
+			canuck_widget_slider_carousel( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto );
 		} else {
 			// Default to no nav.
-			canuck_widget_slider_no_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition , $include_post_titles, $slider_auto );
+			canuck_widget_slider_no_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto );
 		}
 		echo wp_kses_post( $args['after_widget'] );
 	}
@@ -222,14 +222,14 @@ class Canuck_Slider_Widget extends WP_Widget {
  */
 function canuck_widget_slider_no_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto ) {
 	global $canuck_feature_category, $post;
-	$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-	$add_nopin = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
-	$category_id = get_cat_ID( $slider_category );
-	$args = array(
-		'category' => $category_id,
+	$include_pinterest_pinit  = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
+	$add_nopin                = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
+	$category_id              = get_cat_ID( $slider_category );
+	$args                     = array(
+		'category'    => $category_id,
 		'numberposts' => 20,
 	);
-	$custom_posts = get_posts( $args );
+	$custom_posts             = get_posts( $args );
 	$canuck_feature_pic_count = 0;
 	if ( 0 !== $category_id && $custom_posts ) {
 		?>
@@ -239,29 +239,29 @@ function canuck_widget_slider_no_nav( $slider_category, $slider_animation, $slid
 					<?php
 					foreach ( $custom_posts as $post ) {
 						setup_postdata( $post );
-						$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+						$link_to_post        = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
 						$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
 						if ( has_post_thumbnail() ) {
 							$canuck_feature_pic_count ++;
 							?>
 							<li>
 								<?php
-								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
+								$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
 								$image_url = $thumb[0];
-								$title = the_title_attribute( 'echo=0' );
+								$title     = the_title_attribute( 'echo=0' );
 								if ( '' === $title ) {
 									$imagetitle = '';
-									$imagealt = esc_html__( 'flexslider image', 'canuck' );
+									$imagealt   = esc_html__( 'flexslider image', 'canuck' );
 								} else {
 									$imagetitle = $title;
-									$imagealt = $title;
+									$imagealt   = $title;
 								}
 								if ( true === $link_to_post ) {
-									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} elseif ( false !== $custom_feature_link ) {
-									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} else {
-									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';
+									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';// WPCS: XSS ok.
 								}
 								if ( true === $include_post_titles ) {
 									if ( '' !== $title ) {
@@ -322,14 +322,14 @@ function canuck_widget_slider_no_nav( $slider_category, $slider_animation, $slid
  */
 function canuck_widget_slider_button_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto ) {
 	global $canuck_feature_category, $post;
-	$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-	$add_nopin = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
-	$category_id = get_cat_ID( $slider_category );
-	$args = array(
-		'category' => $category_id,
+	$include_pinterest_pinit  = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
+	$add_nopin                = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
+	$category_id              = get_cat_ID( $slider_category );
+	$args                     = array(
+		'category'    => $category_id,
 		'numberposts' => 20,
 	);
-	$custom_posts = get_posts( $args );
+	$custom_posts             = get_posts( $args );
 	$canuck_feature_pic_count = 0;
 	if ( 0 !== $category_id && $custom_posts ) {
 		?>
@@ -339,29 +339,29 @@ function canuck_widget_slider_button_nav( $slider_category, $slider_animation, $
 					<?php
 					foreach ( $custom_posts as $post ) {
 						setup_postdata( $post );
-						$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+						$link_to_post        = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
 						$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
 						if ( has_post_thumbnail() ) {
 							$canuck_feature_pic_count ++;
 							?>
 							<li>
 								<?php
-								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
+								$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
 								$image_url = $thumb[0];
-								$title = the_title_attribute( 'echo=0' );
+								$title     = the_title_attribute( 'echo=0' );
 								if ( '' === $title ) {
 									$imagetitle = '';
-									$imagealt = 'flexslider image';
+									$imagealt   = 'flexslider image';
 								} else {
 									$imagetitle = $title;
-									$imagealt = $title;
+									$imagealt   = $title;
 								}
 								if ( true === $link_to_post ) {
-									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} elseif ( false !== $custom_feature_link ) {
-									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} else {
-									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';
+									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';// WPCS: XSS ok.
 								}
 								if ( true === $include_post_titles ) {
 									if ( '' !== $title ) {
@@ -423,14 +423,14 @@ function canuck_widget_slider_button_nav( $slider_category, $slider_animation, $
  */
 function canuck_widget_slider_carousel_top_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto ) {
 	global $canuck_feature_category, $post;
-	$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-	$add_nopin = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
-	$category_id = get_cat_ID( $slider_category );
-	$args = array(
-		'category' => $category_id,
+	$include_pinterest_pinit  = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
+	$add_nopin                = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
+	$category_id              = get_cat_ID( $slider_category );
+	$args                     = array(
+		'category'    => $category_id,
 		'numberposts' => 20,
 	);
-	$custom_posts = get_posts( $args );
+	$custom_posts             = get_posts( $args );
 	$canuck_feature_pic_count = 0;
 	if ( 0 !== $category_id && $custom_posts ) {
 		?>
@@ -445,7 +445,7 @@ function canuck_widget_slider_carousel_top_nav( $slider_category, $slider_animat
 							?>
 							<li>
 								<?php
-									$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_gallery_thumb' );
+									$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_gallery_thumb' );
 									$image_url = $thumb[0];
 									echo '<img src="' . esc_url( $image_url ) . '" title="" alt="flex thumb" />';
 								?>
@@ -462,29 +462,29 @@ function canuck_widget_slider_carousel_top_nav( $slider_category, $slider_animat
 					$canuck_feature_pic_count = 0;
 					foreach ( $custom_posts as $post ) {
 						setup_postdata( $post );
-						$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+						$link_to_post        = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
 						$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
 						if ( has_post_thumbnail() ) {
 							$canuck_feature_pic_count ++;
 							?>
 							<li>
 								<?php
-								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
+								$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
 								$image_url = $thumb[0];
-								$title = the_title_attribute( 'echo=0' );
+								$title     = the_title_attribute( 'echo=0' );
 								if ( '' === $title ) {
 									$imagetitle = '';
-									$imagealt = 'flexslider image';
+									$imagealt   = 'flexslider image';
 								} else {
 									$imagetitle = $title;
-									$imagealt = $title;
+									$imagealt   = $title;
 								}
 								if ( true === $link_to_post ) {
-									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} elseif ( false !== $custom_feature_link ) {
-									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} else {
-									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';
+									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';// WPCS: XSS ok.
 								}
 								if ( true === $include_post_titles ) {
 									if ( '' !== $title ) {
@@ -546,14 +546,14 @@ function canuck_widget_slider_carousel_top_nav( $slider_category, $slider_animat
  */
 function canuck_widget_slider_carousel_bot_nav( $slider_category, $slider_animation, $slider_pause, $slider_transition, $include_post_titles, $slider_auto ) {
 	global $canuck_feature_category, $post;
-	$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-	$add_nopin = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
-	$category_id = get_cat_ID( $slider_category );
-	$args = array(
-		'category' => $category_id,
+	$include_pinterest_pinit  = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
+	$add_nopin                = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
+	$category_id              = get_cat_ID( $slider_category );
+	$args                     = array(
+		'category'    => $category_id,
 		'numberposts' => 20,
 	);
-	$custom_posts = get_posts( $args );
+	$custom_posts             = get_posts( $args );
 	$canuck_feature_pic_count = 0;
 	if ( 0 !== $category_id && $custom_posts ) {
 		?>
@@ -564,29 +564,29 @@ function canuck_widget_slider_carousel_bot_nav( $slider_category, $slider_animat
 					$canuck_feature_pic_count = 0;
 					foreach ( $custom_posts as $post ) {
 						setup_postdata( $post );
-						$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+						$link_to_post        = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
 						$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
 						if ( has_post_thumbnail() ) {
 							$canuck_feature_pic_count ++;
 							?>
 							<li>
 								<?php
-								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
+								$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
 								$image_url = $thumb[0];
-								$title = the_title_attribute( 'echo=0' );
+								$title     = the_title_attribute( 'echo=0' );
 								if ( '' === $title ) {
 									$imagetitle = '';
-									$imagealt = 'flexslider image';
+									$imagealt   = 'flexslider image';
 								} else {
 									$imagetitle = $title;
-									$imagealt = $title;
+									$imagealt   = $title;
 								}
 								if ( true === $link_to_post ) {
-									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} elseif ( false !== $custom_feature_link ) {
-									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} else {
-									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';
+									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';// WPCS: XSS ok.
 								}
 								if ( true === $include_post_titles ) {
 									if ( '' !== $title ) {
@@ -614,7 +614,7 @@ function canuck_widget_slider_carousel_bot_nav( $slider_category, $slider_animat
 							?>
 							<li>
 								<?php
-									$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_gallery_thumb' );
+									$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_gallery_thumb' );
 									$image_url = $thumb[0];
 									echo '<img src="' . esc_url( $image_url ) . '" title="" alt="flex thumb" />';
 								?>
@@ -665,14 +665,14 @@ function canuck_widget_slider_carousel_bot_nav( $slider_category, $slider_animat
  */
 function canuck_widget_slider_carousel( $slider_category, $include_post_titles ) {
 	global $canuck_feature_category, $post;
-	$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-	$add_nopin = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
-	$category_id = get_cat_ID( $slider_category );
-	$args = array(
-		'category' => $category_id,
+	$include_pinterest_pinit  = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
+	$add_nopin                = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
+	$category_id              = get_cat_ID( $slider_category );
+	$args                     = array(
+		'category'    => $category_id,
 		'numberposts' => 20,
 	);
-	$custom_posts = get_posts( $args );
+	$custom_posts             = get_posts( $args );
 	$canuck_feature_pic_count = 0;
 	if ( 0 !== $category_id && $custom_posts ) {
 		?>
@@ -682,29 +682,29 @@ function canuck_widget_slider_carousel( $slider_category, $include_post_titles )
 					<?php
 					foreach ( $custom_posts as $post ) {
 						setup_postdata( $post );
-						$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+						$link_to_post        = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
 						$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
 						if ( has_post_thumbnail() ) {
 							$canuck_feature_pic_count ++;
 							?>
 							<li>
 								<?php
-								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
+								$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
 								$image_url = $thumb[0];
-								$title = the_title_attribute( 'echo=0' );
+								$title     = the_title_attribute( 'echo=0' );
 								if ( '' === $title ) {
 									$imagetitle = '';
-									$imagealt = 'flexslider image';
+									$imagealt   = 'flexslider image';
 								} else {
 									$imagetitle = $title;
-									$imagealt = $title;
+									$imagealt   = $title;
 								}
 								if ( true === $link_to_post ) {
-									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} elseif ( false !== $custom_feature_link ) {
-									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+									echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';// WPCS: XSS ok.
 								} else {
-									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';
+									echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';// WPCS: XSS ok.
 								}
 								if ( true === $include_post_titles ) {
 									if ( '' !== $title ) {

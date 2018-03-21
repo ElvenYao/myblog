@@ -1,13 +1,13 @@
 Theme Name: Lighthouse
 Author: lighthouseseo
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags: one-column, two-columns, left-sidebar, right-sidebar, flexible-header, custom-background, custom-colors, custom-header, custom-menu, custom-logo, featured-image-header, featured-images, footer-widgets, front-page-post-form, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready, blog, entertainment, news, portfolio
+License: GNU General Public License v3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
+Tags: one-column, two-columns, left-sidebar, right-sidebar, flexible-header, custom-background, custom-colors, custom-header, custom-menu, custom-logo, featured-image-header, featured-images, footer-widgets, front-page-post-form, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready, blog, portfolio, news
 Text Domain: lighthouse
 
 == Description ==
 
-Lighthouse is SEO optimized for the search engines Google and Bing, while being a modern and simple responsive WordPress theme. Journalists, writers and authors can use it to publish news through blogging or writing with our minimalistic multipurpose magazine / newspaper theme.
+Lighthouse is SEO optimized for the search engines Google and Bing, while being a modern and simple responsive WordPress theme. Journalists, writers and authors can use it to publish news through blogging or writing with our minimalistic multipurpose magazine / newspaper theme. We have made clean code so the load time is fast, quick page speed is a big part of our SEO friendly theme. Whether you like food, fashion, photography, travel or need a business portfolio then our minimal article theme is a good choice. If you are a corporate business or agency, you can use it to design your creative &amp; elegant landing page. Bloggers can use ads like adsense and affiliate marketing for your blog page about books, actors or other entertainment as well as write a journal / biography about your personal life with our typography optimised, reading friendly, flat and light design. We don&#8217;t yet fully support websites having a one page / single page with post builder plugins, but we will add that soon together with making special white and dark layouts for school, education, coach and conference sites. Lighthouse has many features such as widgets, header image and responsive design so it works on mobile phones too.
 
 == About the Author == 
  
@@ -68,10 +68,6 @@ Header image 6 - https://www.pexels.com/photo/rock-formation-during-night-time-1
 Header image 7 - https://www.pexels.com/photo/sky-night-space-trees-6546/
 Header image 8 - https://www.pexels.com/photo/astronomy-beautiful-clouds-constellation-355465/
 ------------------------------------------------------------------------------------------------------------------
-
-
-== Credits ==
-
 * Based on Underscores http://underscores.me/, (C) 2012-2015 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
 * Based on Nisarg by Falguni Desai (C) 2015-2016 http://falgunidesai.com/ - https://wordpress.org/themes/nisarg/ [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
 * normalize.css http://necolas.github.io/normalize.css/, (C) 2012-2015 Nicolas Gallagher and Jonathan Neal, [MIT](http://opensource.org/licenses/MIT)

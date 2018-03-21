@@ -2,7 +2,7 @@
  * CSS file for the template-portfolio.php custom page.
  *
  * @package		Canuck WordPress Theme
- * @copyright	Copyright (C) 2017  Kevin Archibald
+ * @copyright	Copyright (C) 2017-2018  Kevin Archibald
  * @license		http://www.gnu.org/licenses/gpl-2.0.html
  * @author		Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -636,7 +636,7 @@
 .masonry-gallery * { box-sizing: border-box; }
 
 .masonry-gallery {
-	background: #fffff;
+	background: #ffffff;
 	width: 100%;
 	float: left;
 	margin: 30px 0 20px 0;
@@ -656,7 +656,7 @@
 	padding: 2.5px;
 }
 
-.masonry-grid-item
+.masonry-grid-item {
 	float: left;
 	position: relative;
 }

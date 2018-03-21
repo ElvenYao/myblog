@@ -7,7 +7,7 @@
  * It was taken from twentyfourteen and modified.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -29,11 +29,11 @@ if ( post_password_required() ) {
 			<?php
 			$number_comments = get_comments_number();
 			if ( 0 === $number_comments ) {
-				 esc_html_e( 'No Comments Yet' , 'canuck' );
+				esc_html_e( 'No Comments Yet', 'canuck' );
 			} elseif ( 1 === $number_comments ) {
-				esc_html_e( '1 Comment' , 'canuck' );
+				esc_html_e( '1 Comment', 'canuck' );
 			} else {
-				echo intval( $number_comments ) . ' ' . esc_html__( 'Comments' , 'canuck' );
+				echo intval( $number_comments ) . ' ' . esc_html__( 'Comments', 'canuck' );
 			}
 			?>
 		</h4>

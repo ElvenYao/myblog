@@ -5,27 +5,36 @@
  * This template part is called by template-home.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 // Get the options.
-$section10_usage = stripslashes( get_theme_mod( 'canuck_section10_media_area_usage', 'image' ) );
-$section10_image = get_theme_mod( 'canuck_section10_image', '' );
-$section10_title = stripslashes( get_theme_mod( 'canuck_section10_title', '' ) );
-$section10_shortcode = stripslashes( get_theme_mod( 'canuck_section10_shortcode', '' ) );
-$section10_text = stripslashes( get_theme_mod( 'canuck_section10_text', '' ) );
+$section10_usage        = stripslashes( get_theme_mod( 'canuck_section10_media_area_usage', 'image' ) );
+$section10_image        = get_theme_mod( 'canuck_section10_image', '' );
+$section10_title        = stripslashes( get_theme_mod( 'canuck_section10_title', '' ) );
+$section10_shortcode    = stripslashes( get_theme_mod( 'canuck_section10_shortcode', '' ) );
+$section10_text         = stripslashes( get_theme_mod( 'canuck_section10_text', '' ) );
 $section10_include_link = get_theme_mod( 'canuck_section10_include_link', false );
-$section10_button_link = get_theme_mod( 'canuck_section10_button_link', '#' );
+$section10_button_link  = get_theme_mod( 'canuck_section10_button_link', '#' );
 $section10_button_label = get_theme_mod( 'canuck_section10_button_title', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
-$sec10_bg_image = get_theme_mod( 'canuck_section10_background_image', '' );
-$sec10_use_parallax = get_theme_mod( 'canuck_section10_use_parallax', false );
-if ( '' !== $sec10_bg_image && false !== $sec10_use_parallax ) { ?>
-	<div class="home-10-wide parallax-window" data-parallax="scroll" data-image-src="<?php echo esc_url( $sec10_bg_image ); ?>">
-<?php } else { ?>
-	<div class="home-10-wide">
-<?php } ?>
+$sec10_bg_image         = get_theme_mod( 'canuck_section10_background_image', '' );
+$sec10_use_parallax     = get_theme_mod( 'canuck_section10_use_parallax', false );
+$use_lazyload           = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+if ( '' !== $sec10_bg_image ) {
+	if ( true === $sec10_use_parallax ) {
+		$string10 = ' class="home-10-wide parallax-window" data-parallax="scroll" data-image-src="' . esc_url( $sec10_bg_image ) . '"';
+	} elseif ( true === $use_lazyload ) {
+		$string10 = ' class="home-10-wide lazyload" data-src="' . esc_url( $sec10_bg_image ) . '"';
+	} else {
+		$string10 = ' class="home-10-wide" style="background-image: url( ' . esc_url( $sec10_bg_image ) . ' );"';
+	}
+} else {
+	$string10 = ' class="home-10-wide"';
+}
+?>
+<div <?php echo $string10;// WPCS: XSS ok. ?>>
 	<div class="home-10-wide-overlay">
 		<div class="home-10-wrap">
 			<div class="home-10-media">
@@ -55,7 +64,18 @@ if ( '' !== $sec10_bg_image && false !== $sec10_use_parallax ) { ?>
 					?>
 					<div class="home-10-image">
 						<?php
-						echo '<img src="' . esc_url( $section10_image ) . '" alt="' . esc_attr( $section10_title ) . '" />';
+						if ( true === $use_lazyload ) {
+							?>
+							<img class="lazyload"
+								src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+								data-src="<?php echo esc_url( $section10_image ); ?>"
+								alt="<?php echo esc_attr( $section10_title ); ?>" />
+							<?php
+						} else {
+							?>
+							<img src="<?php echo esc_url( $section10_image ); ?>" alt="<?php esc_attr( $section10_title ); ?>" />
+							<?php
+						}
 						?>
 					</div>
 					<?php

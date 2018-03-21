@@ -6,7 +6,7 @@
  * of the functions for set up and operation of the theme
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -14,26 +14,26 @@
 /**
  * ---- load files ---------------
  */
-require( get_template_directory() . '/css/custom-css.php' );
-require( get_template_directory() . '/includes/post-functions.php' );
-require( get_template_directory() . '/includes/custom-functions.php' );
-require( get_template_directory() . '/includes/custom-header.php' );
+require get_template_directory() . '/css/custom-css.php';
+require get_template_directory() . '/includes/post-functions.php';
+require get_template_directory() . '/includes/custom-functions.php';
+require get_template_directory() . '/includes/custom-header.php';
 if ( is_admin() ) {
-	require( get_template_directory() . '/includes/metabox-functions.php' );
-	require( get_template_directory() . '/includes/theme-page.php' );
+	require get_template_directory() . '/includes/metabox-functions.php';
+	require get_template_directory() . '/includes/theme-page.php';
 }
 if ( is_customize_preview() ) {
-	require( get_template_directory() . '/includes/kha-customizer.php' );
+	require get_template_directory() . '/includes/kha-customizer.php';
 }
-require( get_template_directory() . '/widgets/class-canuck-author-widget.php' );
-require( get_template_directory() . '/widgets/class-canuck-category-widget.php' );
-require( get_template_directory() . '/widgets/class-canuck-recent-posts-widget.php' );
+require get_template_directory() . '/widgets/class-canuck-author-widget.php';
+require get_template_directory() . '/widgets/class-canuck-category-widget.php';
+require get_template_directory() . '/widgets/class-canuck-recent-posts-widget.php';
 if ( false === get_theme_mod( 'canuck_disable_widget_slider' ) ? true : false ) {
-	require( get_template_directory() . '/widgets/class-canuck-slider-widget.php' );
+	require get_template_directory() . '/widgets/class-canuck-slider-widget.php';
 }
-require( get_template_directory() . '/includes/media-grabber.php' );
+require get_template_directory() . '/includes/media-grabber.php';
 if ( class_exists( 'WooCommerce' ) ) {
-	require( get_template_directory() . '/includes/woocommerce-functions.php' );
+	require get_template_directory() . '/includes/woocommerce-functions.php';
 }
 
 if ( ! function_exists( 'canuck_load_js' ) ) {
@@ -46,48 +46,46 @@ if ( ! function_exists( 'canuck_load_js' ) ) {
 	 * @uses is_admin() @uses wp_enqueue_script @uses get_template_directory_uri()
 	 */
 	function canuck_load_js() {
-		$page_template = basename( get_page_template() );
-		$disable_colorbox = get_theme_mod( 'canuck_disable_colorboxjs' ) ? true : false;
-		$disable_fitvidsjs = get_theme_mod( 'canuck_disable_fitvidsjs' ) ? true : false;
-		$disable_smoothscroll = get_theme_mod( 'canuck_disable_smoothscroll' ) ? true : false;
-		$disable_scrollreveal = get_theme_mod( 'canuck_disable_scrollreveal' ) ? true : false;
-		$disable_widget_slider = get_theme_mod( 'canuck_disable_widget_slider' ) ? true : false;
+		$page_template           = basename( get_page_template() );
+		$use_one_plugin_file     = get_theme_mod( 'canuck_use_one_plugins_file' ) ? true : false;
+		$disable_colorbox        = get_theme_mod( 'canuck_disable_colorboxjs' ) ? true : false;
+		$disable_fitvidsjs       = get_theme_mod( 'canuck_disable_fitvidsjs' ) ? true : false;
+		$disable_smoothscroll    = get_theme_mod( 'canuck_disable_smoothscroll' ) ? true : false;
+		$disable_scrollreveal    = get_theme_mod( 'canuck_disable_scrollreveal' ) ? true : false;
+		$disable_widget_slider   = get_theme_mod( 'canuck_disable_widget_slider' ) ? true : false;
 		$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
+		$use_lazyload            = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
 		if ( ! is_admin() ) {
-			// Option to disable fitvids.
+			if ( true === $use_lazyload ) {
+				// Lazyload plugin, doc ready included in minified file.
+				wp_enqueue_script( 'jquery-lazy', get_template_directory_uri() . '/js/jquery.lazy.min.js', array( 'jquery' ), '', false );
+			}
+			// Static home page specific scripts.
+			if ( 'template-home.php' === $page_template ) {
+				wp_enqueue_script( 'parralax-js', get_template_directory_uri() . '/js/parallax.min.js', array( 'jquery' ), '', true );
+				// Load scroll reveal, doc ready included in minified file.
+				if ( false === $disable_scrollreveal ) {
+					wp_enqueue_script( 'scrollreveal-js', get_template_directory_uri() . '/js/scrollreveal.min.js', array( 'jquery' ), '', true );
+				}
+				// Load Owl slider, doc ready included in minified file.
+				wp_enqueue_script( 'jquery-owl-carousel', get_template_directory_uri() . '/js/owl/owl.carousel.min.js', array( 'jquery' ), '', true );
+			}
+			// Option to disable fitvids, doc ready included in minified file.
 			if ( false === $disable_fitvidsjs ) {
-				wp_enqueue_script( 'jquery-fitvids', get_template_directory_uri() . '/js/jquery.fitvids.js', array( 'jquery' ), '' , true );
-				wp_enqueue_script( 'canuck-fitvids-doc-ready', get_template_directory_uri() . '/js/fitvids-doc-ready.js', array( 'jquery' ), '', true );
+				wp_enqueue_script( 'jquery-fitvids', get_template_directory_uri() . '/js/jquery.fitvids.min.js', array( 'jquery' ), '', true );
 			}
 			// Option to disable smoothscroll.
 			if ( false === $disable_smoothscroll ) {
 				wp_enqueue_script( 'canuck-smoothscroll', get_template_directory_uri() . '/js/smooth-scroll-scripts.js', array( 'jquery' ), '', true );
 			}
-			// Option to disable colorbox.
+			// Option to disable colorbox, doc ready included in minified file.
 			if ( false === $disable_colorbox ) {
 				wp_enqueue_script( 'jquery-colorbox', get_template_directory_uri() . '/js/colorbox/jquery.colorbox-min.js', array( 'jquery' ), '', true );
-				wp_enqueue_script( 'canuck-colorbox-doc-ready', get_template_directory_uri() . '/js/colorbox/colorbox_doc_ready.js', array( 'jquery' ), '', true );
 			}
-			// Load mobile script.
-			wp_enqueue_script( 'canuck-navigation', get_template_directory_uri() . '/js/navigation.js', array( 'jquery' ), '', true );
 			// Load custom js.
-			wp_enqueue_script( 'canuck-custom_js', get_template_directory_uri() . '/js/doc-ready-scripts.js', array( 'jquery' ), '', true );
-			// Load flex slider.
-			wp_enqueue_script( 'jquery-flex-slider', get_template_directory_uri() . '/js/flex-slider/jquery.flexslider.js', array( 'jquery' ), '', true );
-			wp_enqueue_script( 'canuck-custom-flex-js', get_template_directory_uri() . '/js/flex-doc-ready-scripts.js', array( 'jquery' ), '', true );
-			// Load sticky menu.
-			wp_enqueue_script( 'canuck-sticky-menu-js', get_template_directory_uri() . '/js/canuck-sticky-menu.js', array( 'jquery' ), '', true );
-			// Load parallax and scrollreveal if static home page.
-			if ( 'template-home.php' === $page_template ) {
-				wp_enqueue_script( 'parralax-js', get_template_directory_uri() . '/js/parallax.min.js', array( 'jquery' ), '', true );
-				if ( false === $disable_scrollreveal ) {
-					wp_enqueue_script( 'scrollreveal-js', get_template_directory_uri() . '/js/scrollreveal.min.js', array( 'jquery' ), '', true );
-					wp_enqueue_script( 'canuck-scrollreveal-js', get_template_directory_uri() . '/js/scrollreveal-doc-ready-scripts.js', array( 'jquery' ), '', true );
-				}
-				// Load Owl slider.
-				wp_enqueue_script( 'jquery-owl-carousel', get_template_directory_uri() . '/js/owl/owl.carousel.min.js', array( 'jquery' ), '', true );
-				wp_enqueue_script( 'canuck-custom-owl-js', get_template_directory_uri() . '/js/owl-doc-ready-scripts.js', array( 'jquery' ), '', true );
-			}
+			wp_enqueue_script( 'canuck-custom_js', get_template_directory_uri() . '/js/doc-ready-scripts-min.js', array( 'jquery' ), '', true );
+			// Load flex slider, doc ready included in minified file.
+			wp_enqueue_script( 'jquery-flex-slider', get_template_directory_uri() . '/js/flex-slider/jquery.flexslider-min.js', array( 'jquery' ), '', true );
 			// Conditional load widget slider.
 			if ( false === $disable_widget_slider ) {
 				wp_enqueue_script( 'canuck-widget-flex-js', get_template_directory_uri() . '/js/flex-widget-doc-ready-scripts.js', array( 'jquery' ), '', true );
@@ -156,19 +154,19 @@ if ( ! function_exists( 'canuck_styles' ) ) {
 			wp_add_inline_style( 'canuck-parent', $ka_css );
 			/** Note that fontawesome and owl styles are loaded here in case they are not loaded in the child theme
 			 *  It is better to load in the child theme (with the same handle) as all styles will then be loaded before the child theme style. */
-			wp_enqueue_style( 'font-awesome-style',get_template_directory_uri() . '/font-awesome/css/font-awesome.min.css', array() );
-			wp_enqueue_style( 'owl-carousel-style',get_template_directory_uri() . '/js/owl/assets/owl.carousel.css', array() );
+			wp_enqueue_style( 'font-awesome-style', get_template_directory_uri() . '/font-awesome/css/font-awesome.min.css', array() );
+			wp_enqueue_style( 'owl-carousel-style', get_template_directory_uri() . '/js/owl/assets/owl.carousel.css', array() );
 		} else {
-			wp_enqueue_style( 'font-awesome-style',get_template_directory_uri() . '/font-awesome/css/font-awesome.min.css',array() );
-			wp_enqueue_style( 'owl-carousel-style',get_template_directory_uri() . '/js/owl/assets/owl.carousel.css',array() );
+			wp_enqueue_style( 'fontawesome-style', get_template_directory_uri() . '/font-awesome/css/font-awesome.min.css', array() );
 			wp_enqueue_style( 'canuck-style', get_stylesheet_uri(), array() );
 			if ( 'template-portfolio.php' === $page_template ) {
 				wp_enqueue_style( 'canuck-template', get_theme_file_uri( '/css/template-portfolio-style.css' ), array( 'canuck-style' ), '1.0' );
 			} elseif ( 'template-home.php' === $page_template ) {
-				wp_enqueue_style( 'canuck-template', get_theme_file_uri( '/css/template-home-style.css' ), array( 'canuck-style' ), '1.0' );
+				wp_enqueue_style( 'canuck-template', get_theme_file_uri( '/css/template-home-style-min.css' ), array( 'canuck-style' ), '1.0' );
+				wp_enqueue_style( 'owl-carousel-style', get_template_directory_uri() . '/js/owl/assets/owl.carousel.css', array() );
 			}
-			wp_enqueue_style( 'canuck-skin', get_theme_file_uri( '/css/' . esc_html( $skinfile ) . '.css' ), array( 'canuck-style' ), '1.0' );
-			wp_add_inline_style( 'canuck-style', $ka_css );
+			wp_enqueue_style( 'canuck-skin', get_theme_file_uri( '/css/' . esc_html( $skinfile ) . '-min.css' ), array( 'canuck-style' ), '1.0' );
+			wp_add_inline_style( 'canuck-skin', $ka_css );
 		}
 	}
 	add_action( 'wp_enqueue_scripts', 'canuck_styles' );
@@ -179,8 +177,8 @@ if ( ! function_exists( 'canuck_register_menu' ) ) {
 	 * Register menus.
 	 */
 	function canuck_register_menu() {
-		register_nav_menu( 'canuck_primary' , __( 'Primary Menu' , 'canuck' ) );
-		register_nav_menu( 'canuck_social', __( 'Social Menu' , 'canuck' ) );
+		register_nav_menu( 'canuck_primary', __( 'Primary Menu', 'canuck' ) );
+		register_nav_menu( 'canuck_social', __( 'Social Menu', 'canuck' ) );
 	}
 	add_action( 'init', 'canuck_register_menu' );
 }
@@ -220,7 +218,7 @@ if ( ! function_exists( 'canuck_theme_supports' ) ) {
 		// Enable translation.
 		load_theme_textdomain( 'canuck', get_template_directory() . '/languages' );
 		// HTML5 markup for comment lists, comment forms, search forms and galleries.
-		add_theme_support( 'html5' , array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
+		add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
 		// Title tags.
 		add_theme_support( 'title-tag' );
 		// Custom logo support.
@@ -265,257 +263,257 @@ if ( ! function_exists( 'canuck_register_sidebars' ) ) {
 	 */
 	function canuck_register_sidebars() {
 		register_sidebar( array(
-			'id' => 'canuck_default_sidebar_a',
-			'name' => __( 'Default A', 'canuck' ),
-			'description' => __( 'Use for standard WordPress pages', 'canuck' ),
+			'id'            => 'canuck_default_sidebar_a',
+			'name'          => __( 'Default A', 'canuck' ),
+			'description'   => __( 'Use for standard WordPress pages', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_default_sidebar_b',
-			'name' => __( 'Default B', 'canuck' ),
-			'description' => __( 'Second sidebar for standard WordPress pages', 'canuck' ),
+			'id'            => 'canuck_default_sidebar_b',
+			'name'          => __( 'Default B', 'canuck' ),
+			'description'   => __( 'Second sidebar for standard WordPress pages', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar(array(
-			'id' => 'canuck_blog_sidebar_a',
-			'name' => __( 'Blog A', 'canuck' ),
-			'description' => __( 'First Blog Sidebar', 'canuck' ),
+			'id'            => 'canuck_blog_sidebar_a',
+			'name'          => __( 'Blog A', 'canuck' ),
+			'description'   => __( 'First Blog Sidebar', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_blog_sidebar_b',
-			'name' => __( 'Blog B', 'canuck' ),
-			'description' => __( 'Second Blog Sidebar', 'canuck' ),
+			'id'            => 'canuck_blog_sidebar_b',
+			'name'          => __( 'Blog B', 'canuck' ),
+			'description'   => __( 'Second Blog Sidebar', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_404_sidebar_a',
-			'name' => __( 'Error 404 A', 'canuck' ),
-			'description' => __( 'Use this for your 404 page', 'canuck' ),
+			'id'            => 'canuck_404_sidebar_a',
+			'name'          => __( 'Error 404 A', 'canuck' ),
+			'description'   => __( 'Use this for your 404 page', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_404_sidebar_b',
-			'name' => __( 'Error 404 B', 'canuck' ),
-			'description' => __( 'Use this for your 404 page', 'canuck' ),
+			'id'            => 'canuck_404_sidebar_b',
+			'name'          => __( 'Error 404 B', 'canuck' ),
+			'description'   => __( 'Use this for your 404 page', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_contact_sidebar_a',
-			'name' => __( 'Contact A', 'canuck' ),
-			'description' => __( 'Use this for your Contact page', 'canuck' ),
+			'id'            => 'canuck_contact_sidebar_a',
+			'name'          => __( 'Contact A', 'canuck' ),
+			'description'   => __( 'Use this for your Contact page', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar(array(
-			'id' => 'canuck_contact_sidebar_b',
-			'name' => __( 'Contact B', 'canuck' ),
-			'description' => __( 'Use this for your Contact page', 'canuck' ),
+			'id'            => 'canuck_contact_sidebar_b',
+			'name'          => __( 'Contact B', 'canuck' ),
+			'description'   => __( 'Use this for your Contact page', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_about_sidebar_a',
-			'name' => __( 'About A', 'canuck' ),
-			'description' => __( 'Use this for your About page', 'canuck' ),
+			'id'            => 'canuck_about_sidebar_a',
+			'name'          => __( 'About A', 'canuck' ),
+			'description'   => __( 'Use this for your About page', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_about_sidebar_b',
-			'name' => __( 'About B', 'canuck' ),
-			'description' => __( 'Use this for your About page', 'canuck' ),
+			'id'            => 'canuck_about_sidebar_b',
+			'name'          => __( 'About B', 'canuck' ),
+			'description'   => __( 'Use this for your About page', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_home_section1_sidebar',
-			'name' => __( 'Home Page Section 1', 'canuck' ),
-			'description' => __( 'Used when the Home Page Section 1 useage option is set to widget.', 'canuck' ),
+			'id'            => 'canuck_home_section1_sidebar',
+			'name'          => __( 'Home Page Section 1', 'canuck' ),
+			'description'   => __( 'Used when the Home Page Section 1 useage option is set to widget.', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_home_section3_sidebar',
-			'name' => __( 'Home Page Section 3', 'canuck' ),
-			'description' => __( 'Used when the Home Page Section 3 useage option is set to widget.', 'canuck' ),
+			'id'            => 'canuck_home_section3_sidebar',
+			'name'          => __( 'Home Page Section 3', 'canuck' ),
+			'description'   => __( 'Used when the Home Page Section 3 useage option is set to widget.', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_home_section5_sidebar',
-			'name' => __( 'Home Page Section 5', 'canuck' ),
-			'description' => __( 'Used when the Home Page Section 5 useage option is set to widget.', 'canuck' ),
+			'id'            => 'canuck_home_section5_sidebar',
+			'name'          => __( 'Home Page Section 5', 'canuck' ),
+			'description'   => __( 'Used when the Home Page Section 5 useage option is set to widget.', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_home_section7_sidebar',
-			'name' => __( 'Home Page Section 7', 'canuck' ),
-			'description' => __( 'Used when the Home Page Section 7 useage option is set to widget.', 'canuck' ),
+			'id'            => 'canuck_home_section7_sidebar',
+			'name'          => __( 'Home Page Section 7', 'canuck' ),
+			'description'   => __( 'Used when the Home Page Section 7 useage option is set to widget.', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar(array(
-			'id' => 'canuck_home_section10_sidebar',
-			'name' => __( 'Home Page Section 10', 'canuck' ),
-			'description' => __( 'Used when the Home Page Section 10 useage option is set to widget.', 'canuck' ),
+			'id'            => 'canuck_home_section10_sidebar',
+			'name'          => __( 'Home Page Section 10', 'canuck' ),
+			'description'   => __( 'Used when the Home Page Section 10 useage option is set to widget.', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_home_section11_sidebar',
-			'name' => __( 'Home Page Section 11', 'canuck' ),
-			'description' => __( 'Used when the Home Page Section 11 useage option is set to widget.', 'canuck' ),
+			'id'            => 'canuck_home_section11_sidebar',
+			'name'          => __( 'Home Page Section 11', 'canuck' ),
+			'description'   => __( 'Used when the Home Page Section 11 useage option is set to widget.', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar(array(
-			'id' => 'canuck_footer_a_sidebar',
-			'name' => __( 'Footer-A', 'canuck' ),
-			'description' => __( 'First column in footer', 'canuck' ),
+			'id'            => 'canuck_footer_a_sidebar',
+			'name'          => __( 'Footer-A', 'canuck' ),
+			'description'   => __( 'First column in footer', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_footer_b_sidebar',
-			'name' => __( 'Footer-B', 'canuck' ),
-			'description' => __( 'Second column in footer', 'canuck' ),
+			'id'            => 'canuck_footer_b_sidebar',
+			'name'          => __( 'Footer-B', 'canuck' ),
+			'description'   => __( 'Second column in footer', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_footer_c_sidebar',
-			'name' => __( 'Footer-C', 'canuck' ),
-			'description' => __( 'Third column in footer', 'canuck' ),
+			'id'            => 'canuck_footer_c_sidebar',
+			'name'          => __( 'Footer-C', 'canuck' ),
+			'description'   => __( 'Third column in footer', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar(array(
-			'id' => 'canuck_footer_d_sidebar',
-			'name' => __( 'Footer-D', 'canuck' ),
-			'description' => __( 'Fourth column in footer', 'canuck' ),
+			'id'            => 'canuck_footer_d_sidebar',
+			'name'          => __( 'Footer-D', 'canuck' ),
+			'description'   => __( 'Fourth column in footer', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_sidebar_1',
-			'name' => __( 'Sidebar 1', 'canuck' ),
-			'description' => __( 'Use for your custom pages', 'canuck' ),
+			'id'            => 'canuck_sidebar_1',
+			'name'          => __( 'Sidebar 1', 'canuck' ),
+			'description'   => __( 'Use for your custom pages', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_sidebar_2',
-			'name' => __( 'Sidebar 2', 'canuck' ),
-			'description' => __( 'Use for your custom pages', 'canuck' ),
+			'id'            => 'canuck_sidebar_2',
+			'name'          => __( 'Sidebar 2', 'canuck' ),
+			'description'   => __( 'Use for your custom pages', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_sidebar_3',
-			'name' => __( 'Sidebar 3', 'canuck' ),
-			'description' => __( 'Use for your custom pages', 'canuck' ),
+			'id'            => 'canuck_sidebar_3',
+			'name'          => __( 'Sidebar 3', 'canuck' ),
+			'description'   => __( 'Use for your custom pages', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar(array(
-			'id' => 'canuck_sidebar_4',
-			'name' => __( 'Sidebar 4', 'canuck' ),
-			'description' => __( 'Use for your custom pages', 'canuck' ),
+			'id'            => 'canuck_sidebar_4',
+			'name'          => __( 'Sidebar 4', 'canuck' ),
+			'description'   => __( 'Use for your custom pages', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_sidebar_5',
-			'name' => __( 'Sidebar 5', 'canuck' ),
-			'description' => __( 'Use for your custom pages', 'canuck' ),
+			'id'            => 'canuck_sidebar_5',
+			'name'          => __( 'Sidebar 5', 'canuck' ),
+			'description'   => __( 'Use for your custom pages', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		register_sidebar( array(
-			'id' => 'canuck_sidebar_6',
-			'name' => __( 'Sidebar 6', 'canuck' ),
-			'description' => __( 'Use for your custom pages', 'canuck' ),
+			'id'            => 'canuck_sidebar_6',
+			'name'          => __( 'Sidebar 6', 'canuck' ),
+			'description'   => __( 'Use for your custom pages', 'canuck' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
 		) );
 		if ( class_exists( 'WooCommerce' ) ) {
 			register_sidebar( array(
-				'id' => 'canuck_woo_sidebar_a',
-				'name' => __( 'WooCommerce Sidebar a', 'canuck' ),
-				'description' => __( 'Use this side bar for the Woo Commerce Shop Page', 'canuck' ),
+				'id'            => 'canuck_woo_sidebar_a',
+				'name'          => __( 'WooCommerce Sidebar a', 'canuck' ),
+				'description'   => __( 'Use this side bar for the Woo Commerce Shop Page', 'canuck' ),
 				'before_widget' => '<div id="%1$s" class="widget %2$s">',
-				'after_widget' => '</div>',
-				'before_title' => '<h3 class="widget-title">',
-				'after_title' => '</h3>',
+				'after_widget'  => '</div>',
+				'before_title'  => '<h3 class="widget-title">',
+				'after_title'   => '</h3>',
 			) );
 			register_sidebar( array(
-				'id' => 'canuck_woo_sidebar_b',
-				'name' => __( 'WooCommerce Sidebar b', 'canuck' ),
-				'description' => __( 'Use this side bar for the Woo Commerce Shop Page', 'canuck' ),
+				'id'            => 'canuck_woo_sidebar_b',
+				'name'          => __( 'WooCommerce Sidebar b', 'canuck' ),
+				'description'   => __( 'Use this side bar for the Woo Commerce Shop Page', 'canuck' ),
 				'before_widget' => '<div id="%1$s" class="widget %2$s">',
-				'after_widget' => '</div>',
-				'before_title' => '<h3 class="widget-title">',
-				'after_title' => '</h3>',
+				'after_widget'  => '</div>',
+				'before_title'  => '<h3 class="widget-title">',
+				'after_title'   => '</h3>',
 			) );
 		}
 	}

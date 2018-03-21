@@ -1,8 +1,8 @@
 Theme Name: Journalistic
 Author: lighthouseseo
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Version: 2.3
+License: GNU General Public License v3
+License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
+Version: 2.7
 Tags: two-columns, right-sidebar, flexible-header, custom-background, custom-colors, custom-header, custom-menu, custom-logo, featured-images, footer-widgets, sticky-post, theme-options, threaded-comments, translation-ready, blog, news
 Text Domain: journalistic
 
@@ -26,7 +26,7 @@ Gregor over and out!
 
 == LICENSES ==
 
-Journalistic WordPress Theme, Copyright 2017 
+Journalistic WordPress Theme, Copyright 2017 by LH
 Journalistic is distributed under the terms of the GNU GPL
 
 ----------------------------------------------------------------------------------------------------------------

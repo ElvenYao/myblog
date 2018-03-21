@@ -1,30 +1,31 @@
 <?php
 /**
- * Canuck Home Page template part - full slider - carousel navigation
+ * Canuck Home Page template part - full slider - carousel navigation 3:1 aspect
  *
  * This template part is called by canuck_home_feature_options()
  * located in canuck-custom-functions.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 global $post, $canuck_feature_option, $canuck_feature_category;
 $canuck_flex_effect = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_effect', 'fade' ) );
-$canuck_flex_pause = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_pause', '5000' ) );
-$canuck_flex_trans = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_trans', '600' ) );
-$canuck_flex_auto = intval( get_theme_mod( 'canuck_flex_slider_auto', 1 ) );
-$category_id = get_cat_ID( $canuck_feature_category );
-$args = array(
-	'category' => $category_id,
+$canuck_flex_pause  = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_pause', '5000' ) );
+$canuck_flex_trans  = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_trans', '600' ) );
+$canuck_flex_auto   = intval( get_theme_mod( 'canuck_flex_slider_auto', 1 ) );
+$category_id        = get_cat_ID( $canuck_feature_category );
+$args               = array(
+	'category'    => $category_id,
 	'numberposts' => 20,
 );
-$custom_posts = get_posts( $args );
+$custom_posts       = get_posts( $args );
 if ( 0 !== $category_id && $custom_posts ) {
 	?>
 	<div class="flexslider-wrapper">
+		<img class="button-place-holder" style="width:100%;height:auto;" src="<?php echo get_template_directory_uri() . '/images/feature_place_holder.png';// WPCS: XSS ok. ?>" />
 		<div id="flexslider-feature-button" class="flexslider" 
 				data-flex_trans="<?php echo esc_attr( $canuck_flex_trans ); ?>"
 				data-flex_pause="<?php echo esc_attr( $canuck_flex_pause ); ?>"
@@ -35,8 +36,8 @@ if ( 0 !== $category_id && $custom_posts ) {
 				$canuck_feature_pic_count = 0;
 				foreach ( $custom_posts as $post ) {
 					setup_postdata( $post );
-					$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
-					$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
+					$link_to_post          = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+					$custom_feature_link   = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
 					$include_feature_title = ( '' === get_post_meta( $post->ID, 'canuck_metabox_include_feature_title', true ) ? false : true );
 					if ( has_post_thumbnail() ) {
 						$canuck_feature_pic_count ++;
@@ -44,21 +45,34 @@ if ( 0 !== $category_id && $custom_posts ) {
 						<li>
 							<?php
 							$image_url = get_the_post_thumbnail_url( $post->ID, 'canuck_feature' );
-							$title = ( false === $include_feature_title ? get_post( get_post_thumbnail_id() )->post_excerpt : the_title_attribute( 'echo=0' ) );
+							$title     = ( false === $include_feature_title ? get_post( get_post_thumbnail_id() )->post_excerpt : the_title_attribute( 'echo=0' ) );
 							if ( '' === $title ) {
 								$imagetitle = '';
-								$imagealt = esc_html__( 'flexslider image', 'canuck' );
+								$imagealt   = esc_html__( 'flexslider image', 'canuck' );
 							} else {
 								$imagetitle = $title;
-								$imagealt = $title;
+								$imagealt   = $title;
 							}
-							// Set up the link.
+							// Set up the link and image.
 							if ( true === $link_to_post ) {
-								echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+								?>
+								<a href="<?php echo esc_url( get_permalink() ); ?>" title=<?php echo the_title_attribute( 'echo=0' ); ?>">
+									<img src="<?php echo esc_url( $image_url ); ?>"
+										title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $imagealt ); ?>" />
+								</a>
+								<?php
 							} elseif ( false !== $custom_feature_link ) {
-								echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+								?>
+								<a href="<?php echo esc_url( $custom_feature_link ); ?>" title="<?php echo the_title_attribute( 'echo=0' ); ?>">
+									<img src="<?php echo esc_url( $image_url ); ?>"
+										title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $imagealt ); ?>" />
+								</a>
+								<?php
 							} else {
-								echo '<img src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';
+								?>
+								<img src="<?php echo esc_url( $image_url ); ?>"
+									title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $title ); ?>" />
+								<?php
 							}
 							if ( true === $include_feature_title ) {
 								if ( '' !== $title ) {

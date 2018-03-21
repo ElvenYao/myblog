@@ -3,14 +3,14 @@
  * Template Part, masonry.sets up the masonry content for the masonrt custom template.
  *
  * @package		Canuck WordPress Theme
- * @copyright	Copyright (C) 2017  Kevin Archibald
+ * @copyright	Copyright (C) 2017-2018  Kevin Archibald
  * @license		http://www.gnu.org/licenses/gpl-2.0.html
  * @author		Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 $include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
 $images = array();
-
+$use_lazyload = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
 if ( ! post_password_required() ) {
 	if ( have_posts() ) : while ( have_posts() ) : the_post();
 		$images = canuck_get_gallery_images();
@@ -37,9 +37,18 @@ if ( ! post_password_required() ) {
 			<div class="masonry-grid-item">
 				<?php
 				if ( true === $include_pinterest_pinit ) {
-					echo '<img data-pin-no-hover="true" src="' . esc_url( $image_url ) . '" alt="' . esc_attr__( 'gallery image ', 'canuck' ) . $count . '" title="' . esc_attr__( 'Image #', 'canuck' ) . $count . '" />';
+					?>
+					<img data-pin-no-hover="true"
+						src="<?php echo esc_url( $image_url ); ?>"
+						alt="<?php echo esc_attr__( 'gallery image ', 'canuck' ) . $count; ?>"
+						title="<?php echo esc_attr__( 'Image #', 'canuck' ) . $count; ?>" />
+					<?php
 				} else {
-					echo '<img src="' . esc_url( $image_url ) . '" alt="' . esc_attr__( 'gallery image ', 'canuck' ) . $count . '" title="' . esc_attr__( 'Image #', 'canuck' ) . $count . '" />';
+					?>
+					<img src="<?php echo esc_url( $image_url ); ?>"
+						alt="<?php echo esc_attr__( 'gallery image ', 'canuck' ) . $count; ?>"
+						title="<?php esc_attr__( 'Image #', 'canuck' ) . $count; ?>" />
+					<?php
 				}
 				?>
 				<span class="masonry-image-overlay">

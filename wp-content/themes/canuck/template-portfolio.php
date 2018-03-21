@@ -5,21 +5,19 @@
  * Page for displaying special feature posts in a portfolio format
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 global $canuck_include_breadcrumbs,$canuck_exclude_page_title;
-$layout_option = esc_html( ( '' === get_post_meta( $post->ID, 'canuck_metabox_page_layout', true ) ? 'right_sidebar' : get_post_meta( $post->ID, 'canuck_metabox_page_layout', true ) ) );
+$layout_option              = esc_html( ( '' === get_post_meta( $post->ID, 'canuck_metabox_page_layout', true ) ? 'right_sidebar' : get_post_meta( $post->ID, 'canuck_metabox_page_layout', true ) ) );
 $canuck_include_breadcrumbs = get_theme_mod( 'canuck_breadcrumbs' ) ? true : false;
-$canuck_exclude_page_title = get_post_meta( $post->ID, 'canuck_metabox_title', true ) ? true : false;
-$sidebar_a = esc_html( ( '' === get_post_meta( $post->ID, 'canuck_metabox_sidebar_a', true ) ? 'default-a' : get_post_meta( $post->ID, 'canuck_metabox_sidebar_a', true ) ) );
-$sidebar_b = esc_html( ( '' === get_post_meta( $post->ID, 'canuck_metabox_sidebar_b', true ) ? 'default-b' : get_post_meta( $post->ID, 'canuck_metabox_sidebar_b', true ) ) );
-$canuck_portfolio_type = esc_html( ( '' === get_post_meta( $post->ID, 'canuck_portfolio_type', true ) ? 'classic1' : get_post_meta( $post->ID, 'canuck_portfolio_type', true ) ) );
-
+$canuck_exclude_page_title  = get_post_meta( $post->ID, 'canuck_metabox_title', true ) ? true : false;
+$sidebar_a                  = esc_html( ( '' === get_post_meta( $post->ID, 'canuck_metabox_sidebar_a', true ) ? 'default-a' : get_post_meta( $post->ID, 'canuck_metabox_sidebar_a', true ) ) );
+$sidebar_b                  = esc_html( ( '' === get_post_meta( $post->ID, 'canuck_metabox_sidebar_b', true ) ? 'default-b' : get_post_meta( $post->ID, 'canuck_metabox_sidebar_b', true ) ) );
+$canuck_portfolio_type      = esc_html( ( '' === get_post_meta( $post->ID, 'canuck_portfolio_type', true ) ? 'classic1' : get_post_meta( $post->ID, 'canuck_portfolio_type', true ) ) );
 get_header( 'no-feature' );
-
 get_template_part( '/template-parts/partials', 'page-title' );
 ?>
 <div id="main-section">

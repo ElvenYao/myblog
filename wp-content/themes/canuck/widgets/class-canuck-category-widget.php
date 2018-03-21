@@ -5,7 +5,7 @@
  * This file is a widget was modified from the WordPress Category Widget.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  *
@@ -41,7 +41,7 @@ class Canuck_Category_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname' => 'canuck_category_widget_class',
+			'classname'   => 'canuck_category_widget_class',
 			'description' => esc_html__( 'Display selected categories', 'canuck' ),
 		);
 		parent::__construct( 'canuck_category_widget', esc_html__( 'Canuck Category Widget', 'canuck' ), $widget_ops );
@@ -53,16 +53,16 @@ class Canuck_Category_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$canuck_category_defaults = array(
-			'canuck_title' => esc_html__( 'Categories', 'canuck' ),
-			'canuck_count' => false,
+			'canuck_title'        => esc_html__( 'Categories', 'canuck' ),
+			'canuck_count'        => false,
 			'canuck_hierarchical' => false,
-			'canuck_dropdown' => false,
+			'canuck_dropdown'     => false,
 		);
-		$instance = wp_parse_args( (array) $instance, $canuck_category_defaults );
-		$title = $instance['canuck_title'];
-		$count = $instance['canuck_count'];
-		$hierarchical = $instance['canuck_hierarchical'];
-		$dropdown = $instance['canuck_dropdown'];
+		$instance                 = wp_parse_args( (array) $instance, $canuck_category_defaults );
+		$title                    = $instance['canuck_title'];
+		$count                    = $instance['canuck_count'];
+		$hierarchical             = $instance['canuck_hierarchical'];
+		$dropdown                 = $instance['canuck_dropdown'];
 		// Validate data.
 		if ( true !== $count ) {
 			$count = false;
@@ -97,11 +97,11 @@ class Canuck_Category_Widget extends WP_Widget {
 	 * @param array $old_instance The previous options.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-		$instance['canuck_title'] = wp_kses_post( $new_instance['canuck_title'] );
-		$instance['canuck_count'] = ! empty( $new_instance['canuck_count'] ) ? true : false;
+		$instance                        = $old_instance;
+		$instance['canuck_title']        = wp_kses_post( $new_instance['canuck_title'] );
+		$instance['canuck_count']        = ! empty( $new_instance['canuck_count'] ) ? true : false;
 		$instance['canuck_hierarchical'] = ! empty( $new_instance['canuck_hierarchical'] ) ? true : false;
-		$instance['canuck_dropdown'] = ! empty( $new_instance['canuck_dropdown'] ) ? true : false;
+		$instance['canuck_dropdown']     = ! empty( $new_instance['canuck_dropdown'] ) ? true : false;
 		return $instance;
 	}
 	/**
@@ -112,36 +112,36 @@ class Canuck_Category_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		/** This filter is documented in wp-includes/default-widgets.php */
-		$title = apply_filters( 'widget_title', empty( $instance['canuck_title'] ) ? __( 'Categories' , 'canuck' ) : $instance['canuck_title'], $instance, $this->id_base );
-		$c = ! empty( $instance['canuck_count'] ) ? true : false;
-		$h = ! empty( $instance['canuck_hierarchical'] ) ? true : false;
-		$d = ! empty( $instance['canuck_dropdown'] ) ? true : false;
+		$title = apply_filters( 'widget_title', empty( $instance['canuck_title'] ) ? __( 'Categories', 'canuck' ) : $instance['canuck_title'], $instance, $this->id_base );
+		$c     = ! empty( $instance['canuck_count'] ) ? true : false;
+		$h     = ! empty( $instance['canuck_hierarchical'] ) ? true : false;
+		$d     = ! empty( $instance['canuck_dropdown'] ) ? true : false;
 		// Get exclude ids.
-		$exclude_ids = canuck_exclude_category_validation();
-		$id_picks = array();
-		$id_picks = explode( ',', $exclude_ids );
+		$exclude_ids   = canuck_exclude_category_validation();
+		$id_picks      = array();
+		$id_picks      = explode( ',', $exclude_ids );
 		$filtered_list = '';
-		$counter = 0;
+		$counter       = 0;
 		foreach ( $id_picks as $pick ) {
 			if ( 1 < intval( $id_picks[ $counter ] ) ) {
 				$filtered_list .= intval( $id_picks[ $counter ] ) . ',';
 			}
 			$counter++;
 		}
-		$exclude_ids = trim( $filtered_list , ',' );
-		$x = $exclude_ids;
+		$exclude_ids = trim( $filtered_list, ',' );
+		$x           = $exclude_ids;
 		echo wp_kses_post( $args['before_widget'] );
 		if ( '' !== $title ) {
 			echo wp_kses_post( $args['before_title'] ) . wp_kses_post( $title ) . wp_kses_post( $args['after_title'] );
 		}
 		$cat_args = array(
-			'orderby' => 'name',
-			'show_count' => $c,
+			'orderby'      => 'name',
+			'show_count'   => $c,
 			'hierarchical' => $h,
-			'exclude' => $x,
+			'exclude'      => $x,
 		);
 		if ( true === $d ) {
-			$cat_args['option_none_value'] = esc_html__( 'Select Category' , 'canuck' );
+			$cat_args['option_none_value'] = esc_html__( 'Select Category', 'canuck' );
 			/**
 			 * Filter the arguments for the Categories widget drop-down.
 			 *

@@ -1,7 +1,7 @@
 /* jQuery Pinterest Pin It doc-ready-script 3Jul2017
  * http://kevinsspace.ca
  * Canuck WordPress Theme
- * Copyright (C) 2017  Kevin Archibald Licensed GPLv2 or greater 
+ * Copyright (C) 2017-2018  Kevin Archibald Licensed GPLv2 or greater 
  * @source: https://css-tricks.com/smooth-scrolling-accessibility/
  */
 jQuery( document ).ready( function( $ ) {

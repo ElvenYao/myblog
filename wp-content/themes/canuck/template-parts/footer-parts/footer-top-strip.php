@@ -5,14 +5,14 @@
  * This template part is called by header-primary_nav.php and by header-secondary_nav.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 $contact_hours = get_theme_mod( 'canuck_contact_hours', '' );
 $contact_phone = get_theme_mod( 'canuck_contact_phone', '' );
-$contact_page = get_theme_mod( 'canuck_contact_page', '' );
+$contact_page  = get_theme_mod( 'canuck_contact_page', '' );
 if ( has_nav_menu( 'canuck_social' ) || '' !== $contact_hours || '' !== $contact_phone || '' !== $contact_page ) {
 	?>
 	<div class="footer-topstrip-wrap">

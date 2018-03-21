@@ -8,7 +8,21 @@ Changelog Legend:
 [x] = Deleted
 [!] = Bugs
 
-(11/28/17) - Changed - Version 3.7
+(03/13/18) - Changed - Version 3.11
+[*] - Updated WooCommerce templates
+
+(02/22/18) - Changed - Version 3.10
+[+] - Added new 2 column layout for footer widgets area 
+
+(01/05/18) - Changed - Version 3.9
+[*] Enhanced top menu look
+[*] Now Html is allowed in Features, Testimonial & Team section
+[*] Look and feel of social icons changed (Team section and footer) 
+
+(12/26/17) - Changed - Version 3.8
+[*] Visual Improvements to the Admin Dashboard
+
+(11/27/17) - Changed - Version 3.7
 [*] Contact form will be available only on home page 
 [*] Updated WooCommerce template
 

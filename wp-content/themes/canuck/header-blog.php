@@ -7,16 +7,16 @@
  * This file is called by certain primary template pages.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
-$blog_feature = get_theme_mod( 'canuck_blog_feature', 'background_image' );
+$blog_feature          = get_theme_mod( 'canuck_blog_feature', 'background_image' );
 $blog_feature_category = get_theme_mod( 'canuck_blog_feature_category', '' );
-$logo_option = esc_url( get_theme_mod( 'canuck_image_header_logo', '' ) );
-$blog_title = get_theme_mod( 'canuck_home_title', '' );
-$blog_desc = get_theme_mod( 'canuck_home_description', '' );
+$logo_option           = esc_url( get_theme_mod( 'canuck_image_header_logo', '' ) );
+$blog_title            = get_theme_mod( 'canuck_home_title', '' );
+$blog_desc             = get_theme_mod( 'canuck_home_description', '' );
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -79,7 +79,7 @@ $blog_desc = get_theme_mod( 'canuck_home_description', '' );
 		<?php
 		if ( 'background_image' === $blog_feature ) {
 			$image_url = get_header_image();
-			if ( false == $image_url ) {// Leave as not strict.
+			if ( false == $image_url ) {// WPCS: loose comparison ok.
 				$image_url = get_parent_theme_file_uri( '/images/headerdefault.jpg' );
 			}
 			?>
@@ -90,12 +90,12 @@ $blog_desc = get_theme_mod( 'canuck_home_description', '' );
 					if ( '' !== $blog_title ) {
 						echo '<h1>' . wp_kses_post( $blog_title ) . '</h1>';
 					} else {
-						echo '<h1>' . get_bloginfo( 'name' ) . '</h1>';
+						echo '<h1>' . get_bloginfo( 'name' ) . '</h1>';// WPCS: XSS ok.
 					}
 					if ( '' !== $blog_desc ) {
 						echo '<span>' . wp_kses_post( $blog_desc ) . '</span>';
 					} else {
-						echo '<span>' . get_bloginfo( 'description' ) . '</span>';
+						echo '<span>' . get_bloginfo( 'description' ) . '</span>';// WPCS: XSS ok.
 					}
 					?>
 				</div>

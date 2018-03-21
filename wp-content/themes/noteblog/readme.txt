@@ -1,12 +1,13 @@
 Theme Name: Noteblog
 Author: lighthouseseo
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GNU General Public License version 3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 Text Domain: noteblog
 
 == Description ==
 
  Noteblog is SEO optimized for the search engines Google and Bing, while being a modern and simple responsive WordPress theme. Journalists, writers and authors can use it to publish news through blogging or writing with our minimalistic multipurpose magazine / newspaper theme. We have made clean code so the load time is fast, quick page speed is a big part of our SEO friendly theme. Whether you like food, fashion, photography, travel or need a business portfolio then our minimal article theme is a good choice.
+
 
  == About the Author == 
  

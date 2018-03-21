@@ -5,32 +5,40 @@
  * This template part is called by template-home.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
-$sec2_bg_image = get_theme_mod( 'canuck_section2_background_image', '' );
+$sec2_bg_image     = get_theme_mod( 'canuck_section2_background_image', '' );
 $sec2_use_parallax = get_theme_mod( 'canuck_section2_use_parallax', false );
-
-if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
-	<div class="home-2-wide parallax-window" data-parallax="scroll" data-image-src="<?php echo esc_url( $sec2_bg_image ); ?>">
-<?php } else { ?>
-	<div class="home-2-wide">
-<?php } ?>
+$use_lazyload      = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+if ( '' !== $sec2_bg_image ) {
+	if ( true === $sec2_use_parallax ) {
+		$string2 = ' class="home-2-wide parallax-window" data-parallax="scroll" data-image-src="' . esc_url( $sec2_bg_image ) . '"';
+	} elseif ( true === $use_lazyload ) {
+		$string2 = ' class="home-2-wide lazyload" data-src="' . $sec2_bg_image . '"';
+	} else {
+		$string2 = ' class="home-2-wide" style="background-image: url( ' . $sec2_bg_image . ' );"';
+	}
+} else {
+	$string2 = ' class="home-2-wide"';
+}
+?>
+<div <?php echo $string2;// WPCS: XSS ok. ?>>
 	<div class="home-2-wide-overlay">
 		<div class="home-2-wrap">
 			<div class="servicebox one">
 				<?php
 				// Get options.
 				$section2_box1_use_image_font = get_theme_mod( 'canuck_section2_box1_use_font_icon', false );
-				$section2_box1_image_font = get_theme_mod( 'canuck_section2_box1_image_font', '' );
-				$section2_box1_image = get_theme_mod( 'canuck_section2_box1_image', '' );
-				$section2_box1_title = stripslashes( get_theme_mod( 'canuck_section2_box1_title', '' ) );
-				$section2_box1_text = stripslashes( get_theme_mod( 'canuck_section2_box1_text', '' ) );
-				$section2_box1_include_link = get_theme_mod( 'canuck_section2_box1_include_link', false );
-				$section2_box1_button_link = get_theme_mod( 'canuck_section2_box1_button_link', '#' );
-				$section2_box1_button_title = get_theme_mod( 'canuck_section2_box1_button_title', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
+				$section2_box1_image_font     = get_theme_mod( 'canuck_section2_box1_image_font', '' );
+				$section2_box1_image          = get_theme_mod( 'canuck_section2_box1_image', '' );
+				$section2_box1_title          = stripslashes( get_theme_mod( 'canuck_section2_box1_title', '' ) );
+				$section2_box1_text           = stripslashes( get_theme_mod( 'canuck_section2_box1_text', '' ) );
+				$section2_box1_include_link   = get_theme_mod( 'canuck_section2_box1_include_link', false );
+				$section2_box1_button_link    = get_theme_mod( 'canuck_section2_box1_button_link', '#' );
+				$section2_box1_button_title   = get_theme_mod( 'canuck_section2_box1_button_title', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
 				if ( true === $section2_box1_include_link && '' === $section2_box1_button_title ) {
 					// No link button so use image for link.
 					if ( true === $section2_box1_use_image_font && '' !== $section2_box1_image_font ) {
@@ -46,7 +54,20 @@ if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
 					?>
 						<div class="section2-graphic">
 							<a class="section2-linked-image" href="<?php echo esc_url( $section2_box1_button_link ); ?>"	title="<?php echo esc_attr( $section2_box1_title ); ?>">
-								<img src="<?php echo esc_url( $section2_box1_image ); ?>" alt="<?php echo esc_attr( $section2_box1_title ); ?>" />
+								<?php
+								if ( true === $use_lazyload ) {
+									?>
+									<img class="lazyload"
+										src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+										data-src="<?php echo esc_url( $section2_box1_image ); ?>"
+										alt="<?php echo esc_attr( $section2_box1_title ); ?>" />
+									<?php
+								} else {
+									?>
+									<img src="<?php echo esc_url( $section2_box1_image ); ?>" alt="<?php echo esc_attr( $section2_box1_title ); ?>" />
+									<?php
+								}
+								?>
 								<div class="section2-image-overlay">
 									<i class="fa fa-link"></i>
 								</div>
@@ -66,7 +87,20 @@ if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
 						if ( '' !== $section2_box1_image ) {
 						?>
 							<div class="section2-graphic">
-								<img class="no-link" src="<?php echo esc_url( $section2_box1_image ); ?>" alt="<?php echo esc_attr( $section2_box1_title ); ?>" /> 
+								<?php
+								if ( true === $use_lazyload ) {
+									?>
+									<img class="lazyload no-link"
+										src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+										data-src="<?php echo esc_url( $section2_box1_image ); ?>"
+										alt="<?php echo esc_attr( $section2_box1_title ); ?>" />
+									<?php
+								} else {
+									?>
+									<img class ="no-link" src="<?php echo esc_url( $section2_box1_image ); ?>" alt="<?php echo esc_attr( $section2_box1_title ); ?>" />
+									<?php
+								}
+								?>
 							</div>
 						<?php
 						}
@@ -89,18 +123,17 @@ if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
 				}
 				?>
 			</div>
-			
 			<div class="servicebox two">
 				<?php
 				// Get options.
 				$section2_box2_use_image_font = get_theme_mod( 'canuck_section2_box2_use_font_icon', false );
-				$section2_box2_image_font = get_theme_mod( 'canuck_section2_box2_image_font', '' );
-				$section2_box2_image = get_theme_mod( 'canuck_section2_box2_image', '' );
-				$section2_box2_title = stripslashes( get_theme_mod( 'canuck_section2_box2_title', '' ) );
-				$section2_box2_text = stripslashes( get_theme_mod( 'canuck_section2_box2_text', '' ) );
-				$section2_box2_include_link = get_theme_mod( 'canuck_section2_box2_include_link', false );
-				$section2_box2_button_link = get_theme_mod( 'canuck_section2_box2_button_link', '#' );
-				$section2_box2_button_title = get_theme_mod( 'canuck_section2_box2_button_title', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
+				$section2_box2_image_font     = get_theme_mod( 'canuck_section2_box2_image_font', '' );
+				$section2_box2_image          = get_theme_mod( 'canuck_section2_box2_image', '' );
+				$section2_box2_title          = stripslashes( get_theme_mod( 'canuck_section2_box2_title', '' ) );
+				$section2_box2_text           = stripslashes( get_theme_mod( 'canuck_section2_box2_text', '' ) );
+				$section2_box2_include_link   = get_theme_mod( 'canuck_section2_box2_include_link', false );
+				$section2_box2_button_link    = get_theme_mod( 'canuck_section2_box2_button_link', '#' );
+				$section2_box2_button_title   = get_theme_mod( 'canuck_section2_box2_button_title', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
 				if ( true === $section2_box2_include_link && '' === $section2_box2_button_title ) {
 					// No link button so use image for link.
 					if ( true === $section2_box2_use_image_font && '' !== $section2_box2_image_font ) {
@@ -117,7 +150,20 @@ if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
 						<div class="section2-graphic">
 							<a class="section2-linked-image" href="<?php echo esc_url( $section2_box2_button_link ); ?>"
 								title="<?php echo esc_attr( $section2_box2_title ); ?>">
-								<img src="<?php echo esc_url( $section2_box2_image ); ?>" alt="<?php echo esc_attr( $section2_box2_title ); ?>" />
+								<?php
+								if ( true === $use_lazyload ) {
+									?>
+									<img class="lazyload"
+										src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+										data-src="<?php echo esc_url( $section2_box2_image ); ?>"
+										alt="<?php echo esc_attr( $section2_box2_title ); ?>" />
+									<?php
+								} else {
+									?>
+									<img src="<?php echo esc_url( $section2_box2_image ); ?>" alt="<?php echo esc_attr( $section2_box2_title ); ?>" />
+									<?php
+								}
+								?>
 								<div class="section2-image-overlay">
 									<i class="fa fa-link"></i>
 								</div>
@@ -137,7 +183,20 @@ if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
 						if ( '' !== $section2_box2_image ) {
 						?>
 							<div class="section2-graphic">
-								<img class="no-link" src="<?php echo esc_url( $section2_box2_image ); ?>" alt="<?php echo esc_attr( $section2_box2_title ); ?>" /> 
+								<?php
+								if ( true === $use_lazyload ) {
+									?>
+									<img class="lazyload no-link"
+										src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+										data-src="<?php echo esc_url( $section2_box2_image ); ?>"
+										alt="<?php echo esc_attr( $section2_box2_title ); ?>" />
+									<?php
+								} else {
+									?>
+									<img class ="no-link" src="<?php echo esc_url( $section2_box2_image ); ?>" alt="<?php echo esc_attr( $section2_box2_title ); ?>" />
+									<?php
+								}
+								?>
 							</div>
 						<?php
 						}
@@ -160,18 +219,17 @@ if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
 				}
 				?>
 			</div>
-			
 			<div class="servicebox three">
 				<?php
 				// Get the options.
 				$section2_box3_use_image_font = get_theme_mod( 'canuck_section2_box3_use_font_icon', false );
-				$section2_box3_image_font = get_theme_mod( 'canuck_section2_box3_image_font', '' );
-				$section2_box3_image = get_theme_mod( 'canuck_section2_box3_image', '' );
-				$section2_box3_title = stripslashes( get_theme_mod( 'canuck_section2_box3_title', '' ) );
-				$section2_box3_text = stripslashes( get_theme_mod( 'canuck_section2_box3_text', '' ) );
-				$section2_box3_include_link = get_theme_mod( 'canuck_section2_box3_include_link', false );
-				$section2_box3_button_link = get_theme_mod( 'canuck_section2_box3_button_link', '#' );
-				$section2_box3_button_title = get_theme_mod( 'canuck_section2_box3_button_title', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
+				$section2_box3_image_font     = get_theme_mod( 'canuck_section2_box3_image_font', '' );
+				$section2_box3_image          = get_theme_mod( 'canuck_section2_box3_image', '' );
+				$section2_box3_title          = stripslashes( get_theme_mod( 'canuck_section2_box3_title', '' ) );
+				$section2_box3_text           = stripslashes( get_theme_mod( 'canuck_section2_box3_text', '' ) );
+				$section2_box3_include_link   = get_theme_mod( 'canuck_section2_box3_include_link', false );
+				$section2_box3_button_link    = get_theme_mod( 'canuck_section2_box3_button_link', '#' );
+				$section2_box3_button_title   = get_theme_mod( 'canuck_section2_box3_button_title', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
 				if ( true === $section2_box3_include_link && '' === $section2_box3_button_title ) {
 					// No link button so use image for link.
 					if ( true === $section2_box3_use_image_font && '' !== $section2_box3_image_font ) {
@@ -188,7 +246,20 @@ if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
 						<div class="section2-graphic">
 							<a class="section2-linked-image" href="<?php echo esc_url( $section2_box3_button_link ); ?>"
 								title="<?php echo esc_attr( $section2_box3_title ); ?>">
-								<img src="<?php echo esc_url( $section2_box3_image ); ?>" alt="<?php echo esc_attr( $section2_box3_title ); ?>" />
+								<?php
+								if ( true === $use_lazyload ) {
+									?>
+									<img class="lazyload"
+										src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+										data-src="<?php echo esc_url( $section2_box3_image ); ?>"
+										alt="<?php echo esc_attr( $section2_box3_title ); ?>" />
+									<?php
+								} else {
+									?>
+									<img src="<?php echo esc_url( $section2_box3_image ); ?>" alt="<?php echo esc_attr( $section2_box3_title ); ?>" />
+									<?php
+								}
+								?>
 								<div class="section2-image-overlay">
 									<i class="fa fa-link"></i>
 								</div>
@@ -208,7 +279,20 @@ if ( '' !== $sec2_bg_image && false !== $sec2_use_parallax ) { ?>
 						if ( '' !== $section2_box3_image ) {
 							?>
 							<div class="section2-graphic">
-								<img class="no-link" src="<?php echo esc_url( $section2_box3_image ); ?>" alt="<?php echo esc_attr( $section2_box3_title ); ?>" />
+								<?php
+								if ( true === $use_lazyload ) {
+									?>
+									<img class="lazyload no-link"
+										src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+										data-src="<?php echo esc_url( $section2_box3_image ); ?>"
+										alt="<?php echo esc_attr( $section2_box3_title ); ?>" />
+									<?php
+								} else {
+									?>
+									<img class ="no-link" src="<?php echo esc_url( $section2_box3_image ); ?>" alt="<?php echo esc_attr( $section2_box3_title ); ?>" />
+									<?php
+								}
+								?>
 							</div>
 							<?php
 						}

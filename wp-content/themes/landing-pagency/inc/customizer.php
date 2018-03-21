@@ -59,7 +59,7 @@ function landing_pagency_customize_register( $wp_customize ) {
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'pro_section', array(
         'section' => 'landing_new',
         'settings' => 'landing_options[info]',
-        'type' => 'textarea',
+        'type' => 'themearea',
         'priority' => 109
         ) )
     );   
@@ -85,11 +85,10 @@ function landing_pagency_customize_register( $wp_customize ) {
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'premium_section', array(
         'section' => 'landing_pagency_prem',
         'settings' => 'landing_pagency_prem[info]',
-        'type' => 'textarea',
+        'type' => 'themearea',
         'priority' => 109
         ) )
     );   
- 
 
 
     /***************************************************/
@@ -218,15 +217,6 @@ function landing_pagency_customize_register( $wp_customize ) {
                 )
             )
         );
-
-
-
-
-
-     //  =============================
-    //  = Text Input                =
-    //  =============================
-
 
     //Breadcrumb
     $wp_customize->add_setting('landing_pagency_single_breadcrumb_section', array(

@@ -3,6 +3,22 @@
 ==========================================================================================
 To Consider for future upgrades
 -----------------------------------
+- header color control
+
+Version 1.1.1
+-----------------------------------
+- this update focus is to improve ther performance of the theme
+- set up lazy load option for theme, using jquery.lazy.js
+- changed .home-13-wrap{} and .home-12-wrap{} width to remove horizontal slidebar
+- increased posts for home-thirteen.php tp 50
+- increased posts for home-twelve.php tp 50
+- changed header.jpg to headerdefault.jpg in custom-header.php
+- added background, text, link and hover options for the footer
+- changed custom styles to add on to canuck-skin
+- added full size image slider option to the home and blog pages
+- removed title links on colorbox links home sections 9 and 12
+- fixed typo in home-eleven.php to populate Home Page Section 11 widget area instead of Home Page Section 10
+
 Version 1.1.0
 -----------------------------------
 - fixed a couple of errors in css, reported by user

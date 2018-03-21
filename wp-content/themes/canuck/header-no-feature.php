@@ -8,7 +8,7 @@
  * This file is called by certain primary template pages
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -38,7 +38,7 @@
 			}
 			?>
 			<nav class="nav-container">
-				<h2 class="screen-reader-text"><?php esc_html_e( 'Main Navigation' , 'canuck' ); ?></h2>
+				<h2 class="screen-reader-text"><?php esc_html_e( 'Main Navigation', 'canuck' ); ?></h2>
 				<?php canuck_header_menu(); ?>
 			</nav>
 			<div class="canuck-search">
@@ -51,4 +51,3 @@
 <button class="sidebar-b-toggle toggle-off" aria-expanded="false" aria-label="<?php esc_attr_e( 'Sidebar B Toggle', 'canuck' ); ?>"><i class="fa fa-navicon fa-rotate-90"></i></button>
 <a href="#main-header" class="scrolltotop"><i class="fa fa-chevron-up"></i></a>
 <div class="sticky-spacer">&nbsp;</div>
-

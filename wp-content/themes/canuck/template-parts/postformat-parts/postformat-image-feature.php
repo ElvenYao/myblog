@@ -10,15 +10,27 @@
 
 global $post;
 $include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-$add_nopin = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
+$add_nopin               = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
+$use_lazyload            = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
 if ( has_post_thumbnail() ) {
 	?>
 	<div class="post-format-image-feature">
 		<?php
-		$image_url = get_the_post_thumbnail_url( $post->ID, 'canuck_med15' );
+		$image_url     = get_the_post_thumbnail_url( $post->ID, 'canuck_med15' );
 		$image_caption = get_post( get_post_thumbnail_id() )->post_excerpt;
-		echo '<img ' . $add_nopin . 'src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $image_caption ) . '">';
-		$image_meta = wp_get_attachment_metadata( get_post_thumbnail_id() );
+		$image_meta    = wp_get_attachment_metadata( get_post_thumbnail_id() );
+		if ( true === $use_lazyload ) {
+			?>
+			<img class="lazyload" <?php echo $add_nopin;// WPCS: XSS ok. ?>
+				src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+				data-src="<?php echo esc_url( $image_url ); ?>"
+				alt="<?php echo esc_attr( $image_caption ); ?>">
+			<?php
+		} else {
+			?>
+			<img <?php echo $add_nopin;// WPCS: XSS ok. ?>src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $image_caption ); ?>">
+			<?php
+		}
 		?>
 		<div class="post-format-image-overlay">
 			<div class="post-format-image-overlay-content">
@@ -32,7 +44,7 @@ if ( has_post_thumbnail() ) {
 				<span><?php esc_html_e( 'Focal Length', 'canuck' ); ?>: <?php echo esc_html( $image_meta['image_meta']['focal_length'] ); ?></span>
 				<?php
 				// Note-leave as non strict or it will break and cause a divide by zero error.
-				if ( 0 != $image_meta['image_meta']['shutter_speed'] ) {
+				if ( 0 != $image_meta['image_meta']['shutter_speed'] ) {// WPCS: loose comparison ok.
 					$shutter_speed = round( 1 / $image_meta['image_meta']['shutter_speed'], 0 );
 				} else {
 					$shutter_speed = '';

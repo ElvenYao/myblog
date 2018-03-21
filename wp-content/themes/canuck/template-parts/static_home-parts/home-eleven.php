@@ -5,28 +5,36 @@
  * This template part is called by template-home.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 // Get the options.
-$section11_usage = stripslashes( get_theme_mod( 'canuck_section11_media_area_usage', 'image' ) );
-$section11_image = get_theme_mod( 'canuck_section11_image', '' );
-$section11_title = stripslashes( get_theme_mod( 'canuck_section11_title', '' ) );
-$section11_shortcode = stripslashes( get_theme_mod( 'canuck_section11_shortcode', '' ) );
-$section11_text = stripslashes( get_theme_mod( 'canuck_section11_text', '' ) );
+$section11_usage        = stripslashes( get_theme_mod( 'canuck_section11_media_area_usage', 'image' ) );
+$section11_image        = get_theme_mod( 'canuck_section11_image', '' );
+$section11_title        = stripslashes( get_theme_mod( 'canuck_section11_title', '' ) );
+$section11_shortcode    = stripslashes( get_theme_mod( 'canuck_section11_shortcode', '' ) );
+$section11_text         = stripslashes( get_theme_mod( 'canuck_section11_text', '' ) );
 $section11_include_link = get_theme_mod( 'canuck_section11_include_link', false );
-$section11_button_link = get_theme_mod( 'canuck_section11_button_link', '#' );
+$section11_button_link  = get_theme_mod( 'canuck_section11_button_link', '#' );
 $section11_button_label = get_theme_mod( 'canuck_section11_button_title', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
-$sec11_bg_image = get_theme_mod( 'canuck_section11_background_image', '' );
-$sec11_use_parallax = get_theme_mod( 'canuck_section11_use_parallax', false );
-
-if ( '' !== $sec11_bg_image && false !== $sec11_use_parallax ) { ?>
-	<div class="home-11-wide parallax-window" data-parallax="scroll" data-image-src="<?php echo esc_url( $sec11_bg_image ); ?>">
-<?php } else { ?>
-	<div class="home-11-wide">
-<?php } ?>
+$sec11_bg_image         = get_theme_mod( 'canuck_section11_background_image', '' );
+$sec11_use_parallax     = get_theme_mod( 'canuck_section11_use_parallax', false );
+$use_lazyload           = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+if ( '' !== $sec11_bg_image ) {
+	if ( true === $sec11_use_parallax ) {
+		$string11 = ' class="home-11-wide parallax-window" data-parallax="scroll" data-image-src="' . esc_url( $sec11_bg_image ) . '"';
+	} elseif ( true === $use_lazyload ) {
+		$string11 = ' class="home-11-wide lazyload" data-src="' . esc_url( $sec11_bg_image ) . '"';
+	} else {
+		$string11 = ' class="home-11-wide" style="background-image: url( ' . esc_url( $sec11_bg_image ) . ' );"';
+	}
+} else {
+	$string11 = ' class="home-11-wide"';
+}
+?>
+<div <?php echo $string11;// WPCS: XSS ok. ?>>
 	<div class="home-11-wide-overlay">
 		<div class="home-11-wrap">
 			<div class="home-11-media">
@@ -46,7 +54,7 @@ if ( '' !== $sec11_bg_image && false !== $sec11_use_parallax ) { ?>
 						if ( ! dynamic_sidebar( 'canuck_home_section11_sidebar' ) ) {
 							echo esc_html__( 'Section 11 media area is set up as a widget area.', 'canuck' ) .
 								'<br/><span class="alert">' .
-								esc_html__( 'Go to Appearance->Widgets or the Customizer Widgets panel and add a widget to Home Page Section 10.', 'canuck' ) .
+								esc_html__( 'Go to Appearance->Widgets or the Customizer Widgets panel and add a widget to Home Page Section 11.', 'canuck' ) .
 								'</span>';
 						}
 						?>
@@ -55,7 +63,20 @@ if ( '' !== $sec11_bg_image && false !== $sec11_use_parallax ) { ?>
 				} else {
 					?>
 					<div class="home-11-image">
-						<img src="<?php echo esc_url( $section11_image ); ?>" alt="<?php echo esc_attr( $section11_title ); ?>" /> 
+						<?php
+						if ( true === $use_lazyload ) {
+							?>
+							<img class="lazyload"
+								src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+								data-src="<?php echo esc_url( $section11_image ); ?>"
+								alt="<?php echo esc_attr( $section11_title ); ?>" />
+							<?php
+						} else {
+							?>
+							<img src="<?php echo esc_url( $section11_image ); ?>" alt="<?php esc_attr( $section11_title ); ?>" />
+							<?php
+						}
+						?>
 					</div>
 					<?php
 				}

@@ -2,7 +2,7 @@
  * Canuck scrollreveal-doc-ready-scripts
  * http://kevinsspace.ca
  * Canuck WordPress Theme
- * Copyright (C) 2017  Kevin Archibald Licensed GPLv3
+ * Copyright (C) 2017-2018  Kevin Archibald Licensed GPLv3
  */
 jQuery(document).ready(function($){
 	window.sr = ScrollReveal( {reset: false} );

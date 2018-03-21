@@ -5,8 +5,8 @@ Author URI: https://kevinsspace.ca/
 Theme URI: https://kevinsspace.ca/canuckdemo/
 Donate: https://kevinsspace.ca/canuckdemo/donate/
 Requires at least: 4.6
-Tested up to: 4.9.1
-Stable tag: 1.1.0
+Tested up to: 4.9.2
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI:https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,11 +16,18 @@ Canuck is distributed under the terms of the GNU GPL
 Canuck is a full featured Wordpress theme offering the user many options to control the look of the theme, and many options for special pages and content.
 
 == Release Notes ==
-= Verson 1.1.0 =
-* fixed a couple of errors in css, reported by user
-* added position: relative; to .flexslider{} to fix a bug on captions when in slide mode
-* more adjustments to the header style for the logo, one of these days I will figure this out :)
-* fixed css on masonry images to get 5px vertical spacing between images
+= Version 1.1.1 =
+* This is a major update for Canuck.
+* The focus is on improving performance.
+* All scripts have been minimized, and reduced where possible.
+* IMPORTANT - Delete your cache after updating, or you will see weird looking pages.
+* Lazy load features have been added.
+* Enable this page loading improvement in Appearance->Customize->Canuck General->jQuery Options
+* Footer color control has been added.
+* The Static Home Page and Blog sliders now have a full size slider option.
+* This gives you full custom control on the size and quality of the images you want to use.
+* Just remember to keep all images EXACTLY the same size.
+* Also remember to optimize the images to keep file sizes and page load speeds reasonable.
 
 == Description ==
 * Canuck is a full featured responsive theme that looks great on full size screens, tablets and mobile devices. Users have incredible flexibility to create the website that suits your style, with extensive theme options, post metabox options, and page 
@@ -133,9 +140,14 @@ License URI: see the license.txt file for license details.
 * Credit to Thierry Koblentz - http://www.alistapart.com/articles/creating-intrinsic-ratios-for-video/
 * License: WTFPL http://sam.zoy.org/wtfpl/
 	
-= Image Viewer (Colorbox)=
+= Image Viewer (Colorbox) =
 * http://jacklmoore.com/colorbox/) 
 * Released under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
+
+= jquery.lazy.js =
+* Copyright 2012 - 2017, Daniel 'Eisbehr' Kern
+* https://github.com/eisbehr-/jquery.lazy
+* Lazy is dual-licensed under MIT and GPL-2.0 license.
 
 = Images =
 * audio800.jpg - Colorful Abstract Background by Linnaea Mallette
@@ -172,7 +184,18 @@ License URI: see the license.txt file for license details.
 * Use of the custom options for Canuck is detailed in Canuck Theme Page located in the admin panel under Appearance->Canuck.
 
 == Frequently Asked Questions ==
-The faq will be developed as common questions arise.
+= How do I change background or text colors? =
+* To make style changes the author recommend you add your new styles to the Custom CSS panel in customizer. 
+* For extensive style changes the author recommend the use of the Child Theme Starter available from the authors site.
+
+= Page Load Speed is Slow =
+* Optimize your images using a program like Photoshop or Corel Photo Paint. 
+* Keep slider images to 4 or less, and minimize the sections you use on your home page. 
+* Lazy load images, using the lazy load option in Appearance->Customize->Canuck General->jQuery Options.
+
+= Is there theme documentation or tutorials available? =
+* The theme documentation is available in Appearance->Canuck. 
+* Theme toutorials are available at the author site kevinsspace.ca.
 
 == Changelog ==
 * see changelog.txt supplied with the theme

@@ -3,8 +3,8 @@
  *
  * Sets up the flex sliders used by the flex slider widget in the theme.
  *
- * @link http://kevinsspace.ca
- * @licenseCopyright (C) 2017  kevinhaig Licensed GPLv2 or later
+ * @link    http://kevinsspace.ca
+ * @license Copyright (C) 2017-2018  kevinhaig Licensed GPLv2 or later
  * @package Canuck WordPress Theme
  */
 jQuery(document).ready(function($){

@@ -36,7 +36,7 @@
 	<div class="container">
 		<div class="row" id="copyright-note">
 			<span>	
-			<?php echo '&copy';?> <?php echo date_i18n(__('Y','landing-pagency')); ?> <?php bloginfo( 'name' ); ?>
+			<?php echo '&copy';?> <?php echo esc_html(date_i18n(__('Y','landing-pagency'))); ?> <?php bloginfo( 'name' ); ?>
 	</span>
 </div>
 </div>

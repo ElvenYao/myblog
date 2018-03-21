@@ -24,8 +24,8 @@ function canuck_theme_page_init() {
  * Load the tab.
  */
 function canuck_load_theme_page() {
-	if ( isset( $_POST['canuck-subpage-submit'] ) ) {
-		$url_parameters = isset( $_GET['tab'] ) ? 'updated=true&tab=' . esc_attr( wp_unslash( $_GET['tab'] ) ) : 'updated=true'; // XSS OK.
+	if ( isset( $_POST['canuck-subpage-submit'] ) ) {// Input var okay.
+		$url_parameters = isset( $_GET['tab'] ) ? 'updated=true&tab=' . esc_attr( wp_unslash( $_GET['tab'] ) ) : 'updated=true'; // Input var okay.
 		wp_safe_redirect( admin_url( 'themes.php?page=canuck_theme_page&' . $url_parameters ) );
 		exit;
 	}
@@ -38,10 +38,10 @@ function canuck_load_theme_page() {
  */
 function canuck_theme_page_tabs( $current = 'canuck_intro_page' ) {
 	$tabs = array(
-		'canuck_intro_page' => esc_html__( 'Introduction', 'canuck' ),
-		'canuck_quick_setup_page' => esc_html__( 'Quick Setup', 'canuck' ),
+		'canuck_intro_page'        => esc_html__( 'Introduction', 'canuck' ),
+		'canuck_quick_setup_page'  => esc_html__( 'Quick Setup', 'canuck' ),
 		'canuck_detail_setup_page' => esc_html__( 'Detail Setup', 'canuck' ),
-		'canuck_home_setup_page' => esc_html__( 'Home Page Setup', 'canuck' ),
+		'canuck_home_setup_page'   => esc_html__( 'Home Page Setup', 'canuck' ),
 	);
 	echo '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab => $name ) {
@@ -62,17 +62,17 @@ function canuck_theme_page_callback() {
 	<div class="canuck-wrap">
 		<h1><?php esc_html_e( 'Canuck WordPress Theme', 'canuck' ); ?></h1>
 		<?php
-		if ( isset( $_GET['tab'] ) ) {
-			canuck_theme_page_tabs( esc_html( wp_unslash( $_GET['tab'] ) ) );
+		if ( isset( $_GET['tab'] ) ) {// Input var okay.
+			canuck_theme_page_tabs( esc_html( wp_unslash( $_GET['tab'] ) ) );// Input var okay.
 		} else {
 			canuck_theme_page_tabs( 'canuck_intro_page' );
 		}
 		?>
 		<div id="canuck-page">
 			<?php
-			if ( 'themes.php' === $pagenow && 'canuck_theme_page' === $_GET['page'] ) {
-				if ( isset( $_GET['tab'] ) ) {
-					$tab = esc_html( wp_unslash( $_GET['tab'] ) );
+			if ( 'themes.php' === $pagenow && 'canuck_theme_page' === $_GET['page'] ) {// Input var okay.
+				if ( isset( $_GET['tab'] ) ) {// Input var okay.
+					$tab = esc_html( wp_unslash( $_GET['tab'] ) );// Input var okay.
 				} else {
 					$tab = 'canuck_intro_page';
 				}
@@ -134,10 +134,10 @@ function canuck_intro_setup_callback() {
 	echo '</ol>';
 
 	echo '<h3>' . esc_html__( 'Backup your Content from the Options to a Page', 'canuck' ) . '</h3>';
-	echo '<p>' . esc_html__( 'Canuck has an extensive set of options and a great landing page (home page) builder. ','canuck' ) .
-				esc_html__( 'Many of these options create content, that would normally be lost on theme switch. ','canuck' ) .
-				esc_html__( 'By backing up your content from these options to a page, content is maintained, available to you even if you are setting up a different theme. ','canuck' ) .
-				esc_html__( 'To backup your options: ','canuck' ) . '</p>';
+	echo '<p>' . esc_html__( 'Canuck has an extensive set of options and a great landing page (home page) builder. ', 'canuck' ) .
+				esc_html__( 'Many of these options create content, that would normally be lost on theme switch. ', 'canuck' ) .
+				esc_html__( 'By backing up your content from these options to a page, content is maintained, available to you even if you are setting up a different theme. ', 'canuck' ) .
+				esc_html__( 'To backup your options: ', 'canuck' ) . '</p>';
 	echo '<ol>';
 	echo '<li>' . esc_html__( 'Go to "Appearence->Customize"', 'canuck' ) . '</li>';
 	echo '<li>' . esc_html__( 'Select "Canuck General->Backup Options".', 'canuck' ) . '</li>';
@@ -151,10 +151,10 @@ function canuck_intro_setup_callback() {
 	echo '</ol>';
 
 	echo '<h3>' . esc_html__( 'Import your Parent theme options to a child theme.', 'canuck' ) . '</h3>';
-	echo '<p>' . esc_html__( 'When you set up a child theme, all custom theme mods (options) are reset. ','canuck' ) .
-				esc_html__( 'This can be a real pain re-entering options if you are setting up child theme to solve a theme problem after the theme is setup. ','canuck' ) .
-				esc_html__( 'Canuck will let you import all custom options  to the child theme at the click of a button. ','canuck' ) .
-				esc_html__( 'To import your Parent Theme options: ','canuck' ) . '</p>';
+	echo '<p>' . esc_html__( 'When you set up a child theme, all custom theme mods (options) are reset. ', 'canuck' ) .
+				esc_html__( 'This can be a real pain re-entering options if you are setting up child theme to solve a theme problem after the theme is setup. ', 'canuck' ) .
+				esc_html__( 'Canuck will let you import all custom options  to the child theme at the click of a button. ', 'canuck' ) .
+				esc_html__( 'To import your Parent Theme options: ', 'canuck' ) . '</p>';
 	echo '<ol>';
 	echo '<li>' . esc_html__( 'Go to "Appearence->Customize"', 'canuck' ) . '</li>';
 	echo '<li>' . esc_html__( 'Select "Canuck General->Backup Options".', 'canuck' ) . '</li>';
@@ -163,6 +163,15 @@ function canuck_intro_setup_callback() {
 	echo '<li>' . esc_html__( 'Do this only once, at the start of setting up your childtheme.', 'canuck' ) . '</li>';
 	echo '<li>' . esc_html__( 'Any options you set up in the child theme may be overwritten by parent theme options if you do it later.', 'canuck' ) . '</li>';
 	echo '<li style="color:red;">' . esc_html__( 'After the initial import, uncheck the box and "Save & Publish" to ensure the options are not imported again.', 'canuck' ) . '</li>';
+	echo '</ol>';
+
+	echo '<h3>' . esc_html__( 'Theme Static Home Page Performance.', 'canuck' ) . '</h3>';
+	echo '<p>' . esc_html__( 'If you are using many sections and images on your home page, performance will suffer. ', 'canuck' ) .
+				esc_html__( 'If you are concerned about page load speed you can set an option to lazyload images. ', 'canuck' ) . '</p>';
+	echo '<ol>';
+	echo '<li>' . esc_html__( 'Go to "Appearence->Customize"', 'canuck' ) . '</li>';
+	echo '<li>' . esc_html__( 'Select "Canuck General->jQuery Options".', 'canuck' ) . '</li>';
+	echo '<li>' . esc_html__( 'Check the "Use jquery.lazy.js plugin" box, then "Save & Publish".', 'canuck' ) . '</li>';
 	echo '</ol>';
 }
 /**
@@ -190,7 +199,7 @@ function canuck_quick_setup_callback() {
 	echo '<li>' . esc_html__( 'Select "Canuck Blog->General Blog Options"', 'canuck' ) . '</li>';
 	echo '<li>' . esc_html__( 'Select the "Blog Feature Options"->"No Feature" from the dropdown list.', 'canuck' ) . '</li>';
 	echo '</ol>';
-	echo '<p>' . esc_html__( 'To change the image: ','canuck' ) . '</p>';
+	echo '<p>' . esc_html__( 'To change the image: ', 'canuck' ) . '</p>';
 	echo '<ol>';
 	echo '<li>' . esc_html__( 'Select the "Header Media" tab in Customize', 'canuck' ) . '</li>';
 	echo '<li>' . esc_html__( 'Select "Add new image" and pick or upload your image.', 'canuck' ) . '</li>';
@@ -198,7 +207,7 @@ function canuck_quick_setup_callback() {
 	echo '</ol>';
 
 	echo '<h3>' . esc_html__( 'Logo', 'canuck' ) . '</h3>';
-	echo '<p><strong>' . esc_html__( 'Main Logo - ', 'canuck' ) . '</strong>' . esc_html__( 'The main logo should designed for a white background: ','canuck' ) . '</p>';
+	echo '<p><strong>' . esc_html__( 'Main Logo - ', 'canuck' ) . '</strong>' . esc_html__( 'The main logo should designed for a white background: ', 'canuck' ) . '</p>';
 	echo '<ol>';
 	echo '<li>' . esc_html__( 'Select the "Site Identity" tab in Customize', 'canuck' ) . '</li>';
 	echo '<li>' . esc_html__( 'Select "Select Logo" or "Change Logo" and pick or upload your logo image.', 'canuck' ) . '</li>';
@@ -297,7 +306,8 @@ function canuck_detailed_setup_callback() {
 	echo '<li>' . esc_html__( 'Publish/Update the post.', 'canuck' ) . '</li>';
 	echo '<li>' . esc_html__( 'Repeat steps 3-15 for additional images.', 'canuck' ) . '</li>';
 	echo '</ol>';
-	echo '<p>' . esc_html__( 'The home and blog sliders use images with a 3:1 aspect ratio, the Feature Page slider uses images with a 1.5:1 aspect ratio. ', 'canuck' ) .
+	echo '<p>' . esc_html__( 'The home and blog sliders can either be the full size images you upload or images with a 3:1 aspect ratio.  ', 'canuck' ) .
+				esc_html( 'The Feature Page slider uses images with a 1.5:1 aspect ratio. ', 'canuck' ) .
 				esc_html__( 'I would recommend you keep all your images for these sliders at 1100px wide with the appropriate aspect height.  ', 'canuck' ) .
 				esc_html__( 'To set up a Home Page slider:".', 'canuck' ) . '</p>';
 	echo '<ol>';
@@ -334,14 +344,14 @@ function canuck_detailed_setup_callback() {
 	echo '<li>' . esc_html__( 'Click "Save & Publish".', 'canuck' ) . '</li>';
 	echo '</ol>';
 	echo '<p><strong>' . esc_html__( 'Slider Settings - ', 'canuck' ) . '</strong>' . esc_html__( 'Slider setup can be found in "Canuck General->Flex Slider Options"', 'canuck' ) . '</p>';
-	
+
 	echo '<h3>' . esc_html__( 'Canuck General', 'canuck' ) . '</h3>';
 	echo '<p><strong>' . esc_html__( 'Miscellaneous Options - ', 'canuck' ) . '</strong>' . esc_html__( 'This is where you can include Pinterest sharing discussed in the Quick Start tab.', 'canuck' ) . '</p>';
 	echo '<p><strong>' . esc_html__( 'Backup Options - ', 'canuck' ) . '</strong>' . esc_html__( 'Discussed in the Introduction tab.', 'canuck' ) . '</p>';
 	echo '<p><strong>' . esc_html__( 'Exclude Categories - ', 'canuck' ) . '</strong>' . esc_html__( 'This is where you can exclude categories that would be used in the featured posts for sliders, portfolios, etc.', 'canuck' ) . '</p>';
 	echo '<p><strong>' . esc_html__( 'Flex Slider Options - ', 'canuck' ) . '</strong>' . esc_html__( 'Set slider options such as type, pause and transition times.', 'canuck' ) . '</p>';
 	echo '<p><strong>' . esc_html__( 'jQuery Options - ', 'canuck' ) . '</strong>' . esc_html__( 'Disable jQuery scripts for debugging or to use a different script.', 'canuck' ) . '</p>';
-	
+
 	echo '<h3>' . esc_html__( 'Canuck Layouts', 'canuck' ) . '</h3>';
 	echo '<p><strong>' . esc_html__( 'Breadcrumbs - ', 'canuck' ) . '</strong>' . esc_html__( 'Select "General Layout Options" and you can set up Breadcrumbs there. ', 'canuck' ) .
 						esc_html__( 'You must have the plugin "Breadcrumb Trail" by Justin Tadlock installed to use breadcrumbs.', 'canuck' ) . '</p>';
@@ -365,11 +375,11 @@ function canuck_detailed_setup_callback() {
 	echo '<p>' . esc_html__( 'I will not go into additional detail as some options have been previously discussed and the rest have adequate descriptions. ', 'canuck' ) .
 				esc_html__( 'I will note that you can choose excerpts and excerpt size, and exclude meta items such as post date, author, categories and tags. ', 'canuck' ) .
 				esc_html__( 'You can also choose to exclude the No Comments link in the blog and single page post meta.', 'canuck' ) . '</p>';
-	
+
 	echo '<h3>' . esc_html__( 'Canuck WooCommerce Options', 'canuck' ) . '</h3>';
 	echo '<p>' . esc_html__( 'This option appears only if the WooCommerce plugin is installed and activated. ', 'canuck' ) .
 				esc_html__( 'Special WooCommerce sidebars are set up, and you can select the layout you want for the Shop and Product pages.', 'canuck' ) . '</p>';
-				
+
 	echo '<h3>' . esc_html__( 'Post Formats', 'canuck' ) . '</h3>';
 	echo '<p>' . esc_html__( 'Canuck supports Audio, Quote, Gallery, Image, and Video Post Formats ', 'canuck' ) . '</p>';
 	echo '<ol>';
@@ -422,7 +432,7 @@ function canuck_detailed_setup_callback() {
 	echo '<li><strong>' . esc_html__( 'Classic 3 columns: ', 'canuck' ) . '</strong>' .
 						esc_html__( 'Three columns with image and either post title and content or image caption and description, layouts recommended: all.', 'canuck' ) . '</li>';
 	echo '<li><strong>' . esc_html__( 'Classic 4 columns: ', 'canuck' ) . '</strong>' .
-						esc_html__( 'Three columns with image and either post title and content or image caption and description, layouts recommended: all.', 'canuck' ) . '</li>';
+						esc_html__( 'Four columns with image and either post title and content or image caption and description, layouts recommended: all.', 'canuck' ) . '</li>';
 	echo '<li><strong>' . esc_html__( 'Grid 2 columns: ', 'canuck' ) . '</strong>' .
 						esc_html__( 'Two columns with image and overlay of caption and description, layouts recommended: all.', 'canuck' ) . '</li>';
 	echo '<li><strong>' . esc_html__( 'Grid 3 columns: ', 'canuck' ) . '</strong>' .
@@ -444,7 +454,7 @@ function canuck_detailed_setup_callback() {
 	echo '<li>' . esc_html__( 'Select "Masonry Gallery" from the Template dropdown.', 'canuck' ) . '</li>';
 	echo '<li>' . esc_html__( 'Click "Publish" or "Update".', 'canuck' ) . '</li>';
 	echo '</ol>';
-	
+
 	echo '<h3>' . esc_html__( 'Colors', 'canuck' ) . '</h3>';
 	echo '<p>' . esc_html__( 'A little customization of theme colors is allowed here. ', 'canuck' ) . '</p>';
 	echo '<ol>';

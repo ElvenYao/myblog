@@ -2,7 +2,7 @@
  * CSS file for the template-home.php custom page.
  *
  * @package		Canuck WordPress Theme
- * @copyright	Copyright (C) 2017  Kevin Archibald
+ * @copyright	Copyright (C) 2017-2018  Kevin Archibald
  * @license		http://www.gnu.org/licenses/gpl-2.0.html
  * @author		Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -18,6 +18,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-1-wide-overlay {
@@ -76,7 +78,7 @@
 .home-1-button a.button1:before {
 	content: '';
 	width: 100%;
-	top: 0%;
+	top: 0;
 	height: 0;
 	opacity: 0;
 	position: absolute;
@@ -102,6 +104,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-2-wide-overlay {
@@ -287,6 +291,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-3-wide-overlay {
@@ -372,6 +378,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-4-wide-overlay {
@@ -557,6 +565,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-5-wide-overlay {
@@ -641,6 +651,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-6-wide-overlay {
@@ -826,6 +838,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-7-wide-overlay {
@@ -910,6 +924,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-8-wide-overlay {
@@ -1096,6 +1112,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-9-wide-overlay {
@@ -1267,6 +1285,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-10-wide-overlay {
@@ -1391,6 +1411,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-11-wide-overlay {
@@ -1514,6 +1536,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-12-wide-overlay {
@@ -1526,7 +1550,7 @@
 .home-12-wrap {
 	clear: both;	
 	display: block;
-	width: 100%;
+	width: calc(100% - 10px);
 	margin: 0;
 	padding: 5px;
 	text-decoration: none;
@@ -1686,6 +1710,8 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .home-13-wide-overlay {
@@ -1698,7 +1724,7 @@
 .home-13-wrap {
 	clear: both;	
 	display: block;
-	width: 100%;
+	width: calc(100% - 10px);
 	margin: 0;
 	padding: 5px;
 	text-decoration: none;

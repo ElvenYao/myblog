@@ -15,7 +15,6 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
-
 	<?php wp_head(); ?>
 </head>
 
@@ -66,49 +65,49 @@
 				}?>
 
 				<span class="site-title">
-		<?php bloginfo( 'name' ); ?>
+					<?php bloginfo( 'name' ); ?>
 				</span>
 
-		<p class="site-description">
-	<?php bloginfo( 'description' ); ?>
-</p>
-<?php if ( get_theme_mod( 'left_button_text') || get_theme_mod( 'right_button_text')  ) : ?>
-<div class="button-divider"></div>
-<?php endif; ?>
-<span class="button-container">
-<?php if (get_theme_mod('left_button_text') ) : ?>
-	<a class="header-button" href="<?php if (get_theme_mod('left_button_text') ) : ?><?php echo esc_url(get_theme_mod('left_button_link')) ?><?php endif; ?>">
-		<?php if (get_theme_mod('left_button_text') ) : ?><?php echo esc_html(get_theme_mod('left_button_text')) ?><?php endif; ?>
-</a>
-<?php endif; ?>
-</span>
-<span class="button-container">
-<?php if (get_theme_mod('right_button_text') ) : ?>
-	<a class="header-button" href="<?php if (get_theme_mod('right_button_text') ) : ?><?php echo esc_url(get_theme_mod('right_button_link')) ?><?php endif; ?>">
-		<?php if (get_theme_mod('right_button_text') ) : ?><?php echo esc_html(get_theme_mod('right_button_text')) ?><?php endif; ?>
-</a>
-<?php endif; ?>
-</span>
-</div><!-- .site-branding -->
+				<p class="site-description">
+					<?php bloginfo( 'description' ); ?>
+				</p>
+				<?php if ( get_theme_mod( 'left_button_text') || get_theme_mod( 'right_button_text')  ) : ?>
+					<div class="button-divider"></div>
+				<?php endif; ?>
+				<span class="button-container">
+					<?php if (get_theme_mod('left_button_text') ) : ?>
+						<a class="header-button" href="<?php if (get_theme_mod('left_button_text') ) : ?><?php echo esc_url(get_theme_mod('left_button_link')) ?><?php endif; ?>">
+							<?php if (get_theme_mod('left_button_text') ) : ?><?php echo esc_html(get_theme_mod('left_button_text')) ?><?php endif; ?>
+						</a>
+					<?php endif; ?>
+				</span>
+				<span class="button-container">
+					<?php if (get_theme_mod('right_button_text') ) : ?>
+						<a class="header-button" href="<?php if (get_theme_mod('right_button_text') ) : ?><?php echo esc_url(get_theme_mod('right_button_link')) ?><?php endif; ?>">
+							<?php if (get_theme_mod('right_button_text') ) : ?><?php echo esc_html(get_theme_mod('right_button_text')) ?><?php endif; ?>
+						</a>
+					<?php endif; ?>
+				</span>
+			</div><!-- .site-branding -->
 
-</header><!-- #masthead -->
-<?php if ( is_active_sidebar( 'top_widget_left') ||  is_active_sidebar( 'top_widget_middle') ||  is_active_sidebar( 'top_widget_right')  ) : ?>
-	<div class="container"> 
-		<div class="row">
-			<div class="top-widget-wrapper">
-				<div class="top-widget-single">
-					<?php dynamic_sidebar( 'top_widget_left' ); ?>
-				</div>
-				<div class="top-widget-single">
-					<?php dynamic_sidebar( 'top_widget_middle' ); ?>
-				</div>
-				<div class="top-widget-single">
-					<?php dynamic_sidebar( 'top_widget_right' ); ?>
+		</header><!-- #masthead -->
+		<?php if ( is_active_sidebar( 'top_widget_left') ||  is_active_sidebar( 'top_widget_middle') ||  is_active_sidebar( 'top_widget_right')  ) : ?>
+			<div class="container"> 
+				<div class="row">
+					<div class="top-widget-wrapper">
+						<div class="top-widget-single">
+							<?php dynamic_sidebar( 'top_widget_left' ); ?>
+						</div>
+						<div class="top-widget-single">
+							<?php dynamic_sidebar( 'top_widget_middle' ); ?>
+						</div>
+						<div class="top-widget-single">
+							<?php dynamic_sidebar( 'top_widget_right' ); ?>
+						</div>
+					</div>
+
 				</div>
 			</div>
+		<?php endif; ?>
 
-		</div>
-	</div>
-<?php endif; ?>
-
-<div id="content" class="site-content">
+		<div id="content" class="site-content">

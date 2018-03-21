@@ -6,19 +6,29 @@
  * This file is called by all primary template pages
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
-$canuck_showfooter = get_theme_mod( 'canuck_show_footer', true );
-$canuck_showcopyright = get_theme_mod( 'canuck_show_copyright_strip', true );
-$canuck_footercols = intval( get_theme_mod( 'canuck_footer_cols', 3 ) );
+$canuck_showfooter            = get_theme_mod( 'canuck_show_footer', true );
+$canuck_showcopyright         = get_theme_mod( 'canuck_show_copyright_strip', true );
+$canuck_footercols            = intval( get_theme_mod( 'canuck_footer_cols', 3 ) );
 $canuck_show_footer_top_strip = get_theme_mod( 'canuck_show_footer_top_strip', false );
-
+$footer_background_image      = get_theme_mod( 'canuck_footer_background_image', '' );
+$use_lazyload                 = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+if ( '' !== $footer_background_image ) {
+	if ( true === $use_lazyload ) {
+		$footerstring = ' id="canuck-footer" class="lazyload" data-src="' . esc_url( $footer_background_image ) . '"';
+	} else {
+		$footerstring = ' id="canuck-footer" style="background-image: url( ' . esc_url( $footer_background_image ) . ' );"';
+	}
+} else {
+	$footerstring = ' id="canuck-footer"';
+}
 if ( true === $canuck_showfooter || true === $canuck_showcopyright || true === $canuck_show_footer_top_strip ) {
 	?>
-	<footer id="canuck-footer">
+	<footer<?php echo $footerstring;// WPCS: XSS ok. ?>>
 		<div class="footer-overlay">
 			<div id="footer-wrap">
 				<?php

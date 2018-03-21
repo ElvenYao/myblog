@@ -1,19 +1,28 @@
-Theme Name: Corporatebits
-Author: Develobots
-Tags: Blog, Custom Background, Footer Widgets, Full Width Template, One Column, Translation Ready, Theme Options, Custom Header, Custom Menu, Portfolio
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: Corporatebits
+# Corporatebits
 
-== Description ==
+**Contributors:** Develobots  
+**Requires at least:** WordPress 4.1  
+**Tested up to:** WordPress 4.9  
+**Stable tag:** 2.5  
+**Version:** 2.5  
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Tags:** one-column, two-columns, right-sidebar, flexible-header, accessibility-ready, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready
 
 Corporatebits is designed with a clean look and feel, captivating the stylish & modern corporate trend. The total flexibility brings high aesthetic value and the responsiveness will have your site look good to all audiences. Our theme will match perfectly for bloggers, writers, businesses or any agency looking for a professional, down to earth, corporate or business site/blog feel. Hook your target group with our slick landing page. With Corporatebits comes SEO, Search Engine Optimization. Our flexible theme is optimized for search engines like Google, Bing and more. Enjoy creating your own personal blog design with this clean, professional multipurpose blogging / business theme.
 
-== Licenses and Credits ==
+## Description
 
-- Corporatebits WordPress Theme, Copyright 2017
-	Corporatebits is distributed under the terms of the GNU GPL
+Corporatebits is designed with a clean look and feel, captivating the stylish & modern corporate trend. The total flexibility brings high aesthetic value and the responsiveness will have your site look good to all audiences. Our theme will match perfectly for bloggers, writers, businesses or any agency looking for a professional, down to earth, corporate or business site/blog feel. Hook your target group with our slick landing page. With Corporatebits comes SEO, Search Engine Optimization. Our flexible theme is optimized for search engines like Google, Bing and more. Enjoy creating your own personal blog design with this clean, professional multipurpose blogging / business theme.
+ 
+ 
 
+## Copyright
+
+Corporatebits WordPress Theme, Copyright 2017 Develobots
+Corporatebits is distributed under the terms of the GNU GPL
+
+Corporatebits bundles the following third-party resources:
 - Bootstrap - http://getbootstrap.com/ Licensed Under MIT( https://opensource.org/licenses/MIT)
 - Google Fonts - http://www.google.com/fonts/ - "Lato" - SIL Open Font License, 1.1 
 - html5shiv - http://code.google.com/p/html5shiv/ License Under MIT (http://opensource.org/licenses/MIT)

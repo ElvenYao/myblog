@@ -5,7 +5,7 @@
  * This file is a widget that will allow you to set up a bio for your authors
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  *
@@ -39,7 +39,7 @@ class Canuck_Author_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname' => 'canuck_author_widget_class',
+			'classname'   => 'canuck_author_widget_class',
 			'description' => esc_html__( 'Display author biography', 'canuck' ),
 		);
 		parent::__construct( 'canuck_author_widget', esc_html__( 'Canuck Author Widget', 'canuck' ), $widget_ops );
@@ -51,19 +51,18 @@ class Canuck_Author_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$canuck_author_defaults = array(
-			'canuck_author_title' => __( 'About the Author', 'canuck' ),
-			'canuck_author_name' => '',
-			'canuck_author_email' => '',
+			'canuck_author_title'   => __( 'About the Author', 'canuck' ),
+			'canuck_author_name'    => '',
+			'canuck_author_email'   => '',
 			'canuck_author_website' => '',
-			'canuck_author_bio' => '',
+			'canuck_author_bio'     => '',
 		);
-		$instance = wp_parse_args( (array) $instance, $canuck_author_defaults );
-		$title = $instance['canuck_author_title'];
-		$name = $instance['canuck_author_name'];
-		$email = $instance['canuck_author_email'];
-		$website = $instance['canuck_author_website'];
-		$bio = $instance['canuck_author_bio'];
-
+		$instance               = wp_parse_args( (array) $instance, $canuck_author_defaults );
+		$title                  = $instance['canuck_author_title'];
+		$name                   = $instance['canuck_author_name'];
+		$email                  = $instance['canuck_author_email'];
+		$website                = $instance['canuck_author_website'];
+		$bio                    = $instance['canuck_author_bio'];
 		echo '<p>' . esc_html__( 'Title : ', 'canuck' ) .
 					'<input class="widefat" id="' . esc_attr( $this->get_field_id( 'canuck_author_title' ) ) .
 					'" name="' . esc_attr( $this->get_field_name( 'canuck_author_title' ) ) .
@@ -90,13 +89,12 @@ class Canuck_Author_Widget extends WP_Widget {
 	 * @param array $old_instance The previous options.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-		$instance['canuck_author_title'] = sanitize_text_field( $new_instance['canuck_author_title'] );
-		$instance['canuck_author_name'] = sanitize_text_field( $new_instance['canuck_author_name'] );
-		$instance['canuck_author_email'] = sanitize_email( $new_instance['canuck_author_email'] );
+		$instance                          = $old_instance;
+		$instance['canuck_author_title']   = sanitize_text_field( $new_instance['canuck_author_title'] );
+		$instance['canuck_author_name']    = sanitize_text_field( $new_instance['canuck_author_name'] );
+		$instance['canuck_author_email']   = sanitize_email( $new_instance['canuck_author_email'] );
 		$instance['canuck_author_website'] = esc_url_raw( $new_instance['canuck_author_website'] );
-		$instance['canuck_author_bio'] = wp_kses_post( $new_instance['canuck_author_bio'] );
-
+		$instance['canuck_author_bio']     = wp_kses_post( $new_instance['canuck_author_bio'] );
 		return $instance;
 	}
 	/**
@@ -111,21 +109,21 @@ class Canuck_Author_Widget extends WP_Widget {
 		if ( ! empty( $title ) ) {
 			echo wp_kses_post( $args['before_title'] ) . wp_kses_post( $title ) . wp_kses_post( $args['after_title'] );
 		}
-		$canuck_author_name = $instance['canuck_author_name'];
-		$canuck_author_email = $instance['canuck_author_email'];
+		$canuck_author_name    = $instance['canuck_author_name'];
+		$canuck_author_email   = $instance['canuck_author_email'];
 		$canuck_author_website = $instance['canuck_author_website'];
-		$canuck_author_bio = $instance['canuck_author_bio'];
+		$canuck_author_bio     = $instance['canuck_author_bio'];
 		?>
 		<div class="canuck-author-widget">
 			<?php
 			if ( '' !== $canuck_author_email ) {
-				echo '<span class="author-widget-avatar">' . get_avatar( $canuck_author_email , 150 ) . '</span>';
+				echo '<span class="author-widget-avatar">' . get_avatar( $canuck_author_email, 150 ) . '</span>';
 			}
 			?>
 			<span class="author-widget-content-wrap">
 				<?php
 				if ( '' !== $canuck_author_name ) {
-					 echo '<span class="author-widget-name">' . esc_html( $canuck_author_name ) . '</span><br/>';
+					echo '<span class="author-widget-name">' . esc_html( $canuck_author_name ) . '</span><br/>';
 				}
 				if ( '' !== $canuck_author_bio ) {
 					echo '<span class="author-widget-bio">' . wp_kses_post( $canuck_author_bio ) . '</span>';

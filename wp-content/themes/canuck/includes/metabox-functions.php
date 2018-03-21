@@ -5,11 +5,11 @@
  * This file contains custom functions for the theme.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
- 
+
 /**
  * =============================================================================================
  *                     Custom Page Meta Box
@@ -137,7 +137,7 @@ function canuck_show_page_custom_meta_box() {
 		<?php
 		// **************** Feature Slider Category ****************************************************.
 		$feature_category = esc_html( get_post_meta( $post->ID, 'canuck_metabox_feature_category', true ) );
-		$categories = get_categories();
+		$categories       = get_categories();
 		?>
 		<p>
 			<span style="clear:both;width:200px;float:left;" class="feature-category"><?php esc_html_e( 'Feature Slider Category', 'canuck' ); ?></span>
@@ -184,7 +184,7 @@ function canuck_show_page_custom_meta_box() {
 		<?php
 		// **************** Portfolio Category ****************************************************.
 		$portfolio_category = esc_html( get_post_meta( $post->ID, 'canuck_portfolio_category', true ) );
-		$categories = get_categories();
+		$categories         = get_categories();
 		?>
 		<p>
 			<span style="clear:both;width:200px;float:left;" class="portfolio-category"><?php esc_html_e( 'Portfolio Category', 'canuck' ); ?></span>
@@ -229,7 +229,7 @@ function canuck_show_page_custom_meta_box() {
 		</p>
 		<?php
 		// **************** Portfolio Include Post Content ****************************************************
-		$portfolio_post_content = get_post_meta( $post->ID, 'canuck_metabox_include_post_content', true )? true : false;
+		$portfolio_post_content = get_post_meta( $post->ID, 'canuck_metabox_include_post_content', true ) ? true : false;
 		?>
 		<p>
 			<span style="clear:both;width:200px;float:left;" class="include-post-content"><?php esc_html_e( 'Include Post Content', 'canuck' ); ?></span>
@@ -267,7 +267,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 	global $post;
 	$page_template = basename( get_page_template() );
 	// Verify nonce.
-	if ( false === isset( $_POST['canuck_page_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['canuck_page_meta_box_nonce'] ) ), basename( __FILE__ ) ) ) {
+	if ( false === isset( $_POST['canuck_page_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['canuck_page_meta_box_nonce'] ) ), basename( __FILE__ ) ) ) {// Input var okay.
 		return $post_id;
 	}
 	// Check autosave.
@@ -275,7 +275,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 		return $post_id;
 	}
 	// Check permissions.
-	if ( isset( $_POST['post_type'] ) && 'page' === $_POST['post_type'] ) {
+	if ( isset( $_POST['post_type'] ) && 'page' === $_POST['post_type'] ) {// Input var okay.
 		if ( ! current_user_can( 'edit_page', $post_id ) ) {
 			return $post_id;
 		}
@@ -284,8 +284,8 @@ function canuck_save_page_custom_meta( $post_id ) {
 	}
 	// Page layout, do not save the default.
 	$page_layout_old = esc_html( get_post_meta( $post_id, 'canuck_metabox_page_layout', true ) );
-	$page_layout_new = ( isset( $_POST['page_layout'] ) ? sanitize_text_field( wp_unslash( $_POST['page_layout'] ) ) : '' );
-	$default = 'right_sidebar';
+	$page_layout_new = ( isset( $_POST['page_layout'] ) ? sanitize_text_field( wp_unslash( $_POST['page_layout'] ) ) : '' );// Input var okay.
+	$default         = 'right_sidebar';
 	if ( '' !== $page_layout_new && '' === $page_layout_old && $default !== $page_layout_new ) {
 		// If a new meta value was added and there was no previous value, add it.
 		add_post_meta( $post_id, 'canuck_metabox_page_layout', $page_layout_new, true );
@@ -298,7 +298,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 	}
 	// Include post title.
 	$exclude_title_old = get_post_meta( $post_id, 'canuck_metabox_title', true ) ? true : false;
-	$exclude_title_new = ( isset( $_POST['exclude_page_title'] ) ? true : false );
+	$exclude_title_new = ( isset( $_POST['exclude_page_title'] ) ? true : false );// Input var okay.
 	if ( true === $exclude_title_new && false === $exclude_title_old ) {
 		// If a new meta value was added and there was no previous value, add it.
 		add_post_meta( $post_id, 'canuck_metabox_title', true, true );
@@ -308,8 +308,8 @@ function canuck_save_page_custom_meta( $post_id ) {
 	}
 	// Sidebar a option.
 	$sidebar_a_old = esc_html( get_post_meta( $post_id, 'canuck_metabox_sidebar_a', true ) );
-	$sidebar_a_new = ( isset( $_POST['sidebar_a'] ) ? sanitize_text_field( wp_unslash( $_POST['sidebar_a'] ) ) : '' );
-	$default = 'default-a';
+	$sidebar_a_new = ( isset( $_POST['sidebar_a'] ) ? sanitize_text_field( wp_unslash( $_POST['sidebar_a'] ) ) : '' );// Input var okay.
+	$default       = 'default-a';
 	if ( '' !== $sidebar_a_new && '' === $sidebar_a_old && $default !== $sidebar_a_new ) {
 		// If a new meta value was added and there was no previous value, add it.
 		add_post_meta( $post_id, 'canuck_metabox_sidebar_a', $sidebar_a_new, true );
@@ -322,8 +322,8 @@ function canuck_save_page_custom_meta( $post_id ) {
 	}
 	// Sidebar b option.
 	$sidebar_b_old = esc_html( get_post_meta( $post_id, 'canuck_metabox_sidebar_b', true ) );
-	$sidebar_b_new = ( isset( $_POST['sidebar_b'] ) ? sanitize_text_field( wp_unslash( $_POST['sidebar_b'] ) ) : '' );
-	$default = 'default-b';
+	$sidebar_b_new = ( isset( $_POST['sidebar_b'] ) ? sanitize_text_field( wp_unslash( $_POST['sidebar_b'] ) ) : '' );// Input var okay.
+	$default       = 'default-b';
 	if ( '' !== $sidebar_b_new && '' === $sidebar_b_old && $default !== $sidebar_b_new ) {
 		// If a new meta value was added and there was no previous value, add it.
 		add_post_meta( $post_id, 'canuck_metabox_sidebar_b', $sidebar_b_new, true );
@@ -339,7 +339,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 	if ( 'template-feature.php' === $page_template ) {
 		// Feature category.
 		$feature_category_old = esc_html( get_post_meta( $post_id, 'canuck_metabox_feature_category', true ) );
-		$feature_category_new = ( isset( $_POST['feature_category'] ) ? sanitize_text_field( wp_unslash( $_POST['feature_category'] ) ) : '' );
+		$feature_category_new = ( isset( $_POST['feature_category'] ) ? sanitize_text_field( wp_unslash( $_POST['feature_category'] ) ) : '' );// Input var okay.
 		if ( '' !== $feature_category_new && '' === $feature_category_old ) {
 			// If a new meta value was added and there was no previous value, add it.
 			add_post_meta( $post_id, 'canuck_metabox_feature_category', $feature_category_new, true );
@@ -352,8 +352,8 @@ function canuck_save_page_custom_meta( $post_id ) {
 		}
 		// Feature slider type.
 		$feature_type_old = esc_html( get_post_meta( $post_id, 'canuck_metabox_feature_type', true ) );
-		$feature_type_new = ( isset( $_POST['feature_type'] ) ? sanitize_text_field( wp_unslash( $_POST['feature_type'] ) ) : '' );
-		$default = 'button_nav';
+		$feature_type_new = ( isset( $_POST['feature_type'] ) ? sanitize_text_field( wp_unslash( $_POST['feature_type'] ) ) : '' );// Input var okay.
+		$default          = 'button_nav';
 		if ( '' !== $feature_type_new && '' === $feature_type_old && $default !== $feature_type_new ) {
 			// If a new meta value was added and there was no previous value, add it.
 			add_post_meta( $post_id, 'canuck_metabox_feature_type', $feature_type_new, true );
@@ -369,7 +369,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 	if ( 'template-portfolio.php' === $page_template ) {
 		// Portfolio category.
 		$portfolio_category_old = esc_html( get_post_meta( $post_id, 'canuck_portfolio_category', true ) );
-		$portfolio_category_new = ( isset( $_POST['portfolio_category'] ) ? sanitize_text_field( wp_unslash( $_POST['portfolio_category'] ) ) : '' );
+		$portfolio_category_new = ( isset( $_POST['portfolio_category'] ) ? sanitize_text_field( wp_unslash( $_POST['portfolio_category'] ) ) : '' );// Input var okay.
 		if ( '' !== $portfolio_category_new && '' === $portfolio_category_old ) {
 			// If a new meta value was added and there was no previous value, add it.
 			add_post_meta( $post_id, 'canuck_portfolio_category', $portfolio_category_new, true );
@@ -382,8 +382,8 @@ function canuck_save_page_custom_meta( $post_id ) {
 		}
 		// Portfolio columns.
 		$portfolio_type_old = esc_html( get_post_meta( $post_id, 'canuck_portfolio_type', true ) );
-		$portfolio_type_new = ( isset( $_POST['portfolio_type'] ) ? sanitize_text_field( wp_unslash( $_POST['portfolio_type'] ) ) : '' );
-		$default = 'classic1';
+		$portfolio_type_new = ( isset( $_POST['portfolio_type'] ) ? sanitize_text_field( wp_unslash( $_POST['portfolio_type'] ) ) : '' );// Input var okay.
+		$default            = 'classic1';
 		if ( '' !== $portfolio_type_new && '' === $portfolio_type_old && $default !== $portfolio_type_new ) {
 			// If a new meta value was added and there was no previous value, add it.
 			add_post_meta( $post_id, 'canuck_portfolio_type', $portfolio_type_new, true );
@@ -396,7 +396,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 		}
 		// Include post title.
 		$portfolio_post_title_old = get_post_meta( $post_id, 'canuck_metabox_include_post_content_title', true ) ? true : false;
-		$portfolio_post_title_new = ( isset( $_POST['portfolio_post_title'] ) ? true : false );
+		$portfolio_post_title_new = ( isset( $_POST['portfolio_post_title'] ) ? true : false );// Input var okay.
 		if ( true === $portfolio_post_title_new && false === $portfolio_post_title_old ) {
 			// If a new meta value was added and there was no previous value, add it.
 			add_post_meta( $post_id, 'canuck_metabox_include_post_content_title', $portfolio_post_title_new, true );
@@ -406,7 +406,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 		}
 		// Include post content.
 		$portfolio_post_content_old = get_post_meta( $post_id, 'canuck_metabox_include_post_content', true ) ? true : false;
-		$portfolio_post_content_new = ( isset( $_POST['portfolio_post_content'] ) ? true : false );
+		$portfolio_post_content_new = ( isset( $_POST['portfolio_post_content'] ) ? true : false );// Input var okay.
 		if ( true === $portfolio_post_content_new && false === $portfolio_post_content_old ) {
 			// If a new meta value was added and there was no previous value, add it.
 			add_post_meta( $post_id, 'canuck_metabox_include_post_content', $portfolio_post_content_new, true );
@@ -416,7 +416,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 		}
 		// Include image caption.
 		$portfolio_image_caption_old = get_post_meta( $post_id, 'canuck_metabox_include_image_caption', true ) ? true : false;
-		$portfolio_image_caption_new = ( isset( $_POST['portfolio_image_caption'] ) ? true : false );
+		$portfolio_image_caption_new = ( isset( $_POST['portfolio_image_caption'] ) ? true : false );// Input var okay.
 		if ( true === $portfolio_image_caption_new && false === $portfolio_image_caption_old ) {
 			// If a new meta value was added and there was no previous value, add it.
 			add_post_meta( $post_id, 'canuck_metabox_include_image_caption', $portfolio_image_caption_new, true );
@@ -427,7 +427,7 @@ function canuck_save_page_custom_meta( $post_id ) {
 
 		// Include image description.
 		$portfolio_image_desc_old = get_post_meta( $post_id, 'canuck_metabox_include_image_description', true ) ? true : false;
-		$portfolio_image_desc_new = ( isset( $_POST['portfolio_image_desc'] ) ? true : false );
+		$portfolio_image_desc_new = ( isset( $_POST['portfolio_image_desc'] ) ? true : false );// Input var okay.
 		if ( true === $portfolio_image_desc_new && false === $portfolio_image_desc_old ) {
 			// If a new meta value was added and there was no previous value, add it.
 			add_post_meta( $post_id, 'canuck_metabox_include_image_description', $portfolio_image_desc_new, true );
@@ -445,27 +445,27 @@ add_action( 'save_post', 'canuck_save_page_custom_meta' );
  * =============================================================================================
  */
 
- /**
-  * Add meta box to posts.
-  *
-  * The format for the add_meta_box() is as follows:
-  * add_meta_box( $id, $title, $callback, $post_type, $context, $priority, $callback_args );
-  * $id : (string) (required) HTML 'id' attribute of the edit screen section Default: None
-  * $title : (string) (required) Title of the edit screen section, visible to user Default: None
-  * $callback : (callback) (required) Function that prints out the HTML for the edit screen section.
-  *             Pass function name as a string
-  * $post_type : (string) (required) The type of Write screen on which to show the edit screen section
-  *              ('post', 'page', 'link', or 'custom_post_type' where custom_post_type is the custom post type slug)
-  *              Default: None
-  * $context : (string) (optional) The part of the page where the edit screen section should be shown
-  *            ('normal', 'advanced', or 'side'). (Note that 'side' doesn't exist before 2.7)Default: 'advanced'
-  * $priority : (string) (optional) The priority within the context where the boxes should show
-  *             ('high', 'core', 'default' or 'low') Default: 'default'
-  * $callback_args : (array) (optional) Arguments to pass into your callback function. The callback will receive
-  *                  the $post object and whatever parameters are passed through this variable. Default: null
-  *
-  * @since 0.0.1
-  */
+/**
+ * Add meta box to posts.
+ *
+ * The format for the add_meta_box() is as follows:
+ * add_meta_box( $id, $title, $callback, $post_type, $context, $priority, $callback_args );
+ * $id : (string) (required) HTML 'id' attribute of the edit screen section Default: None
+ * $title : (string) (required) Title of the edit screen section, visible to user Default: None
+ * $callback : (callback) (required) Function that prints out the HTML for the edit screen section.
+ *             Pass function name as a string
+ * $post_type : (string) (required) The type of Write screen on which to show the edit screen section
+ *              ('post', 'page', 'link', or 'custom_post_type' where custom_post_type is the custom post type slug)
+ *              Default: None
+ * $context : (string) (optional) The part of the page where the edit screen section should be shown
+ *            ('normal', 'advanced', or 'side'). (Note that 'side' doesn't exist before 2.7)Default: 'advanced'
+ * $priority : (string) (optional) The priority within the context where the boxes should show
+ *             ('high', 'core', 'default' or 'low') Default: 'default'
+ * $callback_args : (array) (optional) Arguments to pass into your callback function. The callback will receive
+ *                  the $post object and whatever parameters are passed through this variable. Default: null
+ *
+ * @since 0.0.1
+ */
 function canuck_add_post_custom_meta_box() {
 	add_meta_box(
 		'canuck_post_custom_meta_box',
@@ -544,7 +544,7 @@ function canuck_show_post_custom_meta_box() {
 function canuck_save_post_custom_meta( $post_id ) {
 	global $post;
 	// Verify nonce.
-	if ( false === isset( $_POST['canuck_post_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['canuck_post_meta_box_nonce'] ) ), basename( __FILE__ ) ) ) {
+	if ( false === isset( $_POST['canuck_post_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['canuck_post_meta_box_nonce'] ) ), basename( __FILE__ ) ) ) {// Input var okay.
 		return $post_id;
 	}
 	// Check autosave.
@@ -552,7 +552,7 @@ function canuck_save_post_custom_meta( $post_id ) {
 		return $post_id;
 	}
 	// Check permissions.
-	if ( isset( $_POST['post_type'] ) && 'page' === $_POST['post_type'] ) {
+	if ( isset( $_POST['post_type'] ) && 'page' === $_POST['post_type'] ) {// Input var okay.
 		if ( ! current_user_can( 'edit_page', $post_id ) ) {
 			return $post_id;
 		}
@@ -561,7 +561,7 @@ function canuck_save_post_custom_meta( $post_id ) {
 	}
 	// Add post title as caption..
 	$include_feature_title_old = get_post_meta( $post_id, 'canuck_metabox_include_feature_title', true ) ? true : false;
-	$include_feature_title_new = ( isset( $_POST['include_feature_title'] ) ? true : false );
+	$include_feature_title_new = ( isset( $_POST['include_feature_title'] ) ? true : false );// Input var okay.
 	if ( true === $include_feature_title_new && false === $include_feature_title_old ) {
 		// If a new meta value was added and there was no previous value, add it.
 		add_post_meta( $post_id, 'canuck_metabox_include_feature_title', true, true );
@@ -574,7 +574,7 @@ function canuck_save_post_custom_meta( $post_id ) {
 	}
 	// Link to post.
 	$link_to_post_old = get_post_meta( $post_id, 'canuck_metabox_link_to_post', true ) ? true : false;
-	$link_to_post_new = ( isset( $_POST['link_to_post'] ) ? true : false );
+	$link_to_post_new = ( isset( $_POST['link_to_post'] ) ? true : false );// Input var okay.
 	if ( true === $link_to_post_new && false === $link_to_post_old ) {
 		// If a new meta value was added and there was no previous value, add it.
 		add_post_meta( $post_id, 'canuck_metabox_link_to_post', true, true );
@@ -587,7 +587,7 @@ function canuck_save_post_custom_meta( $post_id ) {
 	}
 	// Custom link.
 	$custom_link_old = esc_url( get_post_meta( $post_id, 'canuck_custom_feature_link', true ) );
-	$custom_link_new = ( isset( $_POST['custom_link'] ) ? esc_url_raw( wp_unslash( $_POST['custom_link'] ) ) : '' );
+	$custom_link_new = ( isset( $_POST['custom_link'] ) ? esc_url_raw( wp_unslash( $_POST['custom_link'] ) ) : '' );// Input var okay.
 	if ( '' !== $custom_link_new && '' === $custom_link_old ) {
 		// If a new meta value was added and there was no previous value, add it.
 		add_post_meta( $post_id, 'canuck_custom_feature_link', $custom_link_new, true );

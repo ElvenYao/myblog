@@ -3,12 +3,13 @@
  * Canuck Post Format Standard
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 $use_excerpts = get_theme_mod( 'canuck_use_excerpts', false );
+$use_lazyload = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
 if ( ! post_password_required() ) {
 	if ( has_post_format( 'audio' ) ) {
 		get_template_part( '/template-parts/postformat-parts/postformat', 'audio-feature' );
@@ -24,19 +25,39 @@ if ( ! post_password_required() ) {
 		get_template_part( '/template-parts/postformat-parts/postformat', 'video-feature' );
 	} else {
 		if ( has_post_thumbnail() ) {
-			?>
-			<div class="image-post-feature">
-				<?php the_post_thumbnail( 'large' ); ?>
-			</div>
-			<?php
+			$feature_image_url = get_the_post_thumbnail_url( $post->ID, 'large' );
+			if ( true === $use_lazyload ) {
+				?>
+				<div class="image-post-feature">
+					<img class="lazyload"
+						src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+						data-src="<?php echo esc_url( $feature_image_url ); ?>"
+						alt="<?php esc_attr_e( 'top feature image', 'canuck' ); ?>" />
+				</div>
+				<?php
+			} else {
+				?>
+				<img src="<?php echo esc_url( $feature_image_url ); ?>" alt="<?php esc_attr_e( 'top feature image', 'canuck' ); ?>" />
+				<?php
+			}
 		}
 	}
-} elseif ( has_post_format( 'audio' ) || has_post_format( 'gallery' ) || has_post_format( 'image' ) || has_post_format( 'quote' ) || has_post_format( 'video' ) ) {
-	$background_image_url = get_template_directory_uri() . '/images/password800.jpg';
-	echo '<img src="' . esc_url( $background_image_url ) . '" alt="' . esc_attr__( 'password required', 'canuck' ) . '">';
-} elseif ( has_post_thumbnail() ) {
-	$background_image_url = get_template_directory_uri() . '/images/password800.jpg';
-	echo '<img src="' . esc_url( $background_image_url ) . '" alt="' . esc_attr__( 'password required', 'canuck' ) . '">';
+} else {
+	$feature_image_url = get_template_directory_uri() . '/images/password800.jpg';// WPCS: XSS ok.
+	if ( true === $use_lazyload ) {
+		?>
+		<div class="image-post-feature">
+			<img class="lazyload"
+				src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+				data-src="<?php echo esc_url( $feature_image_url ); ?>"
+				alt="<?php esc_attr_e( 'password required', 'canuck' ); ?>" />
+		</div>
+		<?php
+	} else {
+		?>
+		<img src="<?php echo esc_url( $feature_image_url ); ?>" alt="<?php esc_attr_e( 'password required', 'canuck' ); ?>" />
+		<?php
+	}
 }
 ?>
 <div class="post-wrap-tf">
@@ -67,14 +88,14 @@ if ( ! post_password_required() ) {
 								the_excerpt();
 							}
 						} else {
-							$content = get_the_content();
-							$args = array(
-								'type' => 'audio',
+							$content     = get_the_content();
+							$args        = array(
+								'type'        => 'audio',
 								'split_media' => 'true',
 							);
 							$embed_audio = canuck_media_grabber_audio( $args );
-							$content = str_replace( $embed_audio, '', $content );
-							$content = apply_filters( 'the_content', $content );
+							$content     = str_replace( $embed_audio, '', $content );
+							$content     = apply_filters( 'the_content', $content );
 							echo wp_kses_post( $content );
 						}
 						?>
@@ -89,12 +110,12 @@ if ( ! post_password_required() ) {
 								esc_html__( 'Read More', 'canuck' )
 							);
 						} else {
-							$trim_words = get_theme_mod( 'canuck_excerpt_length', 30 );
-							$more = '&hellip;<div class="read-more-wrap"><a class="read-more" href="' . esc_url( get_permalink() ) . '">' . __( 'Read More', 'canuck' ) . '</a></div>';
-							$content = get_the_content();
-							$content = canuck_strip_extracted_quote( $content );
+							$trim_words      = get_theme_mod( 'canuck_excerpt_length', 30 );
+							$more            = '&hellip;<div class="read-more-wrap"><a class="read-more" href="' . esc_url( get_permalink() ) . '">' . __( 'Read More', 'canuck' ) . '</a></div>';
+							$content         = get_the_content();
+							$content         = canuck_strip_extracted_quote( $content );
 							$content_trimmed = wp_trim_words( $content, $trim_words, $more );
-							$excerpt = apply_filters( 'the_excerpt', $content_trimmed );
+							$excerpt         = apply_filters( 'the_excerpt', $content_trimmed );
 							echo wp_kses_post( $excerpt );
 						}
 					} else {

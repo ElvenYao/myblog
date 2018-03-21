@@ -7,7 +7,7 @@
  * Thank you AJ Clarke!
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      modified by Kevin Archibald <www.kevinsspace.ca/contact/>
  * @link        http://www.wpexplorer.com/woocommerce-compatible-theme/
@@ -72,7 +72,7 @@ add_filter( 'woocommerce_sale_flash', 'canuck_woo_sale_flash' );
  * @param array $args is array of data.
  */
 function canuck_woo_related_posts_per_page( $args ) {
-	$args['posts_per_page'] = 4;
+	$args['posts_per_page'] = 8;
 	return $args;
 }
 add_filter( 'woocommerce_output_related_products_args', 'canuck_woo_related_posts_per_page' );
@@ -118,26 +118,17 @@ add_filter( 'body_class', 'canuck_woo_single_loops_columns_body_class' );
  * @param array  $args is array of data.
  */
 function canuck_add_menu_cart_item_to_menus( $items, $args ) {
-
 	// Make sure your change to your Menu location !!!!
 	if ( 'canuck_primary' === $args->theme_location ) {
-
 		$css_class = 'menu-item menu-item-type-cart menu-item-type-woocommerce-cart';
-
 		if ( is_cart() ) {
 			$css_class .= ' current-menu-item';
 		}
-
 		$items .= '<li class="' . esc_attr( $css_class ) . '">';
-
-			$items .= canuck_menu_cart_item();
-
+		$items .= canuck_menu_cart_item();
 		$items .= '</li>';
-
 	}
-
 	return $items;
-
 }
 add_filter( 'wp_nav_menu_items', 'canuck_add_menu_cart_item_to_menus', 10, 2 );
 
@@ -145,33 +136,22 @@ add_filter( 'wp_nav_menu_items', 'canuck_add_menu_cart_item_to_menus', 10, 2 );
  * Function returns the main menu cart link
  */
 function canuck_menu_cart_item() {
-
-	$output = '';
-
+	$output     = '';
 	$cart_count = WC()->cart->cart_contents_count;
-
-	$css_class = 'canuck-menu-cart-total canuck-cart-total-' . intval( $cart_count );
-
+	$css_class  = 'canuck-menu-cart-total canuck-cart-total-' . intval( $cart_count );
 	if ( $cart_count ) {
-		$url  = wc_get_cart_url();
+		$url = wc_get_cart_url();
 	} else {
-		$url  = wc_get_page_permalink( 'shop' );
+		$url = wc_get_page_permalink( 'shop' );
 	}
-
-	$html = $cart_extra = WC()->cart->get_cart_total();
-	$html = str_replace( 'amount', '', $html );
-
+	$html    = WC()->cart->get_cart_total();
+	$html    = str_replace( 'amount', '', $html );
 	$output .= '<a href="' . esc_url( $url ) . '" class="' . esc_attr( $css_class ) . '">';
-
-		$output .= '<span class="fa fa-shopping-bag"></span>';
-
-		$output .= wp_kses_post( $html );
-
+	$output .= '<span class="fa fa-shopping-bag"></span>';
+	$output .= wp_kses_post( $html );
 	$output .= '</a>';
-
 	return $output;
 }
-
 
 /**
  * Update cart link with AJAX.
@@ -191,47 +171,47 @@ function canuck_woo_shop_options() {
 	global $wp_customize;
 	// Add panel.
 	$wp_customize->add_panel( 'canuck_woo', array(
-		'priority'          => 9,
-		'capability'        => 'edit_theme_options',
-		'title'             => __( 'Canuck WooCommerce Options', 'canuck' ),
-		'description'       => __( 'Theme specific options when WooCommerce is installed.', 'canuck' ),
+		'priority'    => 9,
+		'capability'  => 'edit_theme_options',
+		'title'       => __( 'Canuck WooCommerce Options', 'canuck' ),
+		'description' => __( 'Theme specific options when WooCommerce is installed.', 'canuck' ),
 	) );
 	// Add sections in panel.
 	$wp_customize->add_section( 'canuck_shop_page', array(
-		'priority'          => 1,
-		'capability'        => 'edit_theme_options',
-		'title'             => __( 'WooCommerce Shop Page Layouts', 'canuck' ),
-		'description'       => __( 'Pick the layout you want. Sidebars will be in the Appearance->Widgets Panel.', 'canuck' ),
-		'panel'             => 'canuck_woo',
+		'priority'    => 1,
+		'capability'  => 'edit_theme_options',
+		'title'       => __( 'WooCommerce Shop Page Layouts', 'canuck' ),
+		'description' => __( 'Pick the layout you want. Sidebars will be in the Appearance->Widgets Panel.', 'canuck' ),
+		'panel'       => 'canuck_woo',
 	) );
 	$wp_customize->add_setting( 'canuck_shop_page_layout', array(
-		'default'               => 'right_sidebar',
-		'capability'            => 'edit_theme_options',
-		'transport'             => 'refresh',
-		'sanitize_callback'     => 'sanitize_text_field',
+		'default'           => 'right_sidebar',
+		'capability'        => 'edit_theme_options',
+		'transport'         => 'refresh',
+		'sanitize_callback' => 'sanitize_text_field',
 	) );
 	$wp_customize->add_control( new Canuck_Custom_Radio_Image_Control($wp_customize, 'canuck_shop_page_layout', array(
-		'label'         => __( 'Shop Page Layout', 'canuck' ),
-		'section'       => 'canuck_shop_page',
-		'settings'      => 'canuck_shop_page_layout',
-		'type'          => 'radio_image',
-		'description'   => __( 'Select a layout option for your shop page.', 'canuck' ),
-		'priority'      => 1,
-		'choices'       => canuck_page_layout_choices(),
+		'label'       => __( 'Shop Page Layout', 'canuck' ),
+		'section'     => 'canuck_shop_page',
+		'settings'    => 'canuck_shop_page_layout',
+		'type'        => 'radio_image',
+		'description' => __( 'Select a layout option for your shop page.', 'canuck' ),
+		'priority'    => 1,
+		'choices'     => canuck_page_layout_choices(),
 	) ) );
 	$wp_customize->add_setting( 'canuck_shop_page_title', array(
-		'default'               => __( 'Shop Products', 'canuck' ),
-		'capability'            => 'edit_theme_options',
-		'transport'             => 'refresh',
-		'sanitize_callback'     => 'sanitize_text_field',
+		'default'           => __( 'Shop Products', 'canuck' ),
+		'capability'        => 'edit_theme_options',
+		'transport'         => 'refresh',
+		'sanitize_callback' => 'sanitize_text_field',
 	) );
 	$wp_customize->add_control( 'canuck_shop_page_title', array(
-		'label'         => __( 'Shop Page Layout', 'canuck' ),
-		'section'       => 'canuck_shop_page',
-		'settings'      => 'canuck_shop_page_title',
-		'type'          => 'text',
-		'description'   => __( 'Input a title for your Shop Page, no html allowed.', 'canuck' ),
-		'priority'      => 2,
+		'label'       => __( 'Shop Page Layout', 'canuck' ),
+		'section'     => 'canuck_shop_page',
+		'settings'    => 'canuck_shop_page_title',
+		'type'        => 'text',
+		'description' => __( 'Input a title for your Shop Page, no html allowed.', 'canuck' ),
+		'priority'    => 2,
 	) );
 }
 add_action( 'customize_register', 'canuck_woo_shop_options' );

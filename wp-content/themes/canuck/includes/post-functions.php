@@ -5,7 +5,7 @@
  * This file contains functions for posts including meta .
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -29,7 +29,7 @@ function canuck_get_gallery_images() {
 	);
 	$gallery_string = canuck_media_grabber_gallery( $args );
 	if ( '' !== $gallery_string ) {
-		$images = array();
+		$images  = array();
 		$pattern = get_shortcode_regex();
 		// Note: leave as double quotes, or the preg match will not work.
 		preg_match( "/$pattern/s", $gallery_string, $match );// XSS OK.
@@ -273,16 +273,15 @@ add_filter( 'the_excerpt', 'canuck_excerpt_password_form' );
  */
 function canuck_post_meta_full() {
 	$post_style = esc_html( get_theme_mod( 'canuck_blog_style', 'top_feature' ) );
-	if( is_single() ) {
+	if ( is_single() ) {
 		$layout_option = esc_html( get_theme_mod( 'canuck_single_post_layout', 'right_sidebar' ) );
 	} else {
 		$layout_option = esc_html( get_theme_mod( 'canuck_blog_layout', 'right_sidebar' ) );
 	}
 	$exclude_timestamp = get_theme_mod( 'canuck_exclude_timestamp', false );
-	$exclude_author = get_theme_mod( 'canuck_exclude_author', false );
-	$exclude_category = get_theme_mod( 'canuck_exclude_category', false );
-	$exclude_tags = get_theme_mod( 'canuck_exclude_tags', false );
-	//echo $post_style . ',' . $layout_option;
+	$exclude_author    = get_theme_mod( 'canuck_exclude_author', false );
+	$exclude_category  = get_theme_mod( 'canuck_exclude_category', false );
+	$exclude_tags      = get_theme_mod( 'canuck_exclude_tags', false );
 	if ( is_single() ) {
 		if ( 'fullwidth' === $layout_option ) {
 			canuck_comments_link();
@@ -329,11 +328,11 @@ function canuck_post_meta_full() {
  * This function is a helper for post meta in feature-top layouts
  */
 function canuck_post_meta_grid() {
-	$post_style = esc_html( get_theme_mod( 'canuck_blog_style', 'top_feature' ) );
+	$post_style        = esc_html( get_theme_mod( 'canuck_blog_style', 'top_feature' ) );
 	$exclude_timestamp = get_theme_mod( 'canuck_exclude_timestamp', 0 );
-	$exclude_author = get_theme_mod( 'canuck_exclude_author', 0 );
-	$exclude_category = get_theme_mod( 'canuck_exclude_category', 0 );
-	$exclude_tags = get_theme_mod( 'canuck_exclude_tags', 0 );
+	$exclude_author    = get_theme_mod( 'canuck_exclude_author', 0 );
+	$exclude_category  = get_theme_mod( 'canuck_exclude_category', 0 );
+	$exclude_tags      = get_theme_mod( 'canuck_exclude_tags', 0 );
 	canuck_post_meta_timestamp();
 	canuck_comments_link();
 	if ( is_sticky() ) {
@@ -355,9 +354,9 @@ function canuck_post_meta_grid() {
 function canuck_exclude_category_validation() {
 	$exclude_input = sanitize_text_field( get_theme_mod( 'canuck_exclude_categories', '' ) );
 	// Validate Exclude list.
-	$id_picks = array();
-	$id_picks = explode( ',', $exclude_input );
-	$counter = 0;
+	$id_picks      = array();
+	$id_picks      = explode( ',', $exclude_input );
+	$counter       = 0;
 	$filtered_list = '';
 	foreach ( $id_picks as $pick ) {
 		if ( 1 < intval( $id_picks[ $counter ] ) ) {
@@ -365,7 +364,7 @@ function canuck_exclude_category_validation() {
 		}
 		$counter++;
 	}
-	$exclude_ids = trim( $filtered_list , ',' );
+	$exclude_ids = trim( $filtered_list, ',' );
 	return $exclude_ids;
 }
 
@@ -379,11 +378,11 @@ function canuck_exclude_category_validation() {
 function canuck_exclude_category( $query ) {
 	$exclude_categories_list = canuck_exclude_category_validation();
 	if ( '' !== $exclude_categories_list ) {
-		$exclude_ids = array();
-		$exclude_ids = explode( ',', $exclude_categories_list );
+		$exclude_ids          = array();
+		$exclude_ids          = explode( ',', $exclude_categories_list );
 		$negative_exclude_ids = array();
 		foreach ( $exclude_ids as $exclude_id ) {
-			$negative_exclude_ids[] = $exclude_id * (-1);
+			$negative_exclude_ids[] = $exclude_id * ( -1 );
 		}
 		if ( ! is_admin() && $query->is_main_query() ) {
 			$query->set( 'cat', $negative_exclude_ids );

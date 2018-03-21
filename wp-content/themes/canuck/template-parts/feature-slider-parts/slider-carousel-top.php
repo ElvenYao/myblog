@@ -6,26 +6,27 @@
  * located in canuck-custom-functions.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 global $post, $canuck_feature_category;
 $canuck_flex_effect = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_effect', 'fade' ) );
-$canuck_flex_pause = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_pause', '5000' ) );
-$canuck_flex_trans = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_trans', '600' ) );
-$canuck_flex_auto = intval( get_theme_mod( 'canuck_flex_slider_auto', 1 ) );
-$category_id = get_cat_ID( $canuck_feature_category );
-$args = array(
-	'category' => $category_id,
+$canuck_flex_pause  = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_pause', '5000' ) );
+$canuck_flex_trans  = sanitize_text_field( get_theme_mod( 'canuck_flex_slider_trans', '600' ) );
+$canuck_flex_auto   = intval( get_theme_mod( 'canuck_flex_slider_auto', 1 ) );
+$category_id        = get_cat_ID( $canuck_feature_category );
+$args               = array(
+	'category'    => $category_id,
 	'numberposts' => 20,
 );
-$custom_posts = get_posts( $args );
-
+$custom_posts       = get_posts( $args );
+$use_lazyload       = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
 if ( 0 !== $category_id && $custom_posts ) {
 	?>
 	<div class="flexslider-wrapper">
+		<img class="carousel-nav-place-holder" style="width:100%;height:auto;" src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>" />
 		<div id="flexslider-carousel" class="flexslider top">
 			<ul class="slides">
 				<?php
@@ -37,7 +38,7 @@ if ( 0 !== $category_id && $custom_posts ) {
 						?>
 						<li>
 							<?php
-							$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_gallery_thumb' );
+							$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_gallery_thumb' );
 							$image_url = $thumb[0];
 							?>
 							<img src="<?php echo esc_url( $image_url ); ?>" title="<?php esc_attr_e( 'flex thumb', 'canuck' ); ?>" alt="<?php esc_attr_e( 'flex thumb', 'canuck' ); ?>" />
@@ -58,43 +59,85 @@ if ( 0 !== $category_id && $custom_posts ) {
 				$canuck_feature_pic_count = 0;
 				foreach ( $custom_posts as $post ) {
 					setup_postdata( $post );
-					$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
-					$link_to_image = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_image', true ) ? false : true );
-					$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
+					$link_to_post          = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+					$link_to_image         = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_image', true ) ? false : true );
+					$custom_feature_link   = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
 					$include_feature_title = ( '' === get_post_meta( $post->ID, 'canuck_metabox_include_feature_title', true ) ? false : true );
 					if ( has_post_thumbnail() ) {
 						$canuck_feature_pic_count ++;
 						?>
 						<li>
 							<?php
-							$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
+							$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'canuck_med15' );
 							$image_url = $thumb[0];
-							$title = false === $include_feature_title ? get_post( get_post_thumbnail_id() )->post_excerpt : the_title_attribute( 'echo=0' );
+							$title     = false === $include_feature_title ? get_post( get_post_thumbnail_id() )->post_excerpt : the_title_attribute( 'echo=0' );
 							if ( '' === $title ) {
 								$imagetitle = '';
-								$imagealt = esc_html__( 'flexslider image', 'canuck' );
+								$imagealt   = esc_html__( 'flexslider image', 'canuck' );
 							} else {
 								$imagetitle = $title;
-								$imagealt = $title;
+								$imagealt   = $title;
 							}
-							// Set up the link.
-							if ( true === $link_to_post ) {
-								echo '<a href="' . esc_url( get_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
-							} elseif ( false !== $custom_feature_link ) {
-								echo '<a href="' . esc_url( $custom_feature_link ) . '" title="' . the_title_attribute( 'echo=0' ) . '"><img src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $imagealt ) . '" /></a>';
+							// Set up the link and image.
+							if ( 1 === $canuck_feature_pic_count ) {
+								if ( true === $link_to_post ) {
+									?>
+									<a href="<?php echo esc_url( get_permalink() ); ?>" title=<?php echo the_title_attribute( 'echo=0' ); ?>">
+										<img src="<?php echo esc_url( $image_url ); ?>"
+											title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $imagealt ); ?>" />
+									</a>
+									<?php
+								} elseif ( false !== $custom_feature_link ) {
+									?>
+									<a href="<?php echo esc_url( $custom_feature_link ); ?>" title="<?php echo the_title_attribute( 'echo=0' ); ?>">
+										<img src="<?php echo esc_url( $image_url ); ?>"
+											title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $imagealt ); ?>" />
+									</a>
+									<?php
+								} else {
+									?>
+									<img src="<?php echo esc_url( $image_url ); ?>"
+										title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $title ); ?>" />
+									<?php
+								}
 							} else {
-								echo '<img src="' . esc_url( $image_url ) . '" title="' . esc_attr( $imagetitle ) . '" alt="' . esc_attr( $title ) . '" />';
+								if ( true === $link_to_post ) {
+									?>
+									<a href="<?php echo esc_url( get_permalink() ); ?>" title=<?php echo the_title_attribute( 'echo=0' ); ?>">
+										<img class="canuck-flex-lazy"
+											src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+											data-src="<?php echo esc_url( $image_url ); ?>"
+											title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $imagealt ); ?>" />
+									</a>
+									<?php
+								} elseif ( false !== $custom_feature_link ) {
+									?>
+									<a href="<?php echo esc_url( $custom_feature_link ); ?>" title="<?php echo the_title_attribute( 'echo=0' ); ?>">
+										<img class="canuck-flex-lazy"
+											src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+											data-src="<?php echo esc_url( $image_url ); ?>"
+											title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $imagealt ); ?>" />
+									</a>
+									<?php
+								} else {
+									?>
+									<img class="canuck-flex-lazy"
+										src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+										data-src="<?php echo esc_url( $image_url ); ?>"
+										title="<?php echo esc_attr( $imagetitle ); ?>" alt="<?php echo esc_attr( $title ); ?>" />
+									<?php
+								}
 							}
 							if ( true === $include_feature_title ) {
 								if ( '' !== $title ) {
-									echo '<p class="flex-caption">' . esc_html( $title ) . '</p>';
+									echo '<p class="flex-caption">' . wp_kses_post( $title ) . '</p>';
 								}
 							}
 							?>
 						</li>
 						<?php
 					}
-				}// End foreach();
+				}// End foreach.
 				?>
 			</ul>
 		</div>
@@ -102,9 +145,9 @@ if ( 0 !== $category_id && $custom_posts ) {
 	<?php
 } else {
 	?>
-	<div class="error"><?php esc_html_e( 'You have not set up your Feature posts so I can not find any images - see user documentation.' ,'canuck' ); ?></div>
+	<div class="error"><?php esc_html_e( 'You have not set up your Feature posts so I can not find any images - see user documentation.', 'canuck' ); ?></div>
 	<?php
-}// End if().
+}// End if.
 if ( 0 === $canuck_feature_pic_count ) {
 	?>
 		<div class="error">

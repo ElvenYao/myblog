@@ -3,32 +3,32 @@
  * Template Part recent posts
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 ?>
 <br/>
-<h4><?php esc_html_e( 'Recent Posts' , 'canuck' ); ?></h4>
+<h4><?php esc_html_e( 'Recent Posts', 'canuck' ); ?></h4>
 <ul class="fa-ul recent-posts">
 	<?php
 	$id_picks_string = canuck_exclude_category_validation();
-	$id_picks = array();
-	$id_picks = explode( ',', $id_picks_string );
-	$counter = 0;
-	$filtered_list = '';
+	$id_picks        = array();
+	$id_picks        = explode( ',', $id_picks_string );
+	$counter         = 0;
+	$filtered_list   = '';
 	foreach ( $id_picks as $pick ) {
 		if ( 1 < intval( $id_picks[ $counter ] ) ) {
 			$filtered_list .= '-' . intval( $id_picks[ $counter ] ) . ',';
 		}
 		$counter++;
 	}
-	$exclude_ids = trim( $filtered_list , ',' );
-	$x = "'" . $exclude_ids . "'";
-	$args = array(
+	$exclude_ids  = trim( $filtered_list, ',' );
+	$x            = "'" . $exclude_ids . "'";
+	$args         = array(
 		'numberposts' => '5',
-		'category' => $x,
+		'category'    => $x,
 		'post_status' => 'publish',
 	);
 	$recent_posts = wp_get_recent_posts( $args );

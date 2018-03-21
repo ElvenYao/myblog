@@ -4,7 +4,7 @@
  * This css file contains the black-pink css styles
  *
  * @package		Canuck WordPress Theme
- * @copyright	Copyright (C) 2017  Kevin Archibald
+ * @copyright	Copyright (C) 2017-2018  Kevin Archibald
  * @license		http://www.gnu.org/licenses/gpl-2.0.html
  * @author		Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -192,29 +192,6 @@ body.sticky .header-wide-image button { color: #474747; }
 #three-column-sidebar-left .widget a:hover
 { color: #16aee5; }
 
-/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> G. Footer */
-#canuck-footer { background-color: #161616; }
-
-#footer-wrap { color: #7f7f7f; }
-
-#footer-wrap #social-menu-id-footer li a { color: #7f7f7f; }
-
-.footer-topstrip-left a:hover { background-color: #ED1651; color: #ffffff; }
-
-#footer-wrap h1,#footer-wrap h2,#footer-wrap h3,
-#footer-wrap h4,#footer-wrap h5,#footer-wrap h6
-{ color: #ffffff; }
-
-#footer-wrap a { color: #7f7f7f; }
-
-#footer-wrap a:hover { color: #eaeaea; }
-
-#copyright { color: #7f7f7f; }
-
-#copyright a{ color: #7f7f7f; }
-
-#copyright a:hover { color: #eaeaea; }
-
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> H. Misc Page Styles */
 .author-bio-header { border-bottom: 1px solid rgba( 237,22,81,.5); }
 
@@ -356,9 +333,11 @@ img.border { border: 8px solid #ffffff!important; box-shadow: 0px 0px 5px 0 rgba
 .two-stamp-post .post-overlay-stamp .pmeta-post-comments,
 .two-stamp-post .post-overlay-stamp .pmeta-timestamp { color: rgba( 255,255,255,.75); }
 
-.two-stamp-post .post-overlay-stamp .pmeta-post-comments a { color: rgba( 255,255,255,.75); }
+.two-stamp-post .post-overlay-stamp .pmeta-post-comments a,
+.two-stamp-post .post-overlay-stamp .pmeta-timestamp a { color: rgba( 255,255,255,.75); }
 
-.two-stamp-post .post-overlay-stamp .pmeta-post-comments a:hover { color: rgba( 237,22,81,1); }
+.two-stamp-post .post-overlay-stamp .pmeta-post-comments a:hover,
+.two-stamp-post .post-overlay-stamp .pmeta-timestamp a:hover { color: rgba( 237,22,81,1); }
 
 .three-stamp-post .post-overlay-stamp { color: #ffffff; background: linear-gradient( rgba(0,0,0,0), rgba(0,0,0,0.6) ); }
 
@@ -371,9 +350,11 @@ img.border { border: 8px solid #ffffff!important; box-shadow: 0px 0px 5px 0 rgba
 .three-stamp-post .post-overlay-stamp .pmeta-post-comments,
 .three-stamp-post .post-overlay-stamp .pmeta-timestamp { color: rgba( 255,255,255,.75); }
 
-.three-stamp-post .post-overlay-stamp .pmeta-post-comments a { color: rgba( 255,255,255,.75); }
+.three-stamp-post .post-overlay-stamp .pmeta-post-comments a,
+.three-stamp-post .post-overlay-stamp .pmeta-timestamp a { color: rgba( 255,255,255,.75); }
 
-.three-stamp-post .post-overlay-stamp .pmeta-post-comments a:hover { color: rgba( 237,22,81,1); }
+.three-stamp-post .post-overlay-stamp .pmeta-post-comments a:hover,
+.three-stamp-post .post-overlay-stamp .pmeta-timestamp a:hover { color: rgba( 237,22,81,1); }
 
 .post-header-tf .post-title a { color: #474747; }
 
@@ -466,25 +447,11 @@ p.no-comments { border-top: 1px solid #7f7f7f; }
 
 .canuck_recent_posts li span { color: #7f7f7f; }
 
-footer .widget_recent_entries li,
-footer .widget_recent_entries li:last-child,
-footer .canuck_recent_posts li,
-footer .canuck_recent_posts li:last-child
-{ border-bottom: 1px solid #7f7f7f; }
-
 #wp-calendar thead th { background-color: #eaeaea; }
-#canuck-footer #wp-calendar thead th { background-color: #474747; }
 
 #calendar_wrap td#today { background-color: #eaeaea; }
-#canuck-footer #calendar_wrap td#today { background-color: #474747; }
-
-#footer-wrap #wp-calendar tbody td a,#footer-wrap #wp-calendar #prev a, #footer-wrap #wp-calendar #next a { color: #eaeaea; }
-#footer-wrap #wp-calendar tbody td a:hover,#footer-wrap #wp-calendar #prev a:hover, #footer-wrap #wp-calendar #next a:hover { color: #16aee5; }
 
 .tagcloud a { background-color: #ffffff; border: 1px solid #eaeaea; }
-
-#canuck-footer .tagcloud a { background-color: #474747; border: 1px solid #7f7f7f; color: #7f7f7f; }
-#canuck-footer .tagcloud a:hover { background-color: #474747; border: 1px solid #7f7f7f; color: #eaeaea; }
 
 .tagcloud a:hover,
 .sitemap-categories-wrap a:hover,
@@ -587,23 +554,6 @@ footer .canuck_recent_posts li:last-child
 	#main-menu-right ul ul ul ul li > a { color: #474747; background-color: #ffffff; }
 
 	#main-menu-right ul ul ul ul li > a:hover { color: rgba(237,22,81,1); background-color: #ffffff; }
-
-	#footer-wrap { color: #8c8c8c; }
-	
-	#footer-wrap h1,#footer-wrap h2,#footer-wrap h3,
-	#footer-wrap h4,#footer-wrap h5,#footer-wrap h6
-	{ color: #ffffff; }
-	
-	#footer-wrap a { color: #8c8c8c; }
-	
-	#footer-wrap a:hover { color: #E8E8E8; }
-	
-	#copyright { color: #8c8c8c; }
-	
-	#copyright a{ color: #8c8c8c; }
-		
-	#copyright a:hover { color: #ffffff; }
-	
 }
 
 /* ===================================================================== 700 */

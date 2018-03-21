@@ -6,16 +6,16 @@
  * a category link is clicked
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 global $canuck_include_breadcrumbs,$canuck_exclude_page_title,$canuck_page_title;
-$layout_option = get_theme_mod( 'canuck_category_layout', 'right_sidebar' );
+$layout_option              = get_theme_mod( 'canuck_category_layout', 'right_sidebar' );
 $canuck_include_breadcrumbs = get_theme_mod( 'canuck_breadcrumbs' ) ? true : false;
-$canuck_exclude_page_title = get_theme_mod( 'canuck_category_title' ) ? true : false;
-$canuck_page_title = esc_html( get_the_archive_title() );
+$canuck_exclude_page_title  = get_theme_mod( 'canuck_category_title' ) ? true : false;
+$canuck_page_title          = esc_html( get_the_archive_title() );
 get_header( 'no-feature' );
 
 get_template_part( '/template-parts/partials', 'page-title-no-post' );

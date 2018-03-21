@@ -5,7 +5,7 @@
  * This file is a widget was modified from the WordPress Recent Pots Widget.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  *
@@ -23,7 +23,7 @@
 /**
  * Use widgets_init action hook to execute custom function.
  */
-add_action( 'widgets_init','canuck_register_recent_posts_widget' );
+add_action( 'widgets_init', 'canuck_register_recent_posts_widget' );
 
 /**
  * Register our widget.
@@ -42,7 +42,7 @@ class Canuck_Recent_Posts_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname' => 'canuck_recent_posts',
+			'classname'   => 'canuck_recent_posts',
 			'description' => esc_html__( 'Display recent posts, allow excluded categories', 'canuck' ),
 		);
 		parent::__construct( 'canuck_recent_posts_widget', esc_html__( 'Canuck Recent Posts Widget', 'canuck' ), $widget_ops );
@@ -58,9 +58,9 @@ class Canuck_Recent_Posts_Widget extends WP_Widget {
 			'canuck_title' => esc_html__( 'Recent Posts', 'canuck' ),
 			'canuck_count' => 5,
 		);
-		$instance = wp_parse_args( (array) $instance, $canuck_recent_posts_defaults );
-		$title = $instance['canuck_title'];
-		$count = $instance['canuck_count'];
+		$instance                     = wp_parse_args( (array) $instance, $canuck_recent_posts_defaults );
+		$title                        = $instance['canuck_title'];
+		$count                        = $instance['canuck_count'];
 		// Validate data.
 		$count = is_int( $count ) ? $count : 5;
 		?>
@@ -77,7 +77,7 @@ class Canuck_Recent_Posts_Widget extends WP_Widget {
 	 * @param array $old_instance The previous options.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
+		$instance                 = $old_instance;
 		$instance['canuck_title'] = esc_html( $new_instance['canuck_title'] );
 		$instance['canuck_count'] = ! empty( $new_instance['canuck_count'] ) ? intval( $new_instance['canuck_count'] ) : 5;
 		return $instance;
@@ -90,29 +90,29 @@ class Canuck_Recent_Posts_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		// This filter is documented in wp-includes/default-widgets.php.
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Recent Posts' , 'canuck' ) : $instance['canuck_title'], $instance, $this->id_base );
-		$c = ! empty( $instance['canuck_count'] ) ? intval( $instance['canuck_count'] ) : 5;
-		$exclude_ids = canuck_exclude_category_validation();
-		$id_picks = array();
-		$id_picks = explode( ',', $exclude_ids );
+		$title         = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Recent Posts', 'canuck' ) : $instance['canuck_title'], $instance, $this->id_base );
+		$c             = ! empty( $instance['canuck_count'] ) ? intval( $instance['canuck_count'] ) : 5;
+		$exclude_ids   = canuck_exclude_category_validation();
+		$id_picks      = array();
+		$id_picks      = explode( ',', $exclude_ids );
 		$filtered_list = '';
-		$counter = 0;
+		$counter       = 0;
 		foreach ( $id_picks as $pick ) {
 			if ( 1 < intval( $id_picks[ $counter ] ) ) {
 				$filtered_list .= '-' . intval( $id_picks[ $counter ] ) . ',';
 			}
 			$counter++;
 		}
-		$exclude_ids = trim( $filtered_list , ',' );
-		$x = $exclude_ids;
+		$exclude_ids = trim( $filtered_list, ',' );
+		$x           = $exclude_ids;
 		echo wp_kses_post( $args['before_widget'] );
 		if ( $title ) {
 			echo wp_kses_post( $args['before_title'] ) . wp_kses_post( $title ) . wp_kses_post( $args['after_title'] );
 		}
-		$post_args = array(
-			'numberposts' => $c,
-			'category' => $x,
-			'post_status' => 'publish',
+		$post_args    = array(
+			'numberposts'      => $c,
+			'category'         => $x,
+			'post_status'      => 'publish',
 			'suppress_filters' => false,
 		);
 		$recent_posts = wp_get_recent_posts( $post_args );
@@ -122,7 +122,7 @@ class Canuck_Recent_Posts_Widget extends WP_Widget {
 			foreach ( $recent_posts as $recent ) {
 				if ( ! post_password_required( $recent['ID'] ) ) {
 					if ( has_post_thumbnail( $recent['ID'] ) ) {
-						$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $recent['ID'], 'thumbnail' ) );
+						$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $recent['ID'], 'thumbnail' ) );
 						$image_url = esc_url( $thumb[0] );
 					} else {
 						if ( has_post_format( 'audio', $recent['ID'] ) ) {
@@ -134,7 +134,7 @@ class Canuck_Recent_Posts_Widget extends WP_Widget {
 						} elseif ( has_post_format( 'video', $recent['ID'] ) ) {
 							$image_url = get_template_directory_uri() . '/images/video150.jpg';
 						} else {
-							$integer = rand( 1, 5 );
+							$integer   = rand( 1, 5 );
 							$image_url = get_template_directory_uri() . '/images/standard' . $integer . '_150.jpg';
 						}
 					}

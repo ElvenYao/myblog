@@ -3,31 +3,39 @@
  * Canuck Home Page template part - carousel slider
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 global $post;
-$section12_title = stripslashes( get_theme_mod( 'canuck_section12_title', '' ) );
-$section12_text = stripslashes( get_theme_mod( 'canuck_section12_text', '' ) );
+$section12_title              = stripslashes( get_theme_mod( 'canuck_section12_title', '' ) );
+$section12_text               = stripslashes( get_theme_mod( 'canuck_section12_text', '' ) );
 $section12_portfolio_category = get_theme_mod( 'canuck_section12_portfolio_category', '' );
-$section12_portfolio_columns = get_theme_mod( 'canuck_section12_portfolio_columns', '3' );
-$sec12_bg_image = get_theme_mod( 'canuck_section12_background_image', '' );
-$sec12_use_parallax = get_theme_mod( 'canuck_section12_use_parallax', false );
-$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-$category_id = get_cat_ID( $section12_portfolio_category );
-$args = array(
-	'category' => $category_id,
-	'numberposts' => 20,
+$section12_portfolio_columns  = get_theme_mod( 'canuck_section12_portfolio_columns', '3' );
+$sec12_bg_image               = get_theme_mod( 'canuck_section12_background_image', '' );
+$sec12_use_parallax           = get_theme_mod( 'canuck_section12_use_parallax', false );
+$include_pinterest_pinit      = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
+$category_id                  = get_cat_ID( $section12_portfolio_category );
+$args                         = array(
+	'category'    => $category_id,
+	'numberposts' => 50,
 );
-$custom_posts = get_posts( $args );
-
-if ( '' !== $sec12_bg_image && false !== $sec12_use_parallax ) { ?>
-	<div class="home-12-wide parallax-window" data-parallax="scroll" data-image-src="<?php echo esc_url( $sec12_bg_image ); ?>">
-<?php } else { ?>
-	<div class="home-12-wide">
-<?php } ?>
+$custom_posts                 = get_posts( $args );
+$use_lazyload                 = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+if ( '' !== $sec12_bg_image ) {
+	if ( true === $sec12_use_parallax ) {
+		$string12 = ' class="home-12-wide parallax-window" data-parallax="scroll" data-image-src="' . esc_url( $sec12_bg_image ) . '"';
+	} elseif ( true === $use_lazyload ) {
+		$string12 = ' class="home-12-wide lazyload" data-src="' . esc_url( $sec12_bg_image ) . '"';
+	} else {
+		$string12 = ' class="home-12-wide" style="background-image: url( ' . esc_url( $sec12_bg_image ) . ' );"';
+	}
+} else {
+	$string12 = ' class="home-12-wide"';
+}
+?>
+<div <?php echo $string12;// WPCS: XSS ok. ?>>
 	<div class="home-12-wide-overlay">
 		<div class="home-12-wrap">
 			<?php
@@ -55,20 +63,27 @@ if ( '' !== $sec12_bg_image && false !== $sec12_use_parallax ) { ?>
 					$canuck_feature_pic_count = 0;
 					foreach ( $custom_posts as $post ) {
 						setup_postdata( $post );
-						$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+						$link_to_post        = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
 						$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
-						$image_caption = get_post( get_post_thumbnail_id() ) -> post_excerpt;
-						$image_desc = get_post( get_post_thumbnail_id() ) -> post_content;
+						$image_caption       = get_post( get_post_thumbnail_id() )->post_excerpt;
+						$image_desc          = get_post( get_post_thumbnail_id() )->post_content;
 						if ( has_post_thumbnail() ) {
 							$canuck_feature_pic_count ++;
 							$image_url = get_the_post_thumbnail_url( $post->ID, 'canuck_small15' );
 							?>
 							<div class="owl-item-wrap">
 								<?php
-								if ( true === $include_pinterest_pinit ) {
-									echo '<img data-pin-no-hover="true" src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $image_caption ) . '"/>';
+								// data-pin-no-hover is there for Pinerest, if used either in plugin or by theme.
+								if ( true === $use_lazyload ) {
+									?>
+									<img data-pin-no-hover="true" class="owl-lazy"
+										data-src="<?php echo esc_url( $image_url ); ?>"
+										alt="<?php echo esc_attr( $image_caption ); ?>" />
+									<?php
 								} else {
-									echo '<img data-pin-no-hover="true" src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $image_caption ) . '"/>';
+									?>
+									<img data-pin-no-hover="true" src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $image_caption ); ?>"/>
+									<?php
 								}
 								?>
 								<span class="image-overlay">
@@ -83,7 +98,7 @@ if ( '' !== $sec12_bg_image && false !== $sec12_use_parallax ) { ?>
 											} elseif ( true === $link_to_post ) {
 												echo '<a href="' . esc_url( get_the_permalink() ) . '" title="' . the_title_attribute( 'echo=0' ) . '" ><i class="fa fa-link"></i></a>';
 											}
-											echo '<a href="' . esc_url( $image_url ) . '" title="' . the_title_attribute( 'echo=0' ) . '" ><i class="fa fa-image"></i></a>';
+											echo '<a href="' . esc_url( $image_url ) . '" ><i class="fa fa-image"></i></a>';
 											?>
 										</span>
 										<h5 class="title">

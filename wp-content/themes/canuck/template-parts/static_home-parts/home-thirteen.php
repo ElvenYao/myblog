@@ -3,31 +3,38 @@
  * Canuck Home Page template part - carousel slider
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 global $post;
-$section13_title = stripslashes( get_theme_mod( 'canuck_section13_title', '' ) );
-$section13_text = stripslashes( get_theme_mod( 'canuck_section13_text', '' ) );
+$section13_title              = stripslashes( get_theme_mod( 'canuck_section13_title', '' ) );
+$section13_text               = stripslashes( get_theme_mod( 'canuck_section13_text', '' ) );
 $section13_portfolio_category = get_theme_mod( 'canuck_section13_portfolio_category', '' );
-$section13_portfolio_columns = get_theme_mod( 'canuck_section13_portfolio_columns', '3' );
-$sec13_bg_image = get_theme_mod( 'canuck_section13_background_image', '' );
-$sec13_use_parallax = get_theme_mod( 'canuck_section13_use_parallax', false );
-
-$category_id = get_cat_ID( $section13_portfolio_category );
-$args = array(
-	'category' => $category_id,
+$section13_portfolio_columns  = get_theme_mod( 'canuck_section13_portfolio_columns', '3' );
+$sec13_bg_image               = get_theme_mod( 'canuck_section13_background_image', '' );
+$sec13_use_parallax           = get_theme_mod( 'canuck_section13_use_parallax', false );
+$category_id                  = get_cat_ID( $section13_portfolio_category );
+$args                         = array(
+	'category'    => $category_id,
 	'numberposts' => 20,
 );
-$custom_posts = get_posts( $args );
-
-if ( '' !== $sec13_bg_image && false !== $sec13_use_parallax ) { ?>
-	<div class="home-13-wide parallax-window" data-parallax="scroll" data-image-src="<?php echo esc_url( $sec13_bg_image ); ?>">
-<?php } else { ?>
-	<div class="home-13-wide">
-<?php } ?>
+$custom_posts                 = get_posts( $args );
+$use_lazyload                 = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+if ( '' !== $sec13_bg_image ) {
+	if ( true === $sec13_use_parallax ) {
+		$string13 = ' class="home-13-wide parallax-window" data-parallax="scroll" data-image-src="' . esc_url( $sec13_bg_image ) . '"';
+	} elseif ( true === $use_lazyload ) {
+		$string13 = ' class="home-13-wide lazyload" data-src="' . esc_url( $sec13_bg_image ) . '"';
+	} else {
+		$string13 = ' class="home-13-wide" style="background-image: url( ' . esc_url( $sec13_bg_image ) . ' );"';
+	}
+} else {
+	$string13 = ' class="home-13-wide"';
+}
+?>
+<div <?php echo $string13;// WPCS: XSS ok. ?>>
 	<div class="home-13-wide-overlay">
 		<div class="home-13-wrap">
 			<?php
@@ -55,15 +62,25 @@ if ( '' !== $sec13_bg_image && false !== $sec13_use_parallax ) { ?>
 					$canuck_feature_pic_count = 0;
 					foreach ( $custom_posts as $post ) {
 						setup_postdata( $post );
-						$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+						$link_to_post        = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
 						$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
 						if ( has_post_thumbnail() ) {
 							$canuck_feature_pic_count ++;
 							$image_url = get_the_post_thumbnail_url( $post->ID, 'canuck_small15' );
 							?>
 							<div class="owl-item-wrap">
-								<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php esc_attr_e( 'small carousel image', 'canuck' ); ?>" />
 								<?php
+								if ( true === $use_lazyload ) {
+									?>
+									<img class="owl-lazy"
+									data-src="<?php echo esc_url( $image_url ); ?>"
+									alt="<?php esc_attr_e( 'small carousel image', 'canuck' ); ?>" />
+									<?php
+								} else {
+									?>
+									<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php esc_attr_e( 'small carousel image', 'canuck' ); ?>" />
+									<?php
+								}
 								if ( $link_to_post || false !== $custom_feature_link ) {
 									?>
 									<span class="image-overlay">

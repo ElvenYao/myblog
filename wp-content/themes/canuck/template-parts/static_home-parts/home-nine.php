@@ -5,24 +5,33 @@
  * This template part is called by template-home.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 // Get the options.
-$section9_title = stripslashes( get_theme_mod( 'canuck_section9_title', '' ) );
-$section9_text = stripslashes( get_theme_mod( 'canuck_section9_text', '' ) );
+$section9_title              = stripslashes( get_theme_mod( 'canuck_section9_title', '' ) );
+$section9_text               = stripslashes( get_theme_mod( 'canuck_section9_text', '' ) );
 $section9_portfolio_category = get_theme_mod( 'canuck_section9_portfolio_category', '' );
-$section9_portfolio_columns = get_theme_mod( 'canuck_section9_portfolio_columns', '3' );
-$sec9_bg_image = get_theme_mod( 'canuck_section9_background_image', '' );
-$sec9_use_parallax = get_theme_mod( 'canuck_section9_use_parallax', false );
-$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-if ( '' !== $sec9_bg_image && false !== $sec9_use_parallax ) { ?>
-	<div class="home-9-wide parallax-window" data-parallax="scroll" data-image-src="<?php echo esc_url( $sec9_bg_image ); ?>">
-<?php } else { ?>
-	<div class="home-9-wide">
-<?php } ?>
+$section9_portfolio_columns  = get_theme_mod( 'canuck_section9_portfolio_columns', '3' );
+$sec9_bg_image               = get_theme_mod( 'canuck_section9_background_image', '' );
+$sec9_use_parallax           = get_theme_mod( 'canuck_section9_use_parallax', false );
+$include_pinterest_pinit     = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
+$use_lazyload                = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+if ( '' !== $sec9_bg_image ) {
+	if ( true === $sec9_use_parallax ) {
+		$string9 = ' class="home-9-wide parallax-window" data-parallax="scroll" data-image-src="' . esc_url( $sec9_bg_image ) . '"';
+	} elseif ( true === $use_lazyload ) {
+		$string9 = ' class="home-9-wide lazyload" data-src="' . esc_url( $sec9_bg_image ) . '"';
+	} else {
+		$string9 = ' class="home-9-wide" style="background-image: url( ' . esc_url( $sec9_bg_image ) . ' );"';
+	}
+} else {
+	$string9 = ' class="home-9-wide"';
+}
+?>
+<div <?php echo $string9;// WPCS: XSS ok. ?>>
 	<div class="home-9-wide-overlay">
 		<div class="home-9-wrap">
 			<?php
@@ -41,29 +50,37 @@ if ( '' !== $sec9_bg_image && false !== $sec9_use_parallax ) { ?>
 				<?php
 				$category_id = get_cat_ID( esc_html( $section9_portfolio_category ) );
 				global $post,$canuck_feature_pic_count;
-				$args = array(
-					'category' => $category_id,
+				$args         = array(
+					'category'    => $category_id,
 					'numberposts' => 20,
 				);
 				$custom_posts = get_posts( $args );
-				if ( false != $category_id && $custom_posts ) {// Non strict is required.
+				if ( false != $category_id && $custom_posts ) {// WPCS: loose comparison ok.
 					$canuck_feature_pic_count = 0;
 					foreach ( $custom_posts as $post ) {
 						setup_postdata( $post );
-						$link_to_post = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
+						$link_to_post        = ( '' === get_post_meta( $post->ID, 'canuck_metabox_link_to_post', true ) ? false : true );
 						$custom_feature_link = ( '' === get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) ? false : get_post_meta( $post->ID, 'canuck_custom_feature_link', true ) );
-						$image_url = get_the_post_thumbnail_url( $post->ID, 'canuck_med15' );
-						$image_caption = get_post( get_post_thumbnail_id() ) -> post_excerpt;
-						$image_desc = get_post( get_post_thumbnail_id() ) -> post_content;
+						$image_url           = get_the_post_thumbnail_url( $post->ID, 'canuck_med15' );
+						$image_caption       = get_post( get_post_thumbnail_id() )->post_excerpt;
+						$image_desc          = get_post( get_post_thumbnail_id() )->post_content;
 						if ( has_post_thumbnail() ) {
 							$canuck_feature_pic_count ++;
 							?>
 							<div class="section9-portfolio-container">
 								<?php
-								if ( true === $include_pinterest_pinit ) {
-									echo '<img data-pin-no-hover="true" src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $image_caption ) . '"/>';
+								// data-pin-no-hover is there for Pinerest, if used either in plugin or by theme.
+								if ( true === $use_lazyload ) {
+									?>
+									<img data-pin-no-hover="true" class="lazyload"
+										src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+										data-src="<?php echo esc_url( $image_url ); ?>"
+										alt="<?php echo esc_attr( $image_caption ); ?>" />
+									<?php
 								} else {
-									echo '<img data-pin-no-hover="true" src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $image_caption ) . '"/>';
+									?>
+									<img data-pin-no-hover="true" src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $image_caption ); ?>"/>
+									<?php
 								}
 								?>
 								<div class="image-overlay">
@@ -78,7 +95,7 @@ if ( '' !== $sec9_bg_image && false !== $sec9_use_parallax ) { ?>
 											} elseif ( true === $link_to_post ) {
 												echo '<a href="' . esc_url( get_the_permalink( $post->ID ) ) . '" title="' . the_title_attribute( 'echo=0' ) . '" ><i class="fa fa-link"></i></a>';
 											}
-											echo '<a href="' . esc_url( $image_url ) . '" title="' . the_title_attribute( 'echo=0' ) . '" ><i class="fa fa-image"></i></a>';
+											echo '<a href="' . esc_url( $image_url ) . '" ><i class="fa fa-image"></i></a>';
 											?>
 										</span>
 										<h5 class="title">

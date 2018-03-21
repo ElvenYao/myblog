@@ -3,7 +3,7 @@
  * Template Part, single page navigation.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -12,7 +12,7 @@
 <div class="postpagenav">
 	<?php
 	if ( is_attachment() ) {
-		$left = '<i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;' . esc_html__( 'View previous', 'canuck' );
+		$left  = '<i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;' . esc_html__( 'View previous', 'canuck' );
 		$right = esc_html__( 'View next', 'canuck' ) . '&nbsp;&nbsp;<i class="fa fa-hand-o-right"></i>'
 		?>
 		<h2 class="screen-reader-text"><?php esc_html_e( 'Post navigation', 'canuck' ); ?></h2>

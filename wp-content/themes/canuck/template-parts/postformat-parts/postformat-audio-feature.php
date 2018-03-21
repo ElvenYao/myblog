@@ -10,11 +10,12 @@
 
 global $post;
 $include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-$args = array(
-	'type' => 'audio',
+$use_lazyload            = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+$args                    = array(
+	'type'        => 'audio',
 	'split_media' => 'true',
 );
-$embed_audio = canuck_media_grabber_audio( $args );
+$embed_audio             = canuck_media_grabber_audio( $args );
 if ( '' !== $embed_audio ) {
 	$audio_urls = wp_extract_urls( $embed_audio );
 	if ( isset( $audio_urls[0] ) ) {
@@ -48,21 +49,40 @@ if ( has_post_thumbnail() ) {
 // Display the featured area.
 if ( '' !== $audio_url ) {
 	$include_pinterest_pinit = get_theme_mod( 'canuck_include_pinit' ) ? true : false;
-	$add_nopin = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
-	echo '<div class="audio-post-feature">';
-		echo '<img ' . $add_nopin . 'src="' . esc_url( $background_image_url ) . '" alt="' . esc_attr__( 'audio background', 'canuck' ) . '">';
-			echo '<div class="audio-post-feature-overlay">';
-				echo '<span class="audio-feature-meta">' . wp_kses_post( $audio_excerpt ) . '</span>';
-				$attr = array(
-					'src'      => $audio_url,
-					'loop'     => '',
-					'autoplay' => '',
-					'preload'  => 'true',
-				);
-				echo '<div class="audio-feature-audio">';
-					echo wp_audio_shortcode( $attr );// XSS OK.
-				echo '</div>';
-		echo '</div>';
-	echo '</div>';
+	$add_nopin               = ( true === $include_pinterest_pinit ) ? 'data-pin-no-hover="true" ' : '';
+	?>
+	<div class="audio-post-feature">
+		<?php
+		if ( true === $use_lazyload ) {
+			?>
+			<img class="lazyload" <?php echo $add_nopin;// WPCS: XSS ok. ?>
+				src="<?php echo get_template_directory_uri() . '/images/placeholder15.png';// WPCS: XSS ok. ?>"
+				data-src="<?php echo esc_url( $background_image_url ); ?>"
+				alt="<?php esc_attr_e( 'audio background', 'canuck' ); ?>" />
+			<?php
+		} else {
+			?>
+			<img <?php echo $add_nopin;// WPCS: XSS ok. ?>
+				src="<?php echo esc_url( $background_image_url ); ?>"
+				alt="<?php esc_attr_e( 'audio background', 'canuck' ); ?>" />
+			<?php
+		}
+		?>
+		<div class="audio-post-feature-overlay">
+			<span class="audio-feature-meta"><?php echo wp_kses_post( $audio_excerpt ); ?></span>
+			<div class="audio-feature-audio">
+				<?php
+					$attr = array(
+						'src'      => $audio_url,
+						'loop'     => '',
+						'autoplay' => '',
+						'preload'  => 'true',
+					);
+					echo wp_audio_shortcode( $attr );// WPCS: XSS ok.
+				?>
+			</div>
+		</div>
+	</div>
+	<?php
 }
 

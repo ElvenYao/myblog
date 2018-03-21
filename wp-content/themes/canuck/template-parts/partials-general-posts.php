@@ -3,7 +3,7 @@
  * Template Part, general post method, used by author, category, date, search and tag pages
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -44,12 +44,12 @@ if ( have_posts() ) {
 										esc_html__( 'Read More', 'canuck' )
 									);
 								} else {
-									$trim_words = get_theme_mod( 'canuck_excerpt_length', 30 );
-									$more = '&hellip;<div class="read-more-wrap"><a class="read-more" href="' . esc_url( get_permalink() ) . '">' . __( 'Read More', 'canuck' ) . '</a></div>';
-									$content = get_the_content();
-									$content = canuck_strip_extracted_quote( $content );
+									$trim_words      = get_theme_mod( 'canuck_excerpt_length', 30 );
+									$more            = '&hellip;<div class="read-more-wrap"><a class="read-more" href="' . esc_url( get_permalink() ) . '">' . __( 'Read More', 'canuck' ) . '</a></div>';
+									$content         = get_the_content();
+									$content         = canuck_strip_extracted_quote( $content );
 									$content_trimmed = wp_trim_words( $content, $trim_words, $more );
-									$excerpt = apply_filters( 'the_excerpt', $content_trimmed );
+									$excerpt         = apply_filters( 'the_excerpt', $content_trimmed );
 									echo wp_kses_post( $excerpt );
 								}
 							} else {

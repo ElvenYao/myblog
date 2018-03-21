@@ -5,58 +5,83 @@
  * This template part is called by template-home.php
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
 
 // Get the options.
-$section3_usage = esc_html( get_theme_mod( 'canuck_section3_usage', 'normal' ) );
-$section3_text = stripslashes( get_theme_mod( 'canuck_section3_text', '' ) );
-$section3_shortcode = stripslashes( get_theme_mod( 'canuck_section3_shortcode', '' ) );
+$section3_usage        = esc_html( get_theme_mod( 'canuck_section3_usage', 'normal' ) );
+$section3_text         = stripslashes( get_theme_mod( 'canuck_section3_text', '' ) );
+$section3_shortcode    = stripslashes( get_theme_mod( 'canuck_section3_shortcode', '' ) );
 $section3_include_link = get_theme_mod( 'canuck_include_section3_button', false );
-$section3_link = get_theme_mod( 'canuck_section3_button_link', '#' );
-$section3_button_label = get_theme_mod( 'canuck_section3_button_name', "<i class='fa fa-link'></i> " . __( 'more', 'canuck' ) );
-$sec3_bg_image = get_theme_mod( 'canuck_section3_background_image', '' );
-$sec3_use_parallax = get_theme_mod( 'canuck_section3_use_parallax', false );
-
-if ( '' !== $sec3_bg_image && false !== $sec3_use_parallax ) { ?>
-	<div class="home-3-wide parallax-window" data-parallax="scroll" data-image-src="<?php echo esc_url( $sec3_bg_image ); ?>">
-<?php } else { ?>
-	<div class="home-3-wide">
-<?php } ?>
+$section3_link         = get_theme_mod( 'canuck_section3_button_link', '#' );
+$section3_button_label = get_theme_mod( 'canuck_section3_button_name', "<i class='fa fa-link'></i> " . esc_html__( 'more', 'canuck' ) );
+$sec3_bg_image         = get_theme_mod( 'canuck_section3_background_image', '' );
+$sec3_use_parallax     = get_theme_mod( 'canuck_section3_use_parallax', false );
+$use_lazyload          = get_theme_mod( 'canuck_use_lazyload' ) ? true : false;
+if ( '' !== $sec3_bg_image ) {
+	if ( true === $sec3_use_parallax ) {
+		$string3 = ' class="home-3-wide parallax-window" data-parallax="scroll" data-image-src="' . esc_url( $sec3_bg_image ) . '"';
+	} elseif ( true === $use_lazyload ) {
+		$string3 = ' class="home-3-wide lazyload" data-src="' . esc_url( $sec3_bg_image ) . '"';
+	} else {
+		$string3 = ' class="home-3-wide" style="background-image: url( ' . esc_url( $sec3_bg_image ) . ' );"';
+	}
+} else {
+	$string3 = ' class="home-3-wide"';
+}
+?>
+<div <?php echo $string3;// WPCS: XSS ok. ?>>
 	<div class="home-3-wide-overlay">
 		<div class="home-3-wrap">
 			<?php
 			if ( '' !== $section3_text ) {
-				echo '<div class="home-3-text">';
-					echo wp_kses_post( $section3_text );
-				echo '</div>';
+				?>
+				<div class="home-3-text">
+					<?php echo wp_kses_post( $section3_text ); ?>
+				</div>
+				<?php
 			}
 			if ( true === $section3_include_link ) {
 				if ( '' === $section3_button_label ) {
-					$section3_button_label = "<i class='fa fa-link'></i> " . __( 'more', 'canuck' );
+					$section3_button_label = "<i class='fa fa-link'></i> " . esc_html__( 'more', 'canuck' );
 				}
-				echo '<div class="home-3-button">';
-					echo '<a class="button1" href="' . esc_url( $section3_link ) . '" title="' . esc_attr( 'more', 'canuck' ) . '">';
-						echo wp_kses_post( $section3_button_label );
-					echo '</a>';
-				echo '</div>';
+				?>
+				<div class="home-3-button">
+					<a class="button1" href="<?php echo esc_url( $section3_link ); ?>" title="<?php esc_attr_e( 'more', 'canuck' ); ?>">
+						<?php echo wp_kses_post( $section3_button_label ); ?>
+					</a>
+				</div>
+				<?php
 			}
-			echo '<div class="clearfix"></div>';
+			?>
+			<div class="clearfix"></div>
+			<?php
 			if ( 'shortcode' === $section3_usage ) {
-				echo '<div class="home-3-shortcode">';
-					echo do_shortcode( wp_kses_post( $section3_shortcode ) );
-				echo '</div>';
+				?>
+				<div class="home-3-shortcode">
+					<?php echo do_shortcode( wp_kses_post( $section3_shortcode ) ); ?>
+				</div>
+				<?php
 			} elseif ( 'widgetized' === $section3_usage ) {
-				echo '<div class="home-3-widget">';
+				?>
+				<div class="home-3-widget">
+					<?php
 					if ( ! dynamic_sidebar( 'canuck_home_section3_sidebar' ) ) {
-						echo esc_html__( 'Section 3 is set up as a widget area.', 'canuck' ) .
-							'<br/><span class="alert">' .
-							esc_html__( 'Go to Appearance->Widgets or the Customizer Widgets panel and add a widget to Home Page Section 1.', 'canuck' ) .
-							'</span>';
+						?>
+						<span>
+							<?php esc_html_e( 'Section 3 is set up as a widget area.', 'canuck' ); ?>
+						</span>
+						<br/>
+						<span class="alert">
+							<?php esc_html_e( 'Go to Appearance->Widgets or the Customizer Widgets panel and add a widget to Home Page Section 3.', 'canuck' ); ?>
+						</span>
+						<?php
 					}
-				echo '</div>';
+					?>
+				</div>
+				<?php
 			}
 			?>
 		</div>

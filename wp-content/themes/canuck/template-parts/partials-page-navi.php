@@ -3,7 +3,7 @@
  * Template Part, multiple page navigation.
  *
  * @package     Canuck WordPress Theme
- * @copyright   Copyright (C) 2017  Kevin Archibald
+ * @copyright   Copyright (C) 2017-2018  Kevin Archibald
  * @license     http://www.gnu.org/licenses/gpl-2.0.html
  * @author      Kevin Archibald <www.kevinsspace.ca/contact/>
  */
@@ -13,7 +13,7 @@
 	<div class="clearfix"></div>
 	<?php
 	the_posts_pagination( array(
-		'mid_size' => 3,
+		'mid_size'  => 3,
 		'prev_text' => '<i class="fa fa-hand-o-left"></i>',
 		'next_text' => '<i class="fa fa-hand-o-right"></i>',
 	) );

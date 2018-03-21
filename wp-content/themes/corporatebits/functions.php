@@ -1,6 +1,6 @@
 <?php
 /**
- * corporatebits functions and definitions.
+ * CorporateBits functions and definitions.
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
@@ -267,9 +267,7 @@ require get_template_directory() . '/inc/customizer.php';
  */
 require get_template_directory() . '/inc/jetpack.php';
 
-
 /**
  * Implement the Custom Header feature.
  */
 require get_template_directory() . '/inc/custom-header.php';
-
